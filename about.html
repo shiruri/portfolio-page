@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
+    <meta name="keywords" content="Jemmer Almoneda, Programmer, Game dev, Portfolio">
+    <meta name="author" content="@shiros">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
+    <title>About</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-family: 'Micro 5', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        body {
+            cursor: url('Documents/nso_cursor.png'), auto;
+        }
+
+        .container {
+            position: relative;
+            height: auto;
+            max-width: 600px;
+            width: 90vw;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+        }
+
+        /* Hide scroll bar */
+        body {
+            overflow: auto;
+            scrollbar-width: none; /* For Firefox */
+            -ms-overflow-style: none;  /* For IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none; /* For Chrome, Safari, and WebKit-based browsers */
+        }
+
+        /* Styling the navbar at the bottom */
+        nav {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-right: 400px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px; /* Space between each item */
+        }
+
+        nav ul li {
+            font-size: 18px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            padding: 10px 20px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Hover effect */
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            transform: scale(1.1); /* Makes the button grow slightly */
+        }
+        .technologies-container img {
+            max-width:150px ;
+            max-height: 150px;
+            width:150px;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+        p {
+            font-size: 30px;
+            margin-top: 0;
+        }
+        h2 {
+            margin-bottom: 0;
+        }
+        ul {
+
+        }
+        /* Technology list styles */
+.tech-list {
+    list-style: none; /* Remove default bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 10px 0; /* Margin for spacing */
+}
+
+.tech-list li {
+    background-color: rgba(255, 255, 255, 0.5); /* Light background for list items */
+    color: #333; /* Text color */
+    padding: 10px; /* Padding for list items */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 10px; /* Space between items */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    font-size: 30px;
+}
+
+.tech-list li:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Highlight on hover */
+    color: #000; /* Darker text color on hover */
+}
+
+    </style>
+</head>
+<body>
+    <div class="video-bg">
+        <video autoplay loop muted playsinline>
+            <source src="Documents/bg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="container">
+        <!-- Left side with logo and text -->
+        <div>
+            <div class="text">
+                <h1>ABOUT PAGE</h1>
+                <h2>Jemmer Almoneda</h2>
+                <h3>Java, Game Dev</h3>
+            </div>
+
+            <div class="technologies-container">
+                <img src="Documents/nom.png" alt="Technologies">
+                <div class="tech-text">
+                    <h2>TECHNOLOGIES</h2>
+                    <ul class="tech-list">
+                        <li>JAVA - SPRINGBOOT</li>
+                        <li>SQL - MYSQL</li>
+                        <li>GAME ENGINE - RENPY</li>
+                    </ul>
+                </div>
+                <h2>ABOUT ME</h2>
+                <p>Student at ACLC COLLEGE MANILA. Mainly focused on the Java Spring Boot framework and Database management. Started coding in May 2024 and have been constantly learning about other technologies. I still have a lot to learn, but with time and effort, I believe that I can further improve my techniques and knowledge.</p>
+            </div>
+            
+
+    <!-- Navbar at the bottom -->
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="projects.html">PROJECTS</a></li>
+            <li><a href="contacts.html">CONTACTS</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

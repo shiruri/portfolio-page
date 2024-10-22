@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
+    <meta name="keywords" content="Jemmer Almoneda, Programmer, Game dev, Portfolio">
+    <meta name="author" content="@shiros">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
+    <title>Jemmer Almoneda Portfolio</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Micro 5';
+            scroll-behavior: smooth;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        body {
+            cursor: url('Documents/nso_cursor.png'), auto;
+        }
+
+        .container {
+            position: relative;
+            height: auto;
+            max-width: 600px;
+            width: 90vw;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-wrap: wrap; /* Add flex-wrap for responsiveness */
+        }
+
+        .logo {
+            flex: 0 0 120px;
+            margin-right: 20px;
+        }
+
+        .logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .technologies-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .technologies-container img {
+            width: 80px;
+            height: auto;
+        }
+
+        .text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 5px 0;
+        }
+
+        h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .clickables {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            margin-left: 20px;
+        }
+
+        button {
+            border: none;
+            background: transparent;
+            cursor: url('Documents/nso_point.png'), auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .clickables button:nth-child(1) {
+            width: 180px;
+            height: 180px;
+        }
+
+        .clickables button:nth-child(2),
+        .clickables button:nth-child(3) {
+            width: 120px;
+            height: 100px;
+        }
+
+        button img {
+            width: 80%;
+            height: auto;
+        }
+
+        button h3 {
+            font-family: 'Micro 5';
+            font-size: 18px;
+            margin: 5px 0 0 0;
+            color: #000;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: rgba(238, 195, 195, 0.7);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            h3 {
+                font-size: 18px;
+            }
+
+            button {
+                height: 120px;
+            }
+
+            button h3 {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 20px;
+            }
+
+            h3 {
+                font-size: 16px;
+            }
+
+            button {
+                height: 100px;
+            }
+
+            button h3 {
+                font-size: 14px;
+            }
+        }
+
+        /* Adjusted GitHub image size for responsiveness */
+        .github img {
+            display: block;
+            width: 100%;
+            max-width: 300px; /* Responsive width */
+            height: auto;
+            margin: 10px 0;
+        }
+
+        .github:hover {
+            background-color: rgba(238, 195, 195, 0.7);
+            transform: scale(1.1);
+        }
+        /* For WebKit browsers (Chrome, Safari) */
+body {
+    overflow: -webkit-scroll; /* Enable scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar */
+}
+
+/* For Firefox */
+body {
+    scrollbar-width: none; /* Hide the scrollbar in Firefox */
+}
+
+/* General overflow for all browsers */
+body {
+    overflow: scroll; /* Ensure scrolling is enabled */
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="video-bg">
+        <video autoplay loop muted playsinline>
+            <source src="Documents/bg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="container">
+        <!-- Left side with logo and text -->
+        <div>
+            <div class="logo">
+                <img src="Documents/icon.jpg" alt="Logo">
+            </div>
+
+            <div class="text">
+                <h2>Jemmer Almoneda</h2>
+                <h3>Java, Game Dev</h3>
+            </div>
+            <div class="technologies-container">
+                <img src="Documents/nom.png" alt="Technologies">
+                <div class="tech-text">
+                    <ul>
+                        <li>JAVA - SPRINGBOOT</li>
+                        <li>SQL - MYSQL</li>
+                        <li>GAME ENGINE - RENPY</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="github">
+                <a href="https://github.com/shiruri" target="_blank">
+                    <img src="Documents/github.png" alt="GitHub">
+                </a>
+            </div>
+        </div>
+
+        <!-- Right side with buttons -->
+        <div class="clickables">
+            <button id="projects">
+                <img src="Documents/sparkle.jpg" alt="Clickable">
+                <h3>Projects</h3>
+            </button>
+            <button id="about">
+                <img src="Documents/robin.jpg" alt="Clickable">
+                <h3>About</h3>
+            </button>
+            <button id="contacts">
+                <img src="Documents/fire.jpg" alt="Clickable">
+                <h3>Contacts</h3>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('projects').addEventListener('click', function() {
+            window.location.href = 'projects.html';  // Replace with your file path
+        });
+        document.getElementById('about').addEventListener('click', function() {
+            window.location.href = 'about.html';  // Replace with your file path
+        });
+        document.getElementById('contacts').addEventListener('click', function() {
+            window.location.href = 'contacts.html';  // Replace with your file path
+        });
+    </script>
+</body>
+
+</html>

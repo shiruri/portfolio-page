@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
+    <meta name="keywords" content="Jemmer Almoneda, Programmer, Game dev, Portfolio">
+    <meta name="author" content="@shiros">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
+    <title>Projects</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Micro 5', sans-serif;
+            scroll-behavior: smooth;
+            position: relative;
+            overflow: hidden; /* Hide default scrollbar */
+        }
+
+        /* Video Background */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100vw;
+            min-height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Cursor */
+        body {
+            cursor: url('Documents/nso_cursor.png'), auto;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            max-width: 900px;
+            width: 90vw;
+            max-height: 80vh; /* Set a maximum height for the container */
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto; /* Enable scrolling inside the container */
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background-color: rgba(185, 152, 152, 0.6);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
+            font-family: 'Micro 5', sans-serif;
+            border-radius: 10px;
+            width: 100px;
+        }
+
+        .navbar a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            cursor: url('Documents/nso_point.png'), auto;
+            transition: color 0.3s, transform 0.1s;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .navbar a:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Project Card */
+        .project-card {
+            margin: 20px 0;
+            text-align: center;
+            animation: slideInUp 0.8s ease;
+        }
+
+        @keyframes slideInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px); /* Starts from below */
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); /* Ends in the original position */
+            }
+        }
+
+        .project-card img {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card img:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 0;
+        }
+
+        /* Sticky Bottom Navbar */
+        nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            font-size: 18px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            padding: 10px 20px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            transform: scale(1.1);
+        }
+
+        nav ul li a:active {
+            transform: scale(0.95);
+        }
+
+        /* RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                width: 95vw;
+                padding: 15px;
+            }
+
+            .project-card img {
+                max-width: 100%;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            .navbar {
+                position: fixed;
+                left: 0;
+                width: 70px;
+                gap: 10px;
+                padding: 8px;
+            }
+
+            .navbar a {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-card img {
+                max-width: 90%;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .navbar {
+                width: 60px;
+            }
+
+            .navbar a {
+                font-size: 14px;
+            }
+
+            nav ul li a {
+                font-size: 14px;
+            }
+        }
+
+        /* Scrollbar styles for WebKit browsers (Chrome, Safari) */
+        .container::-webkit-scrollbar {
+            width: 10px; /* Set the width of the scrollbar */
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2); /* Background of the track */
+            border-radius: 10px; /* Rounded corners for the track */
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.5); /* Color of the scrollbar handle */
+            border-radius: 10px; /* Rounded corners for the handle */
+            border: 2px solid rgba(0, 0, 0, 0.2); /* Add some padding around the scrollbar thumb */
+        }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.8); /* Lighter color when hovering over the scrollbar */
+        }
+
+        /* Scrollbar styles for Firefox */
+        .container {
+            scrollbar-width: thin; /* Thin scrollbar in Firefox */
+            scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.2); /* Thumb and track colors */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="video-bg">
+        <video autoplay loop muted playsinline>
+            <source src="Documents/bg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="navbar">
+        <a href="javascript:void(0);" onclick="filterProjects('all')">All</a>
+        <a href="javascript:void(0);" onclick="filterProjects('java')">Java</a>
+        <a href="javascript:void(0);" onclick="filterProjects('web')">Web</a>
+        <a href="javascript:void(0);" onclick="filterProjects('game')">Game</a>
+    </div>
+
+    <div class="container" id="project-container">
+        <h1>My Projects</h1>
+        <div class="project-card" data-category="web">
+            <img src="Documents/apple1.png" alt="Project 1">
+            <h3>Apple Web design</h3>
+            <p>A small project that uses basic HTML CSS for design and layout</p>
+            <a href="https://github.com/shiruri/Apple-Web-page" target="_blank">View Project</a>
+        </div>
+        <div class="project-card" data-category="java">
+            <img src="Documents/java.png" alt="Project 2">
+            <h3>Java Payroll System</h3>
+            <p>Java program that uses methods and constructors</p>
+            <a href="https://github.com/shiruri/Java-payroll-system" target="_blank">View Project</a>
+        </div>
+        <div class="project-card" data-category="web">
+            <img src="Documents/facebook.png" alt="Project 3">
+            <h3>Facebook Log In Copy</h3>
+            <p>Facebook log in form using HTML and CSS</p>
+            <a href="https://github.com/shiruri/Facebook-log-in" target="_blank">View Project</a>
+        </div>
+        <div class="project-card" data-category="game">
+            <img src="Documents/digital.png" alt="Project 4">
+            <h3>Digital Love</h3>
+            <p>Visual novel built using Ren'Py engine and Python</p>
+            <a href="https://shiroi26.itch.io/digital-love" target="_blank">View Project</a>
+        </div>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="contacts.html">CONTACTS</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        function filterProjects(category) {
+            const projects = document.querySelectorAll('.project-card');
+            const container = document.getElementById('project-container');
+            let visibleCount = 0; // To count visible projects
+    
+            projects.forEach(project => {
+                if (category === 'all' || project.getAttribute('data-category') === category) {
+                    project.style.display = 'block';
+                    visibleCount++; // Increment count of visible projects
+                    project.style.animation = "slideInUp 0.8s ease";
+                } else {
+                    project.style.display = 'none';
+                }
+            });
+    
+            // Adjust margin based on the number of visible projects
+            if (visibleCount > 0) {
+                container.style.marginTop = '20px'; // Adjust this to keep space even when projects are filtered
+            } else {
+                container.style.marginTop = '20px'; // Keep a small margin even if no projects are visible
+            }
+        }
+    </script>
+</body>
+</html>

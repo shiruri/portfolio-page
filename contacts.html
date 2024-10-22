@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
+    <meta name="keywords" content="Jemmer Almoneda, Programmer, Game dev, Portfolio">
+    <meta name="author" content="@shiros">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
+    <title>Contacts</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-family: 'Micro 5';
+            scroll-behavior: smooth;
+        }
+
+        /* Background Video */
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            max-width: 600px;
+            width: 90vw;
+            height: auto;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-wrap: wrap; /* Responsive flex behavior */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-in animation for the container */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Logo */
+        .logo {
+            flex: 0 0 120px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        /* Bounce effect for the logo */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        /* Social Container */
+        .social-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-container a {
+            text-decoration: none;
+        }
+
+        /* Social icons */
+        .social-container img {
+            width: 150px;
+            height: auto;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border-radius: 10px;
+            padding-left: 10px;
+        }
+
+        /* Hover effects for social icons */
+        .social-container img:hover {
+            transform: scale(1.2) rotate(5deg); /* Scale and rotate on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+        }
+
+        /* Name Heading */
+        h2 {
+            font-size: 24px;
+            margin: 5px 0;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Media Queries for small screens */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95vw;
+                padding: 10px;
+            }
+
+            .social-container img {
+                width: 120px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .social-container img {
+                width: 100px;
+            }
+
+            h2 {
+                font-size: 40px;
+            }
+        }
+        nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100; /* Ensure it's on top */
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            font-size: 18px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            padding: 10px 20px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            transform: scale(1.1);
+        }
+
+        nav ul li a:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-bg">
+        <video autoplay loop muted playsinline>
+            <source src="Documents/bg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="container">
+        <div class="logo">
+            <img src="Documents/icon.jpg" alt="Logo">
+          
+        </div>
+        <h1>CONTACT PAGE</h1>
+        <h2>Jemmer Almoneda</h2>
+
+       
+
+        <div class="social-container">
+            <!-- GitHub Link -->
+            <a href="https://github.com/shiruri" target="_blank">
+                <img src="Documents/git.jpg" alt="GitHub">
+            </a>
+
+            <!-- Facebook Link -->
+            <a href="https://www.facebook.com/shirobako2" target="_blank">
+                <img src="Documents/face.png" alt="Facebook">
+            </a>
+
+            <!-- Email Link -->
+            <a href="mailto:jemmeralmoneda58@gmail.com">
+                <img src="Documents/email.png" alt="Email me">
+              </a>
+              
+        </div>
+        
+    </div>
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="projects.html">PROJECTS</a></li>
+        </ul>
+    </nav>
+</body>
+
+</html>
