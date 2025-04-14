@@ -49,24 +49,22 @@
             cursor: url('Documents/nso_cursor.png'), auto;
         }
 
-        .container {
-            position: relative;
-            height: auto;
-            max-width: 600px;
-            width: 90vw;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 20px;
-            box-sizing: border-box;
-            flex-wrap: wrap;
-        }
+     .container {
+    position: relative;
+    max-width: 800px;
+    height: 600px; /* Set height for scroll */
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 30px;
+    color: #fff;
+    overflow-y: auto; /* Scroll only inside card */
+}
+
 
         /* Hide scroll bar */
         body {
