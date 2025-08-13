@@ -7,6 +7,7 @@
     <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
     <meta name="keywords" content="Jemmer Almoneda, Programmer, Game dev, Portfolio">
     <meta name="author" content="@shiros">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
@@ -34,38 +35,42 @@
             height: 100%;
         }
 
-        video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
+
+video {
+    position: fixed; /* fixed ensures it stays behind everything */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
 
         /* Container */
         .container {
-            position: relative;
-            max-width: 600px;
-            width: 90vw;
-            height: auto;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px); /* Glassmorphism effect */
-            -webkit-backdrop-filter: blur(10px); /* Safari support */
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 20px;
-            box-sizing: border-box;
-            flex-wrap: wrap; /* Responsive flex behavior */
-            animation: fadeIn 1s ease-in-out;
-        }
-
+    position: relative;
+    width: 95%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    box-sizing: border-box;
+}
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 28px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    .social-container img {
+        width: 80px;
+    }
+}
         /* Fade-in animation for the container */
         @keyframes fadeIn {
             0% {
@@ -77,11 +82,9 @@
         }
 
         /* Logo */
-        .logo {
-            flex: 0 0 120px;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
+     .logo {
+        margin: 0 auto 15px auto;
+    }
 
         /* Bounce effect for the logo */
         @keyframes bounce {
@@ -136,20 +139,18 @@
             margin: 5px 0;
             color: #333;
             text-align: center;
+            padding-bottom: 30px;
         }
 
         /* Media Queries for small screens */
-        @media screen and (max-width: 768px) {
-            .container {
-                width: 95vw;
-                padding: 10px;
-            }
-
-            .social-container img {
-                width: 120px;
-            }
-        }
-
+        @media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        width: 95%;
+        padding: 15px;
+    }
+}
         @media screen and (max-width: 480px) {
             .social-container img {
                 width: 100px;
@@ -160,15 +161,16 @@
             }
         }
         nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            z-index: 100; /* Ensure it's on top */
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 10px 0;
-        }
+    position: fixed;
+    bottom: 10px; /* lift above bottom */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 0;
+}
+
 
         nav ul {
             list-style: none;
@@ -233,9 +235,9 @@
             </a>
 
             <!-- Email Link -->
-            <a href="mailto:jemmeralmoneda58@gmail.com">
-                <img src="Documents/email.png" alt="Email me">
-              </a>
+           <a href="mailto:jemmeralmoneda58@gmail.com?subject=Contact%20from%20Portfolio&body=Hello%20Jemmer,">
+    <img src="Documents/email.png" alt="Email me">
+</a>
               
         </div>
         
