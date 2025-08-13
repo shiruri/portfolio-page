@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
     <meta name="keywords" content="Jemmer Almoneda, Programmer, Game dev, Portfolio">
     <meta name="author" content="@shiros">
@@ -12,105 +12,181 @@
     <title>About</title>
     <link rel="icon" type="image/png" href="Documents/logo-icon.jpg">
     <style>
-        /* Custom scrollbar for WebKit browsers */
-.container::-webkit-scrollbar {
-    width: 10px;
-}
-
-.container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-}
-
-.container::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-}
-
-.container::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-}
-
-/* Scrollbar styles for Firefox */
-.container {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.2);
-}
-
         body, html {
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            height: 100%;
+            height: 100vh;
             display: flex; 
             align-items: center; 
             justify-content: center; 
             font-family: 'Micro 5', sans-serif;
             scroll-behavior: smooth;
+            overflow: hidden;
+            touch-action: manipulation; /* Prevent zoom gestures */
         }
 
         .video-bg {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
         }
 
         video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            z-index: -1;
         }
 
         body {
             cursor: url('Documents/nso_cursor.png'), auto;
         }
 
-   .container {
-    position: relative;
-    max-width: 800px;
-    height: 600px; /* For scroll */
-    margin: 40px auto;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 30px;
-    color: #fff;
-    overflow-y: auto;
-    overflow-x: hidden; 
-}
-
-        /* Hide scroll bar */
-        body {
-            overflow: auto;
-            scrollbar-width: none; /* For Firefox */
-            -ms-overflow-style: none;  /* For IE and Edge */
+        .container {
+            position: relative;
+            max-width: 800px;
+            width: 95%;
+            height: 80vh;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 30px;
+            color: #fff;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
-        body::-webkit-scrollbar {
-            display: none; /* For Chrome, Safari, and WebKit-based browsers */
+        /* Custom scrollbar for WebKit browsers */
+        .container::-webkit-scrollbar {
+            width: 8px;
         }
 
-        /* Styling the navbar at the bottom */
+        .container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Scrollbar styles for Firefox */
+        .container {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.2);
+        }
+
+        /* Content styling */
+        .text {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin: 15px 0 10px 0;
+            color: #fff;
+        }
+
+        h3 {
+            font-size: 22px;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .technologies-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .technologies-container img {
+            max-width: 150px;
+            max-height: 150px;
+            width: 150px;
+            height: auto;
+        }
+
+        .tech-text {
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Technology list styles */
+        .tech-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .tech-list li {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #333;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .tech-list li:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000;
+        }
+
+        .about-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .about-section h2 {
+            color: #000;
+            font-size: 24px;
+        }
+
+        .about-section p {
+            color: #000;
+            font-size: 20px;
+            line-height: 1.6;
+            text-align: justify;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        /* Navigation */
         nav {
-            position: sticky;
+            position: fixed;
             bottom: 20px;
             width: 100%;
             display: flex;
             justify-content: center;
-            padding-right: 400px;
+            z-index: 100;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
         nav ul {
@@ -118,7 +194,10 @@
             padding: 0;
             margin: 0;
             display: flex;
-            gap: 20px; /* Space between each item */
+            gap: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            border-radius: 25px;
         }
 
         nav ul li {
@@ -134,52 +213,149 @@
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        /* Hover effect */
         nav ul li a:hover {
             background-color: rgba(255, 255, 255, 0.8);
             color: black;
-            transform: scale(1.1); /* Makes the button grow slightly */
+            transform: scale(1.1);
         }
-        .technologies-container img {
-            max-width:150px ;
-            max-height: 150px;
-            width:150px;
-            display:flex;
-            align-items: center;
-            justify-content: center;
-        }
-        p {
-            font-size: 30px;
-            margin-top: 0;
-        }
-        h2 {
-            margin-bottom: 0;
-        }
-        ul {
 
+        nav ul li a:active {
+            transform: scale(0.95);
         }
-        /* Technology list styles */
-.tech-list {
-    list-style: none; /* Remove default bullet points */
-    padding: 0; /* Remove default padding */
-    margin: 10px 0; /* Margin for spacing */
-}
 
-.tech-list li {
-    background-color: rgba(255, 255, 255, 0.5); /* Light background for list items */
-    color: #333; /* Text color */
-    padding: 10px; /* Padding for list items */
-    border-radius: 8px; /* Rounded corners */
-    margin-bottom: 10px; /* Space between items */
-    transition: background-color 0.3s ease; /* Smooth transition */
-    font-size: 30px;
-}
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .container {
+                width: 98%;
+                height: 75vh;
+                padding: 20px;
+            }
 
-.tech-list li:hover {
-    background-color: rgba(255, 255, 255, 0.8); /* Highlight on hover */
-    color: #000; /* Darker text color on hover */
-}
+            h1 {
+                font-size: 28px;
+            }
 
+            h2 {
+                font-size: 22px;
+            }
+
+            h3 {
+                font-size: 18px;
+            }
+
+            .technologies-container img {
+                width: 100px;
+                max-width: 100px;
+                max-height: 100px;
+            }
+
+            .tech-list li {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .about-section h2 {
+                font-size: 20px;
+            }
+
+            .about-section p {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            nav {
+                bottom: 15px;
+                padding: 0 10px;
+            }
+
+            nav ul {
+                gap: 15px;
+                padding: 8px 15px;
+            }
+
+            nav ul li {
+                font-size: 16px;
+            }
+
+            nav ul li a {
+                padding: 8px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 99%;
+                height: 70vh;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            h3 {
+                font-size: 16px;
+            }
+
+            .technologies-container img {
+                width: 80px;
+                max-width: 80px;
+                max-height: 80px;
+            }
+
+            .tech-list li {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .about-section h2 {
+                font-size: 18px;
+            }
+
+            .about-section p {
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            nav {
+                bottom: 10px;
+                padding: 0 5px;
+            }
+
+            nav ul {
+                gap: 10px;
+                padding: 6px 10px;
+            }
+
+            nav ul li {
+                font-size: 14px;
+            }
+
+            nav ul li a {
+                padding: 6px 12px;
+            }
+        }
+
+        /* Prevent text selection and zoom on mobile */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* Allow text selection for readable content */
+        p, .tech-list li {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
     </style>
 </head>
 <body>
@@ -191,29 +367,30 @@
     </div>
 
     <div class="container">
-        <!-- Left side with logo and text -->
-        <div>
-            <div class="text">
-                <h1>ABOUT PAGE</h1>
-                <h2>Jemmer Almoneda</h2>
-                <h3>Java, Game Dev</h3>
-            </div>
+        <div class="text">
+            <h1>ABOUT PAGE</h1>
+            <h2>Jemmer Almoneda</h2>
+            <h3>Java, Game Dev</h3>
+        </div>
 
-            <div class="technologies-container">
-                <img src="Documents/nom.png" alt="Technologies">
-                <div class="tech-text">
-                    <h2>TECHNOLOGIES</h2>
-                    <ul class="tech-list">
-                        <li>JAVA - CORE, OOP</li>
-                        <li>DATABASE - MYSQL</li>
-                        <li>GAME ENGINE - RENPY</li>
-                        <li>HTML CSS JAVASCRIPT</li>
-                    </ul>
-                </div>
-                <h2 style = "color: black">ABOUT ME</h2>
-                <p style = "color: black">Student at ACLC COLLEGE MANILA. Passionate in programming and willing to learn new technologies to improve my skills. More on Java centered programming and experience in Database Management using Mysql</p>
+        <div class="technologies-container">
+            <img src="Documents/nom.png" alt="Technologies">
+            <div class="tech-text">
+                <h2>TECHNOLOGIES</h2>
+                <ul class="tech-list">
+                    <li>JAVA - CORE, OOP</li>
+                    <li>DATABASE - MYSQL</li>
+                    <li>GAME ENGINE - RENPY</li>
+                    <li>HTML CSS JAVASCRIPT</li>
+                </ul>
             </div>
-            
+        </div>
+
+        <div class="about-section">
+            <h2>ABOUT ME</h2>
+            <p>Student at ACLC COLLEGE MANILA. Passionate in programming and willing to learn new technologies to improve my skills. More on Java centered programming and experience in Database Management using MySQL</p>
+        </div>
+    </div>
 
     <!-- Navbar at the bottom -->
     <nav>

@@ -35,15 +35,15 @@
             height: 100%;
         }
 
-    video {
-    position: fixed; /* so it fills screen even when scrolling */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-}
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
 
         body {
             cursor: url('Documents/nso_cursor.png'), auto;
@@ -65,12 +65,19 @@
             align-items: flex-start;
             padding: 20px;
             box-sizing: border-box;
-            flex-wrap: wrap; /* Add flex-wrap for responsiveness */
+            flex-wrap: wrap;
+        }
+
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .logo {
             flex: 0 0 120px;
             margin-right: 20px;
+            margin-bottom: 15px;
         }
 
         .logo img {
@@ -79,22 +86,11 @@
             border-radius: 50%;
         }
 
-        .technologies-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .technologies-container img {
-            width: 80px;
-            height: auto;
-        }
-
         .text {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            flex: 1;
+            margin-bottom: 15px;
         }
 
         h2 {
@@ -105,6 +101,49 @@
         h3 {
             margin: 0;
             font-size: 20px;
+        }
+
+        .technologies-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .technologies-container img {
+            width: 80px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        .tech-text ul {
+            margin: 0;
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        .tech-text li {
+            font-size: 30px;
+            margin: 3px 0;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .github {
+            margin-bottom: 15px;
+        }
+
+        .github img {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin: 10px 0;
+        }
+
+        .github:hover {
+            background-color: rgba(238, 195, 195, 0.7);
+            transform: scale(1.1);
         }
 
         .clickables {
@@ -157,44 +196,83 @@
             transform: scale(1.1);
         }
 
+        /* Mobile styles */
         @media (max-width: 768px) {
             .container {
-                padding: 10px;
+                padding: 15px;
                 flex-direction: column;
                 align-items: center;
+                width: 95vw;
+                max-height: 90vh;
+                overflow-y: auto;
             }
 
-            .logo {
+            .left-section {
+                width: 100%;
+                align-items: center;
                 margin-bottom: 20px;
             }
 
+            .logo {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .logo img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .text {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
             h2 {
-                font-size: 22px;
+                font-size: 20px;
+                margin: 5px 0;
             }
 
             h3 {
-                font-size: 18px;
+                font-size: 16px;
             }
 
-            button {
+            .technologies-container {
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            .technologies-container img {
+                width: 60px;
+                margin-right: 10px;
+            }
+
+            .tech-text li {
+                font-size: 12px;
+                font-weight: bold;
+            }
+
+            .github img {
+                max-width: 200px;
+            }
+
+            .clickables {
+                flex-direction: row;
+                justify-content: space-around;
+                width: 100%;
+                margin-left: 0;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .clickables button:nth-child(1) {
+                width: 120px;
                 height: 120px;
             }
 
-            button h3 {
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 20px;
-            }
-
-            h3 {
-                font-size: 16px;
-            }
-
-            button {
+            .clickables button:nth-child(2),
+            .clickables button:nth-child(3) {
+                width: 100px;
                 height: 100px;
             }
 
@@ -203,39 +281,79 @@
             }
         }
 
-        /* Adjusted GitHub image size for responsiveness */
-        .github img {
-            display: block;
-            width: 100%;
-            max-width: 300px; /* Responsive width */
-            height: auto;
-            margin: 10px 0;
+        @media (max-width: 480px) {
+            .container {
+                width: 98vw;
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            h3 {
+                font-size: 14px;
+            }
+
+            .technologies-container img {
+                width: 50px;
+            }
+
+            .tech-text li {
+                font-size: 11px;
+                font-weight: bold;
+            }
+
+            .github img {
+                max-width: 150px;
+            }
+
+            .clickables button:nth-child(1) {
+                width: 100px;
+                height: 100px;
+            }
+
+            .clickables button:nth-child(2),
+            .clickables button:nth-child(3) {
+                width: 85px;
+                height: 85px;
+            }
+
+            button h3 {
+                font-size: 12px;
+            }
         }
 
-        .github:hover {
-            background-color: rgba(238, 195, 195, 0.7);
-            transform: scale(1.1);
+        /* Scrollbar styles */
+        body {
+            overflow: -webkit-scroll;
+            -webkit-overflow-scrolling: touch;
         }
-        /* For WebKit browsers (Chrome, Safari) */
-body {
-    overflow: -webkit-scroll; /* Enable scrolling */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
-}
 
-body::-webkit-scrollbar {
-    display: none; /* Hide the scrollbar */
-}
+        body::-webkit-scrollbar {
+            display: none;
+        }
 
-/* For Firefox */
-body {
-    scrollbar-width: none; /* Hide the scrollbar in Firefox */
-}
+        body {
+            scrollbar-width: none;
+        }
 
-/* General overflow for all browsers */
-body {
-    overflow: scroll; /* Ensure scrolling is enabled */
-}
+        body {
+            overflow: scroll;
+        }
 
+        .container::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
     </style>
 </head>
 
@@ -248,8 +366,8 @@ body {
     </div>
 
     <div class="container">
-        <!-- Left side with logo and text -->
-        <div>
+        <!-- Left section with all content -->
+        <div class="left-section">
             <div class="logo">
                 <img src="Documents/icon.jpg" alt="Logo">
             </div>
@@ -258,6 +376,7 @@ body {
                 <h2>Jemmer Almoneda</h2>
                 <h3>Java, Game Dev</h3>
             </div>
+
             <div class="technologies-container">
                 <img src="Documents/nom.png" alt="Technologies">
                 <div class="tech-text">
@@ -268,6 +387,7 @@ body {
                     </ul>
                 </div>
             </div>
+
             <div class="github">
                 <a href="https://github.com/shiruri" target="_blank">
                     <img src="Documents/github.png" alt="GitHub">
@@ -294,13 +414,13 @@ body {
 
     <script>
         document.getElementById('projects').addEventListener('click', function() {
-            window.location.href = 'projects.html';  // Replace with your file path
+            window.location.href = 'projects.html';
         });
         document.getElementById('about').addEventListener('click', function() {
-            window.location.href = 'about.html';  // Replace with your file path
+            window.location.href = 'about.html';
         });
         document.getElementById('contacts').addEventListener('click', function() {
-            window.location.href = 'contacts.html';  // Replace with your file path
+            window.location.href = 'contacts.html';
         });
     </script>
 </body>

@@ -17,60 +17,52 @@
         body, html {
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            height: 100%;
+            height: 100vh;
             display: flex; 
             align-items: center; 
             justify-content: center; 
             font-family: 'Micro 5';
             scroll-behavior: smooth;
+            overflow: hidden;
         }
 
         /* Background Video */
         .video-bg {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
         }
 
-
-video {
-    position: fixed; /* fixed ensures it stays behind everything */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-}
-
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
 
         /* Container */
         .container {
-    position: relative;
-    width: 95%;
-    max-width: 600px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 20px;
-    box-sizing: border-box;
-}
-@media screen and (max-width: 480px) {
-    h1 {
-        font-size: 28px;
-    }
-    h2 {
-        font-size: 20px;
-    }
-    .social-container img {
-        width: 80px;
-    }
-}
+            position: relative;
+            width: 95%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
         /* Fade-in animation for the container */
         @keyframes fadeIn {
             0% {
@@ -82,9 +74,9 @@ video {
         }
 
         /* Logo */
-     .logo {
-        margin: 0 auto 15px auto;
-    }
+        .logo {
+            margin: 0 auto 15px auto;
+        }
 
         /* Bounce effect for the logo */
         @keyframes bounce {
@@ -106,12 +98,28 @@ video {
             transition: transform 0.3s ease;
         }
 
+        /* Headings */
+        h1 {
+            font-size: 32px;
+            margin: 10px 0;
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 5px 0 30px 0;
+            color: #333;
+            text-align: center;
+        }
+
         /* Social Container */
         .social-container {
             display: flex;
             gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
+            margin-bottom: 30px;
         }
 
         .social-container a {
@@ -129,48 +137,21 @@ video {
 
         /* Hover effects for social icons */
         .social-container img:hover {
-            transform: scale(1.2) rotate(5deg); /* Scale and rotate on hover */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+            transform: scale(1.2) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* Name Heading */
-        h2 {
-            font-size: 24px;
-            margin: 5px 0;
-            color: #333;
-            text-align: center;
-            padding-bottom: 30px;
-        }
-
-        /* Media Queries for small screens */
-        @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        align-items: center;
-        width: 95%;
-        padding: 15px;
-    }
-}
-        @media screen and (max-width: 480px) {
-            .social-container img {
-                width: 100px;
-            }
-
-            h2 {
-                font-size: 40px;
-            }
-        }
+        /* Navigation */
         nav {
-    position: fixed;
-    bottom: 10px; /* lift above bottom */
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    z-index: 100;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 10px 0;
-}
-
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
 
         nav ul {
             list-style: none;
@@ -178,6 +159,9 @@ video {
             margin: 0;
             display: flex;
             gap: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            border-radius: 25px;
         }
 
         nav ul li {
@@ -202,6 +186,121 @@ video {
         nav ul li a:active {
             transform: scale(0.95);
         }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+                max-height: 75vh;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+
+            .logo img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .social-container {
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            .social-container img {
+                width: 120px;
+                padding-left: 5px;
+            }
+
+            nav {
+                bottom: 15px;
+                padding: 0 10px;
+            }
+
+            nav ul {
+                gap: 15px;
+                padding: 8px 15px;
+            }
+
+            nav ul li {
+                font-size: 16px;
+            }
+
+            nav ul li a {
+                padding: 8px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 98%;
+                padding: 10px;
+                max-height: 70vh;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .logo img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .social-container {
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .social-container img {
+                width: 100px;
+                padding-left: 0;
+            }
+
+            nav {
+                bottom: 10px;
+                padding: 0 5px;
+            }
+
+            nav ul {
+                gap: 10px;
+                padding: 6px 10px;
+            }
+
+            nav ul li {
+                font-size: 14px;
+            }
+
+            nav ul li a {
+                padding: 6px 12px;
+            }
+        }
+
+        /* Scrollbar styles for container */
+        .container::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
     </style>
 </head>
 
@@ -216,12 +315,9 @@ video {
     <div class="container">
         <div class="logo">
             <img src="Documents/icon.jpg" alt="Logo">
-          
         </div>
         <h1>CONTACT PAGE</h1>
         <h2>Jemmer Almoneda</h2>
-
-       
 
         <div class="social-container">
             <!-- GitHub Link -->
@@ -235,13 +331,12 @@ video {
             </a>
 
             <!-- Email Link -->
-           <a href="mailto:jemmeralmoneda58@gmail.com?subject=Contact%20from%20Portfolio&body=Hello%20Jemmer,">
-    <img src="Documents/email.png" alt="Email me">
-</a>
-              
+            <a href="mailto:jemmeralmoneda58@gmail.com?subject=Contact%20from%20Portfolio&body=Hello%20Jemmer,">
+                <img src="Documents/email.png" alt="Email me">
+            </a>
         </div>
-        
     </div>
+
     <nav>
         <ul>
             <li><a href="index.html">HOME</a></li>
