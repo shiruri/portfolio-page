@@ -64,7 +64,7 @@
 
     /* â•â•â•â•â•â•â•â•â•â•â•â• BASE â•â•â•â•â•â•â•â•â•â•â•â• */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html,body{height:100%;overflow:auto;-webkit-font-smoothing:antialiased;}
+    html,body{height:100%;overflow:auto;overflow-y:auto;-webkit-font-smoothing:antialiased;}
     body{
       font-family:'Outfit',sans-serif;
       background:var(--bg); color:var(--fg);
@@ -216,7 +216,7 @@
     /* â•â•â•â•â•â•â•â•â•â•â•â• CARD GRID â€” ONLY scrollable zone â•â•â•â•â•â•â•â•â•â•â•â• */
     .card-grid{
       flex:1;
-      overflow-y:auto;
+      overflow-y:hidden;
       overflow-x:auto;
       padding:20px 26px 80px;
       display:grid;
@@ -227,7 +227,7 @@
       scrollbar-width:thin;
       scrollbar-color:rgba(124,92,252,0.18) transparent;
       overscroll-behavior:contain;
-       -webkit-overflow-scrolling: touch;
+       
     }
     .card-grid::-webkit-scrollbar{width:4px;}
     .card-grid::-webkit-scrollbar-thumb{background:rgba(124,92,252,0.18);border-radius:4px;}
