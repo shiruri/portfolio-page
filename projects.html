@@ -233,13 +233,26 @@
   .mobile-section{display:none;} /* optional but safer */
 }
     @media(max-width:680px){
-  body{overflow:auto;}
-  .scene{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
-  .sidebar{border-right:none;border-bottom:1px solid var(--border);}
-  .sidebar-body{display:none;}
-  .sidebar-top{padding:16px 18px;}
-  .content{display:flex;}   /* FIXED */
-  .mobile-section{display:none;} /* optional but safer */
+
+  .scene{
+    height:100dvh; /* better for mobile */
+  }
+
+  .content{
+    display:flex;
+    overflow:hidden; /* prevent outer scroll */
+  }
+
+  .card-grid{
+    overflow-y:auto; /* ENABLE INNER SCROLL */
+    padding-bottom:120px; /* space for bottom nav */
+    scrollbar-width:none; /* hide scrollbar (Firefox) */
+  }
+
+  .card-grid::-webkit-scrollbar{
+    display:none; /* hide scrollbar (Chrome) */
+  }
+
     }
 
       /* mobile header */
