@@ -1,109 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
-    <meta name="keywords" content="Jemmer Almoneda, Programmer, Game dev, Portfolio">
-    <meta name="author" content="@shiros">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
-    <title>Projects</title>
-    <link rel="icon" type="image/png" href="Documents/logo-icon.jpg">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Micro 5', sans-serif;
-            scroll-behavior: smooth;
-            position: relative;
-            overflow: hidden; /* Hide default scrollbar */
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
+  <meta name="author" content="@shiros">
+  <title>Projects — Jemmer Almoneda</title>
+  <link rel="icon" type="image/png" href="Documents/logo-icon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:#c9a84c; --gold-light:#e8c97a; --gold-dim:rgba(201,168,76,0.18);
+      --teal:#5ecfcf; --teal-dim:rgba(94,207,207,0.15);
+      --glass-bg:rgba(10,14,28,0.60); --glass-border:rgba(201,168,76,0.22);
+      --text-primary:#f0ead8; --text-secondary:rgba(240,234,216,0.65);
+      --panel-radius:14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body,html{height:100%;font-family:'Raleway',sans-serif;color:var(--text-primary);background:#060a14;}
+    body{overflow:hidden;}
 
-        /* Video Background */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            overflow: hidden;
-        }
+    .bg-video{position:fixed;inset:0;z-index:0;}
+    .bg-video video{width:100%;height:100%;object-fit:cover;filter:brightness(0.25) saturate(0.6);}
+    .bg-overlay{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 80% 70% at 50% 30%,rgba(10,18,40,0.3),rgba(4,8,20,0.82));}
+    .stars{position:fixed;inset:0;z-index:1;overflow:hidden;pointer-events:none;}
+    .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur) ease-in-out infinite;}
+    @keyframes twinkle{0%,100%{opacity:var(--min-o);transform:scale(1)}50%{opacity:var(--max-o);transform:scale(1.4)}}
+    .ornament{position:fixed;z-index:2;pointer-events:none;width:70px;height:70px;opacity:0.28;}
+    .ornament svg{width:100%;height:100%;}
+    .ornament.tl{top:12px;left:12px;}
+    .ornament.tr{top:12px;right:12px;transform:scaleX(-1);}
+    .ornament.bl{bottom:70px;left:12px;transform:scaleY(-1);}
+    .ornament.br{bottom:70px;right:12px;transform:scale(-1,-1);}
 
-        video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100vw;
-            min-height: 100vh;
-            object-fit: cover;
-            z-index: -1;
-        }
+    /* ── Layout ── */
+    .scene{
+      position:relative;z-index:3;
+      height:100vh; display:flex; flex-direction:column;
+    }
 
-        /* Cursor */
-        body {
-            cursor: url('Documents/nso_cursor.png'), auto;
-        }
+    /* Top bar */
+    .topbar{
+      flex-shrink:0;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 28px 14px;
+      background:linear-gradient(180deg,rgba(4,8,20,0.95) 0%,transparent 100%);
+    }
+    .topbar-title .pre{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;}
+    .topbar-title h1{font-family:'Cinzel',serif;font-size:clamp(1rem,3vw,1.3rem);font-weight:600;color:var(--gold-light);letter-spacing:0.08em;}
 
-        /* Main Container */
-        .container {
-            position: relative;
-            max-width: 900px;
-            width: 90vw;
-            max-height: 80vh; /* Set a maximum height for the container */
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto; /* Enable scrolling inside the container */
-        }
+    /* Filter pills */
+    .filters{display:flex;gap:8px;flex-wrap:wrap;}
+    .filter-btn{
+      padding:6px 16px;
+      font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;
+      color:var(--text-secondary); background:transparent;
+      border:1px solid rgba(201,168,76,0.2);border-radius:100px;
+      cursor:pointer; transition:all 0.25s;
+    }
+    .filter-btn:hover,.filter-btn.active{
+      background:var(--gold-dim);border-color:var(--gold);color:var(--gold-light);
+    }
 
-        /* Navbar */
-        .navbar {
-            position: sticky;
-            top: 0;
-            background-color: rgba(185, 152, 152, 0.6);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 10;
-            font-family: 'Micro 5', sans-serif;
-            border-radius: 10px;
-            width: 100px;
-        }
+    /* Divider line */
+    .top-line{
+      flex-shrink:0; height:1px; margin:0 24px;
+      background:linear-gradient(90deg,transparent,var(--glass-border),transparent);
+    }
 
-        .navbar a {
-            color: white;
-            font-size: 18px;
-            text-decoration: none;
-            cursor: url('Documents/nso_point.png'), auto;
-            transition: color 0.3s, transform 0.1s;
-            animation: fadeIn 0.5s ease-in-out;
-        }
+    /* Scroll area */
+    .scroll-area{
+      flex:1;overflow-y:auto;
+      padding:20px 24px 90px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:16px;
+      align-content:start;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(201,168,76,0.3) transparent;
+    }
+    .scroll-area::-webkit-scrollbar{width:4px;}
+    .scroll-area::-webkit-scrollbar-track{background:transparent;}
+    .scroll-area::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.3);border-radius:4px;}
 
-        .navbar a:hover {
-            color: rgba(255, 255, 255, 0.8);
-        }
+    /* ── Project card ── */
+    .project-card{
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      border-radius:var(--panel-radius);
+      backdrop-filter:blur(20px) saturate(1.4);
+      -webkit-backdrop-filter:blur(20px) saturate(1.4);
+      overflow:hidden; position:relative;
+      display:flex;flex-direction:column;
+      transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
+      animation:cardIn 0.6s cubic-bezier(.23,1,.32,1) both;
+    }
+    @keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+    .project-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;
+      transition:opacity 0.3s;
+    }
+    .project-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 20px 50px rgba(0,0,0,0.5),0 0 30px var(--gold-dim);
+      border-color:var(--gold);
+    }
+    .project-card:hover::before{opacity:0.7;}
 
-        .navbar a:active {
-            transform: scale(0.95);
-        }
+    /* Category badge */
+    .category-badge{
+      position:absolute;top:10px;left:10px;z-index:2;
+      padding:3px 9px;
+      font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;
+      border-radius:100px;
+    }
+    .category-badge.web{background:rgba(94,207,207,0.2);border:1px solid rgba(94,207,207,0.4);color:var(--teal);}
+    .category-badge.java{background:rgba(201,168,76,0.2);border:1px solid rgba(201,168,76,0.4);color:var(--gold-light);}
+    .category-badge.game{background:rgba(160,100,220,0.2);border:1px solid rgba(160,100,220,0.4);color:#c080f0;}
 
+    /* Thumbnail */
+    .card-thumb{
+      width:100%;aspect-ratio:16/10;object-fit:cover;
+      display:block;
+      transition:transform 0.5s ease;
+    }
+    .project-card:hover .card-thumb{transform:scale(1.05);}
+    .thumb-wrap{overflow:hidden;position:relative;}
+    .thumb-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(0deg,rgba(4,8,20,0.7) 0%,transparent 60%);
+    }
+
+    /* Card body */
+    .card-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+    .card-title{
+      font-family:'Cinzel',serif;font-size:0.78rem;font-weight:600;
+      color:var(--gold-light);letter-spacing:0.05em;line-height:1.3;
+    }
+    .card-desc{font-size:0.72rem;color:var(--text-secondary);line-height:1.6;flex:1;}
+    .card-link{
+      display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+      padding:5px 14px;
+      font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;
+      color:var(--gold);text-decoration:none;
+      border:1px solid rgba(201,168,76,0.3);border-radius:6px;
+      background:var(--gold-dim);
+      transition:background 0.3s,border-color 0.3s,color 0.3s;
+      margin-top:4px;
+    }
+    .card-link:hover{background:rgba(201,168,76,0.28);border-color:var(--gold);color:var(--gold-light);}
+    .card-link::after{content:'›';font-size:0.9rem;}
+
+    /* Bottom nav */
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:center;padding:10px 0 14px;background:linear-gradient(0deg,rgba(4,8,20,0.95),transparent);}
+    .bottom-nav ul{list-style:none;display:flex;gap:8px;background:rgba(10,14,28,0.75);border:1px solid var(--glass-border);border-radius:100px;padding:8px 16px;backdrop-filter:blur(16px);}
+    .bottom-nav a{display:block;padding:6px 18px;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--text-secondary);text-decoration:none;border-radius:100px;transition:background 0.3s,color 0.3s;}
+    .bottom-nav a:hover,.bottom-nav a.active{background:var(--gold-dim);color:var(--gold-light);}
+  </style>
+</head>
+<body>
+
+<div class="bg-video">
+  <video autoplay loop muted playsinline>
+    <source src="Documents/bg.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="bg-overlay"></div>
+<div class="stars" id="stars"></div>
+
+<div class="ornament tl"><svg viewBox="0 0 80 80" fill="none"><path d="M4 4 L36 4 L4 36 Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M4 4 L4 40 M4 4 L40 4" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><circle cx="4" cy="4" r="2.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+<div class="ornament tr"><svg viewBox="0 0 80 80" fill="none"><path d="M4 4 L36 4 L4 36 Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M4 4 L4 40 M4 4 L40 4" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><circle cx="4" cy="4" r="2.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+<div class="ornament bl"><svg viewBox="0 0 80 80" fill="none"><path d="M4 4 L36 4 L4 36 Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M4 4 L4 40 M4 4 L40 4" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><circle cx="4" cy="4" r="2.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+<div class="ornament br"><svg viewBox="0 0 80 80" fill="none"><path d="M4 4 L36 4 L4 36 Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M4 4 L4 40 M4 4 L40 4" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><circle cx="4" cy="4" r="2.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+
+<div class="scene">
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-title">
+      <p class="pre">Archive</p>
+      <h1>Projects</h1>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filter('all',this)">All</button>
+      <button class="filter-btn" onclick="filter('java',this)">Java</button>
+      <button class="filter-btn" onclick="filter('web',this)">Web</button>
+      <button class="filter-btn" onclick="filter('game',this)">Game</button>
+    </div>
+  </div>
+
+  <div class="top-line"></div>
+
+  <!-- Project grid -->
+  <div class="scroll-area" id="grid">
+
+    <!-- WEB -->
+    <div class="project-card" data-cat="web">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/Screenshot (166).png" alt="EcoHaven">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge web">Web</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">EcoHaven</p>
+        <p class="card-desc">HTML and CSS only project focused on eco-friendly design.</p>
+        <a class="card-link" href="https://shiruri.github.io/EcoHaven/index.html" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="web">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/Screenshot (142).png" alt="Cakenime">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge web">Web</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Cakenime</p>
+        <p class="card-desc">Front-end project using JS, HTML, and CSS.</p>
+        <a class="card-link" href="https://shiruri.github.io/Cakenime/index.html" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="web">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/facebook.png" alt="Facebook Login Copy">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge web">Web</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Facebook Log In Copy</p>
+        <p class="card-desc">Facebook log in form using HTML and CSS.</p>
+        <a class="card-link" href="https://github.com/shiruri/Facebook-log-in" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <!-- JAVA -->
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/java.png" alt="Java Payroll System">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Java Payroll System</p>
+        <p class="card-desc">Java program using methods and constructors.</p>
+        <a class="card-link" href="https://github.com/shiruri/Java-payroll-system" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/javac.png" alt="Java Banking System">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Java Banking System</p>
+        <p class="card-desc">Banking system with basic cryptography and database connection (WIP).</p>
+        <a class="card-link" href="https://github.com/shiruri/BankingSystem" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/Screenshot (134).png" alt="Algonime">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Algonime</p>
+        <p class="card-desc">Java program about sorting algorithms for an array.</p>
+        <a class="card-link" href="https://github.com/shiruri/Algonime" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/Javapass.png" alt="Password Manager">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Password Manager</p>
+        <p class="card-desc">Local encrypted file for log in, account creation, and email verification via Maven.</p>
+        <a class="card-link" href="https://github.com/shiruri/passmanager" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/javat.png" alt="Teacher Evaluation">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Teacher Evaluation Management System</p>
+        <p class="card-desc">School system for generating evaluation reports.</p>
+        <a class="card-link" href="https://github.com/shiruri/TeacherEvaluationManagementSystem" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/mpos.png" alt="MPOS System">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">MPOS System</p>
+        <p class="card-desc">Fully functional POS system with hashing, security features, and admin dashboard.</p>
+        <a class="card-link" href="https://github.com/shiruri/MPOS" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/elynime.png" alt="Elynime">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Elynime</p>
+        <p class="card-desc">A simple MP3 player built in Java.</p>
+        <a class="card-link" href="https://github.com/shiruri/Elynime" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/atm_project.png" alt="ATM Project">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">ATM Project</p>
+        <p class="card-desc">Simple ATM system with basic withdrawal and deposit functionality.</p>
+        <a class="card-link" href="https://github.com/shiruri/ATM-Project" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="java">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/ELYSIUM.png" alt="Elysium">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge java">Java</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Elysium</p>
+        <p class="card-desc">A programming language based off BASIC.</p>
+        <a class="card-link" href="https://github.com/shiruri/Elysium/tree/main" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <!-- GAME -->
+    <div class="project-card" data-cat="game">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/between.png" alt="Between Shared Umbrella">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge game">Game</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Between Shared Umbrella</p>
+        <p class="card-desc">Visual novel one-shot made under an hour as a personal challenge.</p>
+        <a class="card-link" href="https://shiroi26.itch.io/between-shared-umbrella-oneshot" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="game">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/digital.png" alt="Digital Love">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge game">Game</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Digital Love</p>
+        <p class="card-desc">Visual novel built using Ren'Py engine and Python.</p>
+        <a class="card-link" href="https://shiroi26.itch.io/digital-love" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="game">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/calendar.png" alt="Paperweight">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge game">Game</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Paperweight</p>
+        <p class="card-desc">Visual novel informing people about the struggles of students under pressure.</p>
+        <a class="card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="game">
+      <div class="thumb-wrap">
+        <img class="card-thumb" src="Documents/untitledNote.png" alt="Untitled Note">
+        <div class="thumb-overlay"></div>
+        <span class="category-badge game">Game</span>
+      </div>
+      <div class="card-body">
+        <p class="card-title">Untitled Note</p>
+        <p class="card-desc">Romcom visual novel with linear story progression.</p>
+        <a class="card-link" href="https://shiroi26.itch.io/untitled-note" target="_blank">View Project</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="contacts.html">Contact</a></li>
+  </ul>
+</nav>
+
+<script>
+  // Stars
+  const s = document.getElementById('stars');
+  for (let i = 0; i < 70; i++) {
+    const el = document.createElement('div'); el.className = 'star';
+    const sz = Math.random()*2+0.5, mo = Math.random()*0.12+0.04;
+    el.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${2.5+Math.random()*4}s;--min-o:${mo};--max-o:${mo+Math.random()*0.35};animation-delay:${Math.random()*5}s;`;
+    s.appendChild(el);
+  }
+
+  // Staggered card animation on load
+  document.querySelectorAll('.project-card').forEach((c,i)=>{
+    c.style.animationDelay = `${0.05 + i*0.06}s`;
+  });
+
+  // Filter
+  function filter(cat, btn) {
+    
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
