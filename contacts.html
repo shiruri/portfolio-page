@@ -1,349 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
-    <meta name="keywords" content="Jemmer Almoneda, Programmer, Game dev, Portfolio">
-    <meta name="author" content="@shiros">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Micro+5&display=swap" rel="stylesheet">
-    <title>Contacts</title>
-    <link rel="icon" type="image/png" href="Documents/logo-icon.jpg">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-family: 'Micro 5';
-            scroll-behavior: smooth;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Jemmer Almoneda — Contact">
+  <meta name="author" content="@shiros">
+  <title>Contact — Jemmer Almoneda</title>
+  <link rel="icon" type="image/png" href="Documents/logo-icon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#08070f;--bg2:#0f0d1a;
+      --surface:rgba(255,255,255,0.045);--surface2:rgba(255,255,255,0.075);
+      --border:rgba(255,255,255,0.08);--border-hi:rgba(145,110,255,0.45);
+      --accent:#7c5cfc;--accent2:#a78bfa;
+      --glow:rgba(124,92,252,0.28);--glow2:rgba(167,139,250,0.15);
+      --white:#f8f6ff;--muted:rgba(248,246,255,0.52);--dim:rgba(248,246,255,0.26);
+      --r:16px;--r-sm:10px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;overflow:hidden;-webkit-font-smoothing:antialiased;}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--white);}
 
-        /* Background Video */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+    /* BG */
+    .bg-video{position:fixed;inset:0;z-index:0;}
+    .bg-video video{width:100%;height:100%;object-fit:cover;filter:brightness(0.18) saturate(0.5);}
+    .bg-mesh{position:fixed;inset:0;z-index:1;pointer-events:none;
+      background:radial-gradient(ellipse 70% 55% at 65% 25%,rgba(124,92,252,0.16) 0%,transparent 60%),
+                radial-gradient(ellipse 55% 50% at 15% 78%,rgba(76,29,149,0.1) 0%,transparent 55%);}
+    .bg-grid{position:fixed;inset:0;z-index:1;pointer-events:none;
+      background-image:linear-gradient(rgba(124,92,252,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,252,0.03) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:radial-gradient(ellipse 70% 65% at 50% 40%,black 10%,transparent 75%);}
 
-        video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
+    /* SCENE */
+    .scene{
+      position:relative;z-index:3;
+      height:100vh;
+      display:grid;
+      grid-template-columns:280px 1fr;
+    }
 
-        /* Container */
-        .container {
-            position: relative;
-            width: 95%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
+    /* ── LEFT PANEL ── */
+    .left-panel{
+      border-right:1px solid var(--border);
+      background:rgba(8,7,15,0.72);
+      backdrop-filter:blur(28px);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:40px 32px;gap:24px;
+      animation:sideIn .8s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes sideIn{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
 
-        /* Fade-in animation for the container */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+    /* Avatar */
+    .avatar-frame{
+      position:relative;
+      width:100px;height:100px;
+    }
+    .avatar-frame img{
+      width:100%;height:100%;border-radius:50%;object-fit:cover;
+      border:2px solid transparent;
+      background:linear-gradient(var(--bg2),var(--bg2)) padding-box,
+                 linear-gradient(135deg,var(--accent),var(--accent2)) border-box;
+      box-shadow:0 0 0 6px rgba(124,92,252,0.1),0 0 36px rgba(124,92,252,0.2);
+      display:block;
+    }
+    .avatar-ring1{
+      position:absolute;inset:-8px;border-radius:50%;
+      border:1px solid rgba(124,92,252,0.2);
+      animation:rpulse 3s ease-in-out infinite;
+    }
+    .avatar-ring2{
+      position:absolute;inset:-16px;border-radius:50%;
+      border:1px solid rgba(124,92,252,0.1);
+      animation:rpulse 3s ease-in-out infinite .75s;
+    }
+    @keyframes rpulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.7;transform:scale(1.03)}}
 
-        /* Logo */
-        .logo {
-            margin: 0 auto 15px auto;
-        }
+    .lp-name{
+      font-size:1.15rem;font-weight:800;letter-spacing:-.02em;
+      color:var(--white);text-align:center;
+    }
+    .lp-handle{
+      font-family:'Zen Kaku Gothic New',sans-serif;
+      font-size:0.58rem;letter-spacing:.28em;text-transform:uppercase;
+      color:var(--accent2);margin-top:-18px;
+    }
 
-        /* Bounce effect for the logo */
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-15px);
-            }
-            60% {
-                transform: translateY(-10px);
-            }
-        }
+    /* status row */
+    .status-row{
+      display:flex;align-items:center;gap:8px;
+      padding:8px 16px;
+      background:rgba(52,211,153,.07);
+      border:1px solid rgba(52,211,153,.2);
+      border-radius:100px;
+    }
+    .status-dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 6px #34d399;}
+    .status-text{font-size:0.72rem;font-weight:500;color:#6ee7b7;}
 
-        .logo img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
+    .lp-divider{width:100%;height:1px;background:var(--border);}
 
-        /* Headings */
-        h1 {
-            font-size: 32px;
-            margin: 10px 0;
-            color: #333;
-            text-align: center;
-        }
+    /* social buttons on left */
+    .social-list{display:flex;flex-direction:column;gap:8px;width:100%;}
+    .social-item{
+      display:flex;align-items:center;gap:12px;
+      padding:10px 14px;
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);
+      cursor:default;
+      transition:border-color .25s,background .25s;
+    }
+    .social-item:hover{border-color:rgba(124,92,252,.3);background:var(--surface2);}
+    .social-item-icon{
+      width:32px;height:32px;border-radius:8px;flex-shrink:0;
+      background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.2);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .social-item-icon svg{width:15px;height:15px;}
+    .social-item-name{font-size:0.75rem;font-weight:600;color:var(--white);}
+    .social-item-sub{font-size:0.62rem;color:var(--muted);}
 
-        h2 {
-            font-size: 24px;
-            margin: 5px 0 30px 0;
-            color: #333;
-            text-align: center;
-        }
+    /* ── RIGHT PANEL — contact cards ── */
+    .right-panel{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:40px 48px;
+      gap:20px;
+      animation:rightIn .8s cubic-bezier(.22,1,.36,1) .1s both;
+    }
+    @keyframes rightIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
-        /* Social Container */
-        .social-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
+    .rp-header{text-align:center;margin-bottom:8px;}
+    .rp-pre{font-family:'Zen Kaku Gothic New',sans-serif;font-size:0.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+    .rp-title{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;letter-spacing:-.04em;color:var(--white);}
+    .rp-sub{font-size:0.82rem;color:var(--muted);margin-top:8px;line-height:1.6;}
+    .rp-hl{width:50px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);border-radius:2px;margin:12px auto 0;}
 
-        .social-container a {
-            text-decoration: none;
-        }
+    /* contact cards */
+    .contact-stack{display:flex;flex-direction:column;gap:12px;width:100%;max-width:400px;}
 
-        /* Social icons */
-        .social-container img {
-            width: 150px;
-            height: auto;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            border-radius: 10px;
-            padding-left: 10px;
-        }
+    .contact-card{
+      display:flex;align-items:center;gap:16px;
+      padding:18px 20px;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--r);
+      text-decoration:none;position:relative;overflow:hidden;
+      transition:transform .28s cubic-bezier(.4,0,.2,1),box-shadow .28s,border-color .28s;
+      animation:cardIn .6s cubic-bezier(.22,1,.36,1) both;
+    }
+    .contact-card:nth-child(1){animation-delay:.18s;}
+    .contact-card:nth-child(2){animation-delay:.26s;}
+    .contact-card:nth-child(3){animation-delay:.34s;}
+    @keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+    .contact-card::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+      background:linear-gradient(180deg,var(--accent),var(--accent2));
+      opacity:0;border-radius:0 2px 2px 0;transition:opacity .28s;
+    }
+    .contact-card:hover{
+      transform:translateX(6px) scale(1.01);
+      border-color:var(--border-hi);
+      box-shadow:0 12px 36px rgba(0,0,0,.45),0 0 20px var(--glow2);
+    }
+    .contact-card:hover::before{opacity:1;}
 
-        /* Hover effects for social icons */
-        .social-container img:hover {
-            transform: scale(1.2) rotate(5deg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
+    .contact-icon{
+      width:46px;height:46px;border-radius:12px;flex-shrink:0;
+      background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.2);
+      display:flex;align-items:center;justify-content:center;
+      transition:border-color .25s,background .25s;
+    }
+    .contact-card:hover .contact-icon{background:rgba(124,92,252,.18);border-color:rgba(124,92,252,.4);}
+    .contact-icon svg{width:20px;height:20px;}
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            bottom: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            z-index: 100;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
+    .contact-info{flex:1;}
+    .contact-platform{
+      font-family:'Zen Kaku Gothic New',sans-serif;
+      font-size:0.58rem;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--accent2);margin-bottom:3px;
+    }
+    .contact-handle{font-size:0.82rem;font-weight:600;color:var(--white);}
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            gap: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 10px 20px;
-            border-radius: 25px;
-        }
+    .contact-arrow{
+      width:30px;height:30px;border-radius:50%;flex-shrink:0;
+      background:var(--surface);border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;
+      transition:all .25s;
+    }
+    .contact-card:hover .contact-arrow{background:rgba(124,92,252,.18);border-color:var(--border-hi);transform:translateX(3px);}
+    .contact-arrow svg{width:12px;height:12px;fill:none;stroke:var(--accent2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 
-        nav ul li {
-            font-size: 18px;
-        }
+    /* bottom nav */
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:center;padding:8px 0 14px;background:linear-gradient(0deg,rgba(8,7,15,.96),transparent);}
+    .nav-pill{display:flex;gap:2px;background:rgba(15,13,26,0.9);border:1px solid var(--border);border-radius:100px;padding:5px 8px;backdrop-filter:blur(20px);box-shadow:0 8px 32px rgba(0,0,0,.5);}
+    .nav-pill a{padding:7px 18px;font-family:'Outfit',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-radius:100px;transition:all .25s;}
+    .nav-pill a:hover{color:var(--accent2);background:rgba(124,92,252,.1);}
+    .nav-pill a.active{background:linear-gradient(135deg,rgba(124,92,252,.35),rgba(124,92,252,.15));color:var(--white);border:1px solid var(--border-hi);box-shadow:0 0 12px var(--glow);}
 
-        nav ul li a {
-            text-decoration: none;
-            padding: 10px 20px;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 8px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.8);
-            color: black;
-            transform: scale(1.1);
-        }
-
-        nav ul li a:active {
-            transform: scale(0.95);
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 15px;
-                max-height: 75vh;
-            }
-
-            h1 {
-                font-size: 28px;
-            }
-
-            h2 {
-                font-size: 22px;
-                margin-bottom: 20px;
-            }
-
-            .logo img {
-                width: 80px;
-                height: 80px;
-            }
-
-            .social-container {
-                gap: 15px;
-                margin-bottom: 20px;
-            }
-
-            .social-container img {
-                width: 120px;
-                padding-left: 5px;
-            }
-
-            nav {
-                bottom: 15px;
-                padding: 0 10px;
-            }
-
-            nav ul {
-                gap: 15px;
-                padding: 8px 15px;
-            }
-
-            nav ul li {
-                font-size: 16px;
-            }
-
-            nav ul li a {
-                padding: 8px 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                width: 98%;
-                padding: 10px;
-                max-height: 70vh;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            h2 {
-                font-size: 18px;
-                margin-bottom: 15px;
-            }
-
-            .logo img {
-                width: 70px;
-                height: 70px;
-            }
-
-            .social-container {
-                gap: 10px;
-                margin-bottom: 15px;
-            }
-
-            .social-container img {
-                width: 100px;
-                padding-left: 0;
-            }
-
-            nav {
-                bottom: 10px;
-                padding: 0 5px;
-            }
-
-            nav ul {
-                gap: 10px;
-                padding: 6px 10px;
-            }
-
-            nav ul li {
-                font-size: 14px;
-            }
-
-            nav ul li a {
-                padding: 6px 12px;
-            }
-        }
-
-        /* Scrollbar styles for container */
-        .container::-webkit-scrollbar {
-            width: 3px;
-        }
-
-        .container::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .container::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-        }
-    </style>
+    /* MOBILE */
+    @media(max-width:680px){
+      .scene{grid-template-columns:1fr;grid-template-rows:auto 1fr;overflow-y:auto;}
+      .left-panel{
+        flex-direction:row;flex-wrap:wrap;justify-content:flex-start;
+        padding:18px 20px 14px;gap:14px;
+        border-right:none;border-bottom:1px solid var(--border);
+        align-items:center;
+      }
+      .avatar-frame{width:56px;height:56px;}
+      .avatar-ring1,.avatar-ring2{display:none;}
+      .lp-name{font-size:0.95rem;}
+      .status-row,.lp-divider,.social-list{display:none;}
+      .lp-handle{margin-top:0;}
+      .right-panel{padding:24px 20px 80px;justify-content:flex-start;}
+      .rp-title{font-size:1.6rem;}
+    }
+  </style>
 </head>
-
 <body>
-    <div class="video-bg">
-        <video autoplay loop muted playsinline>
-            <source src="Documents/bg.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+
+<div class="bg-video"><video autoplay loop muted playsinline><source src="Documents/bg.mp4" type="video/mp4"></video></div>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+
+<div class="scene">
+
+  <!-- LEFT -->
+  <div class="left-panel">
+    <div class="avatar-frame">
+      <img src="Documents/icon.jpg" alt="Jemmer Almoneda">
+      <div class="avatar-ring1"></div>
+      <div class="avatar-ring2"></div>
     </div>
 
-    <div class="container">
-        <div class="logo">
-            <img src="Documents/icon.jpg" alt="Logo">
-        </div>
-        <h1>CONTACT PAGE</h1>
-        <h2>Jemmer Almoneda</h2>
+    <p class="lp-name">Jemmer Almoneda</p>
+    <p class="lp-handle">@shiros</p>
 
-        <div class="social-container">
-            <!-- GitHub Link -->
-            <a href="https://github.com/shiruri" target="_blank">
-                <img src="Documents/git.jpg" alt="GitHub">
-            </a>
-
-            <!-- Facebook Link -->
-            <a href="https://www.facebook.com/shirobako2" target="_blank">
-                <img src="Documents/face.png" alt="Facebook">
-            </a>
-
-            <!-- Email Link -->
-            <a href="mailto:jemmeralmoneda58@gmail.com?subject=Contact%20from%20Portfolio&body=Hello%20Jemmer,">
-                <img src="Documents/email.png" alt="Email me">
-            </a>
-        </div>
+    <div class="status-row">
+      <span class="status-dot"></span>
+      <span class="status-text">Open to opportunities</span>
     </div>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">HOME</a></li>
-            <li><a href="about.html">ABOUT</a></li>
-            <li><a href="projects.html">PROJECTS</a></li>
-        </ul>
-    </nav>
+    <div class="lp-divider"></div>
+
+    <div class="social-list">
+      <div class="social-item">
+        <div class="social-item-icon">
+          <svg viewBox="0 0 16 16" fill="var(--accent2)"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </div>
+        <div><p class="social-item-name">GitHub</p><p class="social-item-sub">shiruri</p></div>
+      </div>
+      <div class="social-item">
+        <div class="social-item-icon">
+          <svg viewBox="0 0 24 24" fill="var(--accent2)"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <div><p class="social-item-name">Facebook</p><p class="social-item-sub">shirobako2</p></div>
+      </div>
+      <div class="social-item">
+        <div class="social-item-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div><p class="social-item-name">Email</p><p class="social-item-sub">jemmeralmoneda58</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-panel">
+    <div class="rp-header">
+      <p class="rp-pre">Transmission Channel</p>
+      <h1 class="rp-title">Get in Touch</h1>
+      <p class="rp-sub">Reach out via any of the channels below.</p>
+      <div class="rp-hl"></div>
+    </div>
+
+    <div class="contact-stack">
+
+      <a class="contact-card" href="https://github.com/shiruri" target="_blank">
+        <div class="contact-icon">
+          <svg viewBox="0 0 16 16" fill="var(--accent2)"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </div>
+        <div class="contact-info">
+          <p class="contact-platform">GitHub</p>
+          <p class="contact-handle">github.com/shiruri</p>
+        </div>
+        <div class="contact-arrow"><svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></div>
+      </a>
+
+      <a class="contact-card" href="https://www.facebook.com/shirobako2" target="_blank">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="var(--accent2)"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <div class="contact-info">
+          <p class="contact-platform">Facebook</p>
+          <p class="contact-handle">facebook.com/shirobako2</p>
+        </div>
+        <div class="contact-arrow"><svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></div>
+      </a>
+
+      <a class="contact-card" href="mailto:jemmeralmoneda58@gmail.com?subject=Contact%20from%20Portfolio&body=Hello%20Jemmer,">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-info">
+          <p class="contact-platform">Email</p>
+          <p class="contact-handle">jemmeralmoneda58@gmail.com</p>
+        </div>
+        <div class="contact-arrow"><svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<nav class="bottom-nav">
+  <div class="nav-pill">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contacts.html" class="active">Contact</a>
+  </div>
+</nav>
+
 </body>
-
 </html>
