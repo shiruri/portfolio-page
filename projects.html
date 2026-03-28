@@ -3,453 +3,484 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Jemmer Almoneda - Programmer and Game dev">
+  <meta name="description" content="Jemmer Almoneda — Projects">
   <meta name="author" content="@shiros">
   <title>Projects — Jemmer Almoneda</title>
   <link rel="icon" type="image/png" href="Documents/logo-icon.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --gold:#c9a84c; --gold-light:#e8c97a; --gold-dim:rgba(201,168,76,0.18);
-      --teal:#5ecfcf; --teal-dim:rgba(94,207,207,0.15);
-      --glass-bg:rgba(10,14,28,0.60); --glass-border:rgba(201,168,76,0.22);
-      --text-primary:#f0ead8; --text-secondary:rgba(240,234,216,0.65);
-      --panel-radius:14px;
+    :root{
+      --bg:#08070f;--bg2:#0f0d1a;
+      --surface:rgba(255,255,255,0.045);--surface2:rgba(255,255,255,0.075);
+      --border:rgba(255,255,255,0.08);--border-hi:rgba(145,110,255,0.45);
+      --accent:#7c5cfc;--accent2:#a78bfa;
+      --glow:rgba(124,92,252,0.28);--glow2:rgba(167,139,250,0.15);
+      --white:#f8f6ff;--muted:rgba(248,246,255,0.52);--dim:rgba(248,246,255,0.26);
+      --r:14px;--r-sm:10px;
+      /* category accents */
+      --c-web:#38bdf8;--c-java:#fb923c;--c-game:#a78bfa;
     }
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body,html{height:100%;font-family:'Raleway',sans-serif;color:var(--text-primary);background:#060a14;}
-    body{overflow:hidden;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;overflow:hidden;-webkit-font-smoothing:antialiased;}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--white);}
 
+    /* BG */
     .bg-video{position:fixed;inset:0;z-index:0;}
-    .bg-video video{width:100%;height:100%;object-fit:cover;filter:brightness(0.25) saturate(0.6);}
-    .bg-overlay{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 80% 70% at 50% 30%,rgba(10,18,40,0.3),rgba(4,8,20,0.82));}
-    .stars{position:fixed;inset:0;z-index:1;overflow:hidden;pointer-events:none;}
-    .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur) ease-in-out infinite;}
-    @keyframes twinkle{0%,100%{opacity:var(--min-o);transform:scale(1)}50%{opacity:var(--max-o);transform:scale(1.4)}}
-    .ornament{position:fixed;z-index:2;pointer-events:none;width:70px;height:70px;opacity:0.28;}
-    .ornament svg{width:100%;height:100%;}
-    .ornament.tl{top:12px;left:12px;}
-    .ornament.tr{top:12px;right:12px;transform:scaleX(-1);}
-    .ornament.bl{bottom:70px;left:12px;transform:scaleY(-1);}
-    .ornament.br{bottom:70px;right:12px;transform:scale(-1,-1);}
+    .bg-video video{width:100%;height:100%;object-fit:cover;filter:brightness(0.18) saturate(0.5);}
+    .bg-mesh{position:fixed;inset:0;z-index:1;pointer-events:none;
+      background:radial-gradient(ellipse 65% 55% at 80% 15%,rgba(124,92,252,0.16) 0%,transparent 60%),
+                radial-gradient(ellipse 50% 45% at 10% 80%,rgba(76,29,149,0.1) 0%,transparent 55%);}
+    .bg-grid{position:fixed;inset:0;z-index:1;pointer-events:none;
+      background-image:linear-gradient(rgba(124,92,252,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,252,0.03) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:radial-gradient(ellipse 70% 65% at 50% 40%,black 10%,transparent 75%);}
 
-    /* ── Layout ── */
+    /* LAYOUT */
     .scene{
       position:relative;z-index:3;
-      height:100vh; display:flex; flex-direction:column;
-    }
-
-    /* Top bar */
-    .topbar{
-      flex-shrink:0;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:20px 28px 14px;
-      background:linear-gradient(180deg,rgba(4,8,20,0.95) 0%,transparent 100%);
-    }
-    .topbar-title .pre{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;}
-    .topbar-title h1{font-family:'Cinzel',serif;font-size:clamp(1rem,3vw,1.3rem);font-weight:600;color:var(--gold-light);letter-spacing:0.08em;}
-
-    /* Filter pills */
-    .filters{display:flex;gap:8px;flex-wrap:wrap;}
-    .filter-btn{
-      padding:6px 16px;
-      font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;
-      color:var(--text-secondary); background:transparent;
-      border:1px solid rgba(201,168,76,0.2);border-radius:100px;
-      cursor:pointer; transition:all 0.25s;
-    }
-    .filter-btn:hover,.filter-btn.active{
-      background:var(--gold-dim);border-color:var(--gold);color:var(--gold-light);
-    }
-
-    /* Divider line */
-    .top-line{
-      flex-shrink:0; height:1px; margin:0 24px;
-      background:linear-gradient(90deg,transparent,var(--glass-border),transparent);
-    }
-
-    /* Scroll area */
-    .scroll-area{
-      flex:1;overflow-y:auto;
-      padding:20px 24px 90px;
+      height:100vh;
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      grid-template-columns:220px 1fr;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar{
+      border-right:1px solid var(--border);
+      background:rgba(8,7,15,0.72);
+      backdrop-filter:blur(28px);
+      display:flex;flex-direction:column;
+      overflow:hidden;
+      animation:sideIn .8s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes sideIn{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+
+    .sidebar-top{
+      padding:26px 20px 18px;
+      border-bottom:1px solid var(--border);
+    }
+    .sidebar-tag{
+      font-family:'Zen Kaku Gothic New',sans-serif;
+      font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;
+      color:var(--accent2);margin-bottom:8px;
+    }
+    .sidebar-title{font-size:1.1rem;font-weight:800;letter-spacing:-0.03em;color:var(--white);}
+
+    .sidebar-body{flex:1;overflow-y:auto;padding:14px 0 14px;scrollbar-width:none;}
+    .sidebar-body::-webkit-scrollbar{display:none;}
+
+    .s-cat-label{
+      font-family:'Zen Kaku Gothic New',sans-serif;
+      font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;
+      color:var(--dim);padding:0 18px 7px;
+    }
+
+    .s-cat-btn{
+      display:flex;align-items:center;gap:11px;
+      padding:10px 18px;width:100%;
+      background:transparent;border:none;cursor:pointer;
+      color:var(--muted);font-family:'Outfit',sans-serif;
+      font-size:0.78rem;font-weight:500;
+      transition:background .2s,color .2s;
+      position:relative;text-align:left;
+    }
+    .s-cat-btn:hover{background:rgba(124,92,252,0.06);color:var(--white);}
+    .s-cat-btn.active{color:var(--white);}
+    .s-cat-btn.active::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+      background:linear-gradient(180deg,var(--accent),var(--accent2));
+      border-radius:0 2px 2px 0;
+    }
+    .s-cat-dot{
+      width:8px;height:8px;border-radius:50%;flex-shrink:0;
+      box-shadow:0 0 6px currentColor;
+    }
+    .dot-all{background:var(--white);color:var(--white);box-shadow:none;}
+    .dot-web{background:var(--c-web);color:var(--c-web);}
+    .dot-java{background:var(--c-java);color:var(--c-java);}
+    .dot-game{background:var(--c-game);color:var(--c-game);}
+    .s-cat-count{
+      margin-left:auto;
+      font-size:0.6rem;font-weight:700;font-family:'Zen Kaku Gothic New',sans-serif;
+      color:var(--dim);background:var(--surface);
+      border:1px solid var(--border);border-radius:100px;
+      padding:1px 7px;
+    }
+    .s-cat-btn.active .s-cat-count{color:var(--accent2);border-color:rgba(124,92,252,0.3);background:rgba(124,92,252,0.1);}
+
+    /* ── CONTENT ── */
+    .content{
+      display:flex;flex-direction:column;overflow:hidden;
+      animation:contentIn .8s cubic-bezier(.22,1,.36,1) .08s both;
+    }
+    @keyframes contentIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+    /* content header */
+    .content-header{
+      flex-shrink:0;
+      padding:24px 32px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
       gap:16px;
+    }
+    .ch-left{}
+    .ch-pre{font-family:'Zen Kaku Gothic New',sans-serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px;}
+    .ch-title{font-size:1.25rem;font-weight:800;letter-spacing:-0.03em;color:var(--white);}
+    .ch-right{display:flex;gap:7px;flex-shrink:0;}
+    .filter-pill{
+      padding:6px 14px;
+      font-family:'Outfit',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+      color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:100px;
+      cursor:pointer;transition:all .25s;white-space:nowrap;
+    }
+    .filter-pill:hover{border-color:var(--border-hi);color:var(--accent2);background:rgba(124,92,252,0.08);}
+    .filter-pill.active{background:rgba(124,92,252,0.2);border-color:var(--border-hi);color:var(--white);box-shadow:0 0 10px var(--glow);}
+
+    /* desktop card grid */
+    .card-grid{
+      flex:1;overflow-y:auto;
+      padding:20px 28px 80px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+      gap:13px;
       align-content:start;
       scrollbar-width:thin;
-      scrollbar-color:rgba(201,168,76,0.3) transparent;
+      scrollbar-color:rgba(124,92,252,0.2) transparent;
     }
-    .scroll-area::-webkit-scrollbar{width:4px;}
-    .scroll-area::-webkit-scrollbar-track{background:transparent;}
-    .scroll-area::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.3);border-radius:4px;}
+    .card-grid::-webkit-scrollbar{width:4px;}
+    .card-grid::-webkit-scrollbar-thumb{background:rgba(124,92,252,0.2);border-radius:4px;}
 
-    /* ── Project card ── */
-    .project-card{
-      background:var(--glass-bg);
-      border:1px solid var(--glass-border);
-      border-radius:var(--panel-radius);
-      backdrop-filter:blur(20px) saturate(1.4);
-      -webkit-backdrop-filter:blur(20px) saturate(1.4);
-      overflow:hidden; position:relative;
-      display:flex;flex-direction:column;
-      transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
-      animation:cardIn 0.6s cubic-bezier(.23,1,.32,1) both;
+    /* project card */
+    .p-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--r);overflow:hidden;
+      display:flex;flex-direction:column;position:relative;
+      transition:transform .32s cubic-bezier(.4,0,.2,1),box-shadow .32s,border-color .32s;
+      animation:cardIn .55s cubic-bezier(.22,1,.36,1) both;
+      will-change:transform;
     }
-    @keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-    .project-card::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:2px;
-      background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;
-      transition:opacity 0.3s;
+    @keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+    .p-card::after{
+      content:'';position:absolute;top:0;left:14px;right:14px;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(167,139,250,0.5),transparent);
+      opacity:0;transition:opacity .3s;
     }
-    .project-card:hover{
-      transform:translateY(-6px);
-      box-shadow:0 20px 50px rgba(0,0,0,0.5),0 0 30px var(--gold-dim);
-      border-color:var(--gold);
+    .p-card:hover{
+      transform:translateY(-6px) scale(1.01);
+      border-color:var(--border-hi);
+      box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 30px rgba(124,92,252,0.15);
     }
-    .project-card:hover::before{opacity:0.7;}
+    .p-card:hover::after{opacity:1;}
 
-    /* Category badge */
-    .category-badge{
-      position:absolute;top:10px;left:10px;z-index:2;
-      padding:3px 9px;
-      font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;
-      border-radius:100px;
-    }
-    .category-badge.web{background:rgba(94,207,207,0.2);border:1px solid rgba(94,207,207,0.4);color:var(--teal);}
-    .category-badge.java{background:rgba(201,168,76,0.2);border:1px solid rgba(201,168,76,0.4);color:var(--gold-light);}
-    .category-badge.game{background:rgba(160,100,220,0.2);border:1px solid rgba(160,100,220,0.4);color:#c080f0;}
-
-    /* Thumbnail */
-    .card-thumb{
-      width:100%;aspect-ratio:16/10;object-fit:cover;
-      display:block;
-      transition:transform 0.5s ease;
-    }
-    .project-card:hover .card-thumb{transform:scale(1.05);}
-    .thumb-wrap{overflow:hidden;position:relative;}
-    .thumb-overlay{
+    /* thumb */
+    .card-thumb-wrap{overflow:hidden;position:relative;aspect-ratio:16/10;}
+    .card-thumb{width:100%;height:100%;object-fit:cover;display:block;
+      filter:saturate(.85) brightness(.9);
+      transition:transform .55s cubic-bezier(.4,0,.2,1),filter .35s;}
+    .p-card:hover .card-thumb{transform:scale(1.07);filter:saturate(1.05) brightness(1);}
+    .card-overlay{
       position:absolute;inset:0;
-      background:linear-gradient(0deg,rgba(4,8,20,0.7) 0%,transparent 60%);
+      background:linear-gradient(0deg,rgba(8,7,15,.75) 0%,rgba(8,7,15,.05) 55%,transparent 100%);
     }
 
-    /* Card body */
-    .card-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
-    .card-title{
-      font-family:'Cinzel',serif;font-size:0.78rem;font-weight:600;
-      color:var(--gold-light);letter-spacing:0.05em;line-height:1.3;
+    /* badge */
+    .card-badge{
+      position:absolute;top:9px;left:9px;z-index:2;
+      padding:3px 9px;border-radius:100px;
+      font-family:'Zen Kaku Gothic New',sans-serif;
+      font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;
     }
-    .card-desc{font-size:0.72rem;color:var(--text-secondary);line-height:1.6;flex:1;}
+    .badge-web{background:rgba(56,189,248,.14);border:1px solid rgba(56,189,248,.4);color:var(--c-web);}
+    .badge-java{background:rgba(251,146,60,.14);border:1px solid rgba(251,146,60,.4);color:var(--c-java);}
+    .badge-game{background:rgba(167,139,250,.14);border:1px solid rgba(167,139,250,.4);color:var(--c-game);}
+
+    /* body */
+    .card-body{padding:13px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1;}
+    .card-title{font-size:0.83rem;font-weight:700;color:var(--white);letter-spacing:-.01em;line-height:1.3;}
+    .card-desc{font-size:0.7rem;color:var(--muted);line-height:1.65;flex:1;}
     .card-link{
-      display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
-      padding:5px 14px;
-      font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;
-      color:var(--gold);text-decoration:none;
-      border:1px solid rgba(201,168,76,0.3);border-radius:6px;
-      background:var(--gold-dim);
-      transition:background 0.3s,border-color 0.3s,color 0.3s;
-      margin-top:4px;
+      display:inline-flex;align-items:center;gap:5px;
+      align-self:flex-start;margin-top:5px;
+      padding:5px 12px;
+      font-family:'Outfit',sans-serif;font-size:0.6rem;font-weight:700;
+      letter-spacing:0.07em;text-transform:uppercase;
+      color:var(--accent2);text-decoration:none;
+      background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.28);border-radius:7px;
+      transition:all .25s;
     }
-    .card-link:hover{background:rgba(201,168,76,0.28);border-color:var(--gold);color:var(--gold-light);}
-    .card-link::after{content:'›';font-size:0.9rem;}
+    .card-link:hover{background:rgba(124,92,252,.22);border-color:var(--accent);color:var(--white);box-shadow:0 0 10px var(--glow);}
+    .card-link svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 
-    /* Bottom nav */
-    .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:center;padding:10px 0 14px;background:linear-gradient(0deg,rgba(4,8,20,0.95),transparent);}
-    .bottom-nav ul{list-style:none;display:flex;gap:8px;background:rgba(10,14,28,0.75);border:1px solid var(--glass-border);border-radius:100px;padding:8px 16px;backdrop-filter:blur(16px);}
-    .bottom-nav a{display:block;padding:6px 18px;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--text-secondary);text-decoration:none;border-radius:100px;transition:background 0.3s,color 0.3s;}
-    .bottom-nav a:hover,.bottom-nav a.active{background:var(--gold-dim);color:var(--gold-light);}
+    /* ── MOBILE SECTION ── */
+    .mobile-section{display:none;}
+
+    /* bottom nav */
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:center;padding:8px 0 14px;background:linear-gradient(0deg,rgba(8,7,15,.96),transparent);}
+    .nav-pill{display:flex;gap:2px;background:rgba(15,13,26,0.9);border:1px solid var(--border);border-radius:100px;padding:5px 8px;backdrop-filter:blur(20px);box-shadow:0 8px 32px rgba(0,0,0,.5);}
+    .nav-pill a{padding:7px 18px;font-family:'Outfit',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-radius:100px;transition:all .25s;}
+    .nav-pill a:hover{color:var(--accent2);background:rgba(124,92,252,.1);}
+    .nav-pill a.active{background:linear-gradient(135deg,rgba(124,92,252,.35),rgba(124,92,252,.15));color:var(--white);border:1px solid var(--border-hi);box-shadow:0 0 12px var(--glow);}
+
+    /* ── MOBILE BREAKPOINT ── */
+    @media(max-width:680px){
+      body{overflow:hidden;}
+      .scene{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
+      .sidebar{border-right:none;border-bottom:1px solid var(--border);}
+      .sidebar-body{display:none;}
+      .sidebar-top{padding:16px 18px;}
+      .content{display:none;}
+      .mobile-section{display:flex;flex-direction:column;flex:1;overflow:hidden;}
+
+      /* mobile header */
+      .mob-header{
+        flex-shrink:0;
+        padding:14px 18px 10px;
+        border-bottom:1px solid var(--border);
+        display:flex;align-items:center;justify-content:space-between;
+        gap:10px;
+      }
+      .mob-title{font-size:1rem;font-weight:800;letter-spacing:-.02em;}
+      .mob-filters{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
+      .mob-filters::-webkit-scrollbar{display:none;}
+
+      /* category rows */
+      .mob-scroll-outer{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:80px;}
+      .mob-scroll-outer::-webkit-scrollbar{display:none;}
+
+      .cat-section{padding-bottom:6px;}
+      .cat-section-header{
+        display:flex;align-items:center;gap:9px;
+        padding:12px 18px 8px;
+      }
+      .cat-dot-badge{
+        width:8px;height:8px;border-radius:50%;flex-shrink:0;
+        box-shadow:0 0 6px currentColor;
+      }
+      .dot-b-web{background:var(--c-web);color:var(--c-web);}
+      .dot-b-java{background:var(--c-java);color:var(--c-java);}
+      .dot-b-game{background:var(--c-game);color:var(--c-game);}
+      .cat-section-name{font-size:0.75rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--white);}
+      .cat-count-chip{
+        font-size:0.58rem;font-weight:700;font-family:'Zen Kaku Gothic New',sans-serif;
+        color:var(--dim);background:var(--surface);border:1px solid var(--border);
+        border-radius:100px;padding:2px 7px;
+      }
+
+      .card-track{
+        display:flex;gap:12px;
+        overflow-x:auto;overflow-y:visible;
+        padding:2px 18px 10px;
+        scroll-snap-type:x mandatory;
+        scrollbar-width:none;
+        -webkit-overflow-scrolling:touch;
+      }
+      .card-track::-webkit-scrollbar{display:none;}
+      .card-track .p-card{
+        flex-shrink:0;width:210px;
+        scroll-snap-align:start;
+        animation:none!important;opacity:1!important;transform:none!important;
+      }
+      .card-track .p-card:hover{transform:translateY(-4px) scale(1.01);}
+
+      .track-dots{
+        display:flex;gap:5px;justify-content:center;padding:2px 0 0;
+      }
+      .t-dot{
+        width:5px;height:5px;border-radius:50%;
+        background:rgba(124,92,252,.2);transition:all .3s;cursor:pointer;
+      }
+      .t-dot.active{
+        background:var(--accent);box-shadow:0 0 6px var(--glow);
+        width:16px;border-radius:3px;
+      }
+
+      .cat-divider{height:1px;margin:4px 18px;background:var(--border);}
+    }
+
+    @media(max-width:380px){.card-track .p-card{width:185px;}}
   </style>
 </head>
 <body>
 
-<div class="bg-video">
-  <video autoplay loop muted playsinline>
-    <source src="Documents/bg.mp4" type="video/mp4">
-  </video>
-</div>
-<div class="bg-overlay"></div>
-<div class="stars" id="stars"></div>
-
-<div class="ornament tl"><svg viewBox="0 0 80 80" fill="none"><path d="M4 4 L36 4 L4 36 Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M4 4 L4 40 M4 4 L40 4" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><circle cx="4" cy="4" r="2.5" fill="#c9a84c" opacity="0.6"/></svg></div>
-<div class="ornament tr"><svg viewBox="0 0 80 80" fill="none"><path d="M4 4 L36 4 L4 36 Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M4 4 L4 40 M4 4 L40 4" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><circle cx="4" cy="4" r="2.5" fill="#c9a84c" opacity="0.6"/></svg></div>
-<div class="ornament bl"><svg viewBox="0 0 80 80" fill="none"><path d="M4 4 L36 4 L4 36 Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M4 4 L4 40 M4 4 L40 4" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><circle cx="4" cy="4" r="2.5" fill="#c9a84c" opacity="0.6"/></svg></div>
-<div class="ornament br"><svg viewBox="0 0 80 80" fill="none"><path d="M4 4 L36 4 L4 36 Z" stroke="#c9a84c" stroke-width="0.8" fill="none"/><path d="M4 4 L4 40 M4 4 L40 4" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><circle cx="4" cy="4" r="2.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+<div class="bg-video"><video autoplay loop muted playsinline><source src="Documents/bg.mp4" type="video/mp4"></video></div>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
 
 <div class="scene">
-  <!-- Top bar -->
-  <div class="topbar">
-    <div class="topbar-title">
-      <p class="pre">Archive</p>
-      <h1>Projects</h1>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <p class="sidebar-tag">Dev Archive</p>
+      <p class="sidebar-title">Projects</p>
     </div>
-    <div class="filters">
-      <button class="filter-btn active" onclick="filter('all',this)">All</button>
-      <button class="filter-btn" onclick="filter('java',this)">Java</button>
-      <button class="filter-btn" onclick="filter('web',this)">Web</button>
-      <button class="filter-btn" onclick="filter('game',this)">Game</button>
+    <div class="sidebar-body">
+      <p class="s-cat-label">Filter by type</p>
+      <button class="s-cat-btn active" onclick="filterCat('all',this)">
+        <span class="s-cat-dot dot-all" style="background:var(--muted);box-shadow:none;"></span>All Projects
+        <span class="s-cat-count">11</span>
+      </button>
+      <button class="s-cat-btn" onclick="filterCat('web',this)">
+        <span class="s-cat-dot dot-web"></span>Web
+        <span class="s-cat-count">1</span>
+      </button>
+      <button class="s-cat-btn" onclick="filterCat('java',this)">
+        <span class="s-cat-dot dot-java"></span>Java
+        <span class="s-cat-count">6</span>
+      </button>
+      <button class="s-cat-btn" onclick="filterCat('game',this)">
+        <span class="s-cat-dot dot-game"></span>Game
+        <span class="s-cat-count">4</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── DESKTOP CONTENT ── -->
+  <div class="content">
+    <div class="content-header">
+      <div class="ch-left">
+        <p class="ch-pre">Jemmer Almoneda</p>
+        <p class="ch-title" id="cat-display-title">All Projects</p>
+      </div>
+      <div class="ch-right">
+        <button class="filter-pill active" onclick="filterPill('all',this)">All</button>
+        <button class="filter-pill" onclick="filterPill('web',this)">Web</button>
+        <button class="filter-pill" onclick="filterPill('java',this)">Java</button>
+        <button class="filter-pill" onclick="filterPill('game',this)">Game</button>
+      </div>
+    </div>
+    <div class="card-grid" id="desktop-grid">
+
+      <!-- WEB -->
+      <div class="p-card" data-cat="web">
+        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/webp1.png" alt="Portfolio Site"><div class="card-overlay"></div><span class="card-badge badge-web">Web</span></div>
+        <div class="card-body"><p class="card-title">Portfolio Site</p><p class="card-desc">Personal portfolio showcasing projects, skills, and contact info.</p><a class="card-link" href="https://github.com/shiruri/portfolio-page" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      </div>
+
+      <!-- JAVA -->
+      <div class="p-card" data-cat="java">
+        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/Javapass.png" alt="Password Manager"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
+        <div class="card-body"><p class="card-title">Password Manager</p><p class="card-desc">Local encrypted file for log in, account creation, and email verification via Maven.</p><a class="card-link" href="https://github.com/shiruri/passmanager" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      </div>
+
+      <div class="p-card" data-cat="java">
+        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/javat.png" alt="Teacher Evaluation"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
+        <div class="card-body"><p class="card-title">Teacher Evaluation System</p><p class="card-desc">School system for generating evaluation reports.</p><a class="card-link" href="https://github.com/shiruri/TeacherEvaluationManagementSystem" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      </div>
+
+      <div class="p-card" data-cat="java">
+        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/mpos.png" alt="MPOS System"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
+        <div class="card-body"><p class="card-title">MPOS System</p><p class="card-desc">Fully functional POS system with hashing, security features, and admin dashboard.</p><a class="card-link" href="https://github.com/shiruri/MPOS" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      </div>
+
+      <div class="p-card" data-cat="java">
+        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/elynime.png" alt="Elynime"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
+        <div class="card-body"><p class="card-title">Elynime</p><p class="card-desc">A simple MP3 player built in Java.</p><a class="card-link" href="https://github.com/shiruri/Elynime" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      </div>
+
+      <div class="p-card" data-cat="java">
+        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/atm_project.png" alt="ATM Project"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
+        <div class="card-body"><p class="card-title">ATM Project</p><p class="card-desc">Simple ATM system with basic withdrawal and deposit functionality.</p><a class="card-link" href="https://github.com/shiruri/ATM-Project" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      </div>
+
+      <div class="p-card" data-cat="java">
+        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/ELYSIUM.png" alt="Elysium"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
+        <div class="card-body"><p class="card-title">Elysium</p><p class="card-desc">A programming language based off BASIC.</p><a class="card-link" href="https://github.com/shiruri/Elysium/tree/main" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      </div>
+
+      <!-- GAME -->
+      <!-- GAME -->
+      <div class="cat-section" data-mob-cat="game">
+        <div class="cat-section-header">
+          <span class="cat-dot-badge dot-b-game"></span>
+          <span class="cat-section-name">Game</span>
+          <span class="cat-count-chip">4</span>
+        </div>
+        <div class="card-track" id="mob-track-game">
+          <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/between.png" alt="Between Shared Umbrella"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Between Shared Umbrella</p><p class="card-desc">Visual novel one-shot made under an hour as a personal challenge.</p><a class="card-link" href="https://shiroi26.itch.io/between-shared-umbrella-oneshot" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
+          <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/digital.png" alt="Digital Love"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Digital Love</p><p class="card-desc">Visual novel built using Ren'Py engine and Python.</p><a class="card-link" href="https://shiroi26.itch.io/digital-love" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
+          <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/calendar.png" alt="Paperweight"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Paperweight</p><p class="card-desc">Visual novel about the struggles of students under pressure.</p><a class="card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
+          <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/untitledNote.png" alt="Untitled Note"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Untitled Note</p><p class="card-desc">Romcom visual novel with linear story progression.</p><a class="card-link" href="https://shiroi26.itch.io/untitled-note" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
+        </div>
+        <div class="track-dots" id="mob-dots-game"></div>
+      </div>
+
     </div>
   </div>
 
-  <div class="top-line"></div>
-
-  <!-- Project grid -->
-  <div class="scroll-area" id="grid">
-
-    <!-- WEB -->
-    <div class="project-card" data-cat="web">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/Screenshot (166).png" alt="EcoHaven">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge web">Web</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">EcoHaven</p>
-        <p class="card-desc">HTML and CSS only project focused on eco-friendly design.</p>
-        <a class="card-link" href="https://shiruri.github.io/EcoHaven/index.html" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="web">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/Screenshot (142).png" alt="Cakenime">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge web">Web</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Cakenime</p>
-        <p class="card-desc">Front-end project using JS, HTML, and CSS.</p>
-        <a class="card-link" href="https://shiruri.github.io/Cakenime/index.html" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="web">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/facebook.png" alt="Facebook Login Copy">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge web">Web</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Facebook Log In Copy</p>
-        <p class="card-desc">Facebook log in form using HTML and CSS.</p>
-        <a class="card-link" href="https://github.com/shiruri/Facebook-log-in" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <!-- JAVA -->
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/java.png" alt="Java Payroll System">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Java Payroll System</p>
-        <p class="card-desc">Java program using methods and constructors.</p>
-        <a class="card-link" href="https://github.com/shiruri/Java-payroll-system" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/javac.png" alt="Java Banking System">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Java Banking System</p>
-        <p class="card-desc">Banking system with basic cryptography and database connection (WIP).</p>
-        <a class="card-link" href="https://github.com/shiruri/BankingSystem" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/Screenshot (134).png" alt="Algonime">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Algonime</p>
-        <p class="card-desc">Java program about sorting algorithms for an array.</p>
-        <a class="card-link" href="https://github.com/shiruri/Algonime" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/Javapass.png" alt="Password Manager">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Password Manager</p>
-        <p class="card-desc">Local encrypted file for log in, account creation, and email verification via Maven.</p>
-        <a class="card-link" href="https://github.com/shiruri/passmanager" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/javat.png" alt="Teacher Evaluation">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Teacher Evaluation Management System</p>
-        <p class="card-desc">School system for generating evaluation reports.</p>
-        <a class="card-link" href="https://github.com/shiruri/TeacherEvaluationManagementSystem" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/mpos.png" alt="MPOS System">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">MPOS System</p>
-        <p class="card-desc">Fully functional POS system with hashing, security features, and admin dashboard.</p>
-        <a class="card-link" href="https://github.com/shiruri/MPOS" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/elynime.png" alt="Elynime">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Elynime</p>
-        <p class="card-desc">A simple MP3 player built in Java.</p>
-        <a class="card-link" href="https://github.com/shiruri/Elynime" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/atm_project.png" alt="ATM Project">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">ATM Project</p>
-        <p class="card-desc">Simple ATM system with basic withdrawal and deposit functionality.</p>
-        <a class="card-link" href="https://github.com/shiruri/ATM-Project" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="java">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/ELYSIUM.png" alt="Elysium">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge java">Java</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Elysium</p>
-        <p class="card-desc">A programming language based off BASIC.</p>
-        <a class="card-link" href="https://github.com/shiruri/Elysium/tree/main" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <!-- GAME -->
-    <div class="project-card" data-cat="game">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/between.png" alt="Between Shared Umbrella">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge game">Game</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Between Shared Umbrella</p>
-        <p class="card-desc">Visual novel one-shot made under an hour as a personal challenge.</p>
-        <a class="card-link" href="https://shiroi26.itch.io/between-shared-umbrella-oneshot" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="game">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/digital.png" alt="Digital Love">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge game">Game</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Digital Love</p>
-        <p class="card-desc">Visual novel built using Ren'Py engine and Python.</p>
-        <a class="card-link" href="https://shiroi26.itch.io/digital-love" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="game">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/calendar.png" alt="Paperweight">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge game">Game</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Paperweight</p>
-        <p class="card-desc">Visual novel informing people about the struggles of students under pressure.</p>
-        <a class="card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank">View Project</a>
-      </div>
-    </div>
-
-    <div class="project-card" data-cat="game">
-      <div class="thumb-wrap">
-        <img class="card-thumb" src="Documents/untitledNote.png" alt="Untitled Note">
-        <div class="thumb-overlay"></div>
-        <span class="category-badge game">Game</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">Untitled Note</p>
-        <p class="card-desc">Romcom visual novel with linear story progression.</p>
-        <a class="card-link" href="https://shiroi26.itch.io/untitled-note" target="_blank">View Project</a>
-      </div>
-    </div>
-
-  </div>
 </div>
 
 <nav class="bottom-nav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="projects.html" class="active">Projects</a></li>
-    <li><a href="contacts.html">Contact</a></li>
-  </ul>
+  <div class="nav-pill">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html" class="active">Projects</a>
+    <a href="contacts.html">Contact</a>
+  </div>
 </nav>
 
 <script>
-  // Stars
-  const s = document.getElementById('stars');
-  for (let i = 0; i < 70; i++) {
-    const el = document.createElement('div'); el.className = 'star';
-    const sz = Math.random()*2+0.5, mo = Math.random()*0.12+0.04;
-    el.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${2.5+Math.random()*4}s;--min-o:${mo};--max-o:${mo+Math.random()*0.35};animation-delay:${Math.random()*5}s;`;
-    s.appendChild(el);
-  }
+const CATS = {all:'All Projects',web:'Web',java:'Java',game:'Game'};
 
-  // Staggered card animation on load
-  document.querySelectorAll('.project-card').forEach((c,i)=>{
-    c.style.animationDelay = `${0.05 + i*0.06}s`;
+/* stagger desktop cards */
+document.querySelectorAll('#desktop-grid .p-card').forEach((c,i)=>{
+  c.style.animationDelay=`${.04+i*.05}s`;
+});
+
+/* sync sidebar + pill filter */
+function syncFilter(cat){
+  document.getElementById('cat-display-title').textContent = CATS[cat]||'All Projects';
+  document.querySelectorAll('#desktop-grid .p-card').forEach(c=>{
+    const show = cat==='all' || c.dataset.cat===cat;
+    c.style.display = show ? '' : 'none';
+    if(show){c.style.animation='none';void c.offsetHeight;c.style.animation='cardIn .5s cubic-bezier(.22,1,.36,1) both';}
   });
+}
+function filterCat(cat,btn){
+  document.querySelectorAll('.s-cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.filter-pill').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase().startsWith(cat==='all'?'all':cat));});
+  syncFilter(cat);
+}
+function filterPill(cat,btn){
+  document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.s-cat-btn').forEach(b=>{const txt=b.textContent.trim().toLowerCase();b.classList.toggle('active',cat==='all'?txt.startsWith('all'):txt.startsWith(cat));});
+  syncFilter(cat);
+}
 
-  // Filter
-  function filter(cat, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.project-card').forEach(c => {
-      const show = cat === 'all' || c.dataset.cat === cat;
-      c.style.display = show ? '' : 'none';
-      if (show) {
-        c.style.animation = 'none';
-        c.offsetHeight; // reflow
-        c.style.animation = 'cardIn 0.5s cubic-bezier(.23,1,.32,1) both';
-      }
-    });
-  }
+/* mobile filter */
+function mobFilter(cat,btn){
+  document.querySelectorAll('.mob-filters .filter-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cat-section').forEach(s=>{
+    const show = cat==='all' || s.dataset.mobCat===cat;
+    s.style.display = show ? '' : 'none';
+  });
+  document.querySelectorAll('.cat-divider').forEach(d=>{d.style.display=cat==='all'?'':'none';});
+}
+
+/* track dots */
+function setupDots(trackId,dotsId){
+  const track=document.getElementById(trackId);
+  const dotsEl=document.getElementById(dotsId);
+  if(!track||!dotsEl) return;
+  const cards=track.querySelectorAll('.p-card');
+  if(cards.length<=1) return;
+  cards.forEach((_,i)=>{
+    const d=document.createElement('div');d.className='t-dot'+(i===0?' active':'');
+    d.addEventListener('click',()=>track.scrollTo({left:i*(cards[0].offsetWidth+12),behavior:'smooth'}));
+    dotsEl.appendChild(d);
+  });
+  track.addEventListener('scroll',()=>{
+    const idx=Math.round(track.scrollLeft/(cards[0].offsetWidth+12));
+    dotsEl.querySelectorAll('.t-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  },{passive:true});
+}
+setupDots('mob-track-web','mob-dots-web');
+setupDots('mob-track-java','mob-dots-java');
+setupDots('mob-track-game','mob-dots-game');
 </script>
 </body>
-</html>
- 
-    
+  </html>
