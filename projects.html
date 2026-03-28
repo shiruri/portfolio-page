@@ -217,7 +217,7 @@
     .card-grid{
       flex:1;
       overflow-y:auto;
-      overflow-x:hidden;
+      overflow-x:auto;
       padding:20px 26px 80px;
       display:grid;
       grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
@@ -227,6 +227,7 @@
       scrollbar-width:thin;
       scrollbar-color:rgba(124,92,252,0.18) transparent;
       overscroll-behavior:contain;
+       -webkit-overflow-scrolling: touch;
     }
     .card-grid::-webkit-scrollbar{width:4px;}
     .card-grid::-webkit-scrollbar-thumb{background:rgba(124,92,252,0.18);border-radius:4px;}
