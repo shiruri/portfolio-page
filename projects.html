@@ -1,81 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Jemmer Almoneda — Projects">
+  <meta name="description" content="Jemmer Almoneda â€” Projects">
   <meta name="author" content="@shiros">
-  <title>Projects — Jemmer Almoneda</title>
+  <title>Projects â€” Jemmer Almoneda</title>
   <link rel="icon" type="image/png" href="Documents/logo-icon.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#08070f;--bg2:#0f0d1a;
-      --surface:rgba(255,255,255,0.045);--surface2:rgba(255,255,255,0.075);
-      --border:rgba(255,255,255,0.08);--border-hi:rgba(145,110,255,0.45);
-      --accent:#7c5cfc;--accent2:#a78bfa;
-      --glow:rgba(124,92,252,0.28);--glow2:rgba(167,139,250,0.15);
-      --white:#f8f6ff;--muted:rgba(248,246,255,0.52);--dim:rgba(248,246,255,0.26);
-      --r:14px;--r-sm:10px;
-      /* category accents */
-      --c-web:#38bdf8;--c-java:#fb923c;--c-game:#a78bfa;
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       DESIGN TOKENS â€” dark (default)
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    :root {
+      --bg:#08070f; --bg2:#0f0d1a;
+      --surface:rgba(255,255,255,0.045); --surface2:rgba(255,255,255,0.075);
+      --border:rgba(255,255,255,0.08); --border-hi:rgba(145,110,255,0.45);
+      --accent:#7c5cfc; --accent2:#a78bfa;
+      --glow:rgba(124,92,252,0.28); --glow2:rgba(167,139,250,0.15);
+      --fg:#f8f6ff; --muted:rgba(248,246,255,0.52); --dim:rgba(248,246,255,0.26);
+      --r:14px; --r-sm:10px;
+      --c-web:#38bdf8; --c-java:#fb923c; --c-game:#a78bfa;
+      --sidebar-bg:rgba(8,7,15,0.78);
+      --header-bg:rgba(8,7,15,0.92);
+      --nav-bg:rgba(15,13,26,0.92);
+      --nav-grad:linear-gradient(0deg,rgba(8,7,15,.97),transparent);
+      --modal-bg:rgba(12,10,22,0.98);
+      --modal-overlay:linear-gradient(0deg,rgba(12,10,22,1) 0%,rgba(12,10,22,.15) 55%,transparent 100%);
+      --card-shadow:0 20px 48px rgba(0,0,0,.55),0 0 28px rgba(124,92,252,0.14);
+      --thumb-filter:saturate(.85) brightness(.9);
+      --thumb-filter-hi:saturate(1.05) brightness(1);
+      --mesh-a:rgba(124,92,252,0.16); --mesh-b:rgba(76,29,149,0.10);
+      --grid-c:rgba(124,92,252,0.03);
+      --shimmer-a:rgba(255,255,255,0.04); --shimmer-b:rgba(255,255,255,0.08);
+      --toggle-bg:rgba(255,255,255,0.06);
+      --toggle-icon:"â˜€";
     }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html,body{height:100%;overflow:auto;-webkit-font-smoothing:antialiased;}
-    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--white);}
+    [data-theme="light"] {
+      --bg:#f0edf8; --bg2:#e6e2f4;
+      --surface:rgba(100,70,220,0.06); --surface2:rgba(100,70,220,0.10);
+      --border:rgba(100,70,220,0.13); --border-hi:rgba(100,70,220,0.45);
+      --accent:#5b3fce; --accent2:#7c5cfc;
+      --glow:rgba(91,63,206,0.20); --glow2:rgba(124,92,252,0.12);
+      --fg:#1a1535; --muted:rgba(26,21,53,0.55); --dim:rgba(26,21,53,0.32);
+      --c-web:#0284c7; --c-java:#c2410c; --c-game:#6d28d9;
+      --sidebar-bg:rgba(240,237,248,0.90);
+      --header-bg:rgba(240,237,248,0.96);
+      --nav-bg:rgba(240,237,248,0.95);
+      --nav-grad:linear-gradient(0deg,rgba(240,237,248,.97),transparent);
+      --modal-bg:rgba(248,246,255,0.99);
+      --modal-overlay:linear-gradient(0deg,rgba(248,246,255,1) 0%,rgba(248,246,255,.15) 55%,transparent 100%);
+      --card-shadow:0 12px 36px rgba(91,63,206,0.12),0 2px 8px rgba(91,63,206,0.08);
+      --thumb-filter:saturate(.9) brightness(1.0);
+      --thumb-filter-hi:saturate(1.1) brightness(1.04);
+      --mesh-a:rgba(91,63,206,0.09); --mesh-b:rgba(124,92,252,0.06);
+      --grid-c:rgba(91,63,206,0.04);
+      --shimmer-a:rgba(100,70,220,0.05); --shimmer-b:rgba(100,70,220,0.10);
+      --toggle-bg:rgba(0,0,0,0.06);
+      --toggle-icon:"ðŸŒ™";
+    }
 
-    /* BG */
+    /* â•â•â•â•â•â•â•â•â•â•â•â• BASE â•â•â•â•â•â•â•â•â•â•â•â• */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;overflow:hidden;-webkit-font-smoothing:antialiased;}
+    body{
+      font-family:'Outfit',sans-serif;
+      background:var(--bg); color:var(--fg);
+      transition:background .35s,color .35s;
+    }
+
+    /* â•â•â•â•â•â•â•â•â•â•â•â• BG â•â•â•â•â•â•â•â•â•â•â•â• */
     .bg-video{position:fixed;inset:0;z-index:0;}
     .bg-video video{width:100%;height:100%;object-fit:cover;filter:brightness(0.18) saturate(0.5);}
-    .bg-mesh{position:fixed;inset:0;z-index:1;pointer-events:none;
-      background:radial-gradient(ellipse 65% 55% at 80% 15%,rgba(124,92,252,0.16) 0%,transparent 60%),
-                radial-gradient(ellipse 50% 45% at 10% 80%,rgba(76,29,149,0.1) 0%,transparent 55%);}
-    .bg-grid{position:fixed;inset:0;z-index:1;pointer-events:none;
-      background-image:linear-gradient(rgba(124,92,252,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,252,0.03) 1px,transparent 1px);
+    [data-theme="light"] .bg-video{opacity:0;}
+    .bg-mesh{
+      position:fixed;inset:0;z-index:1;pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 55% at 80% 15%,var(--mesh-a) 0%,transparent 60%),
+        radial-gradient(ellipse 50% 45% at 10% 80%,var(--mesh-b) 0%,transparent 55%);
+      transition:background .4s;
+    }
+    .bg-grid{
+      position:fixed;inset:0;z-index:1;pointer-events:none;
+      background-image:linear-gradient(var(--grid-c) 1px,transparent 1px),linear-gradient(90deg,var(--grid-c) 1px,transparent 1px);
       background-size:56px 56px;
-      mask-image:radial-gradient(ellipse 70% 65% at 50% 40%,black 10%,transparent 75%);}
+      mask-image:radial-gradient(ellipse 70% 65% at 50% 40%,black 10%,transparent 75%);
+    }
 
-    /* LAYOUT */
+    /* â•â•â•â•â•â•â•â•â•â•â•â• SCENE â€” fixed viewport â•â•â•â•â•â•â•â•â•â•â•â• */
     .scene{
       position:relative;z-index:3;
       height:100vh;
       display:grid;
       grid-template-columns:220px 1fr;
+      overflow:hidden; /* nothing outside scene scrolls */
     }
 
-    /* ── SIDEBAR ── */
+    /* â•â•â•â•â•â•â•â•â•â•â•â• SIDEBAR â•â•â•â•â•â•â•â•â•â•â•â• */
     .sidebar{
       border-right:1px solid var(--border);
-      background:rgba(8,7,15,0.72);
+      background:var(--sidebar-bg);
       backdrop-filter:blur(28px);
       display:flex;flex-direction:column;
       overflow:hidden;
       animation:sideIn .8s cubic-bezier(.22,1,.36,1) both;
+      transition:background .35s,border-color .35s;
     }
     @keyframes sideIn{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
-
     .sidebar-top{
       padding:26px 20px 18px;
       border-bottom:1px solid var(--border);
+      flex-shrink:0;
+      transition:border-color .35s;
     }
     .sidebar-tag{
       font-family:'Zen Kaku Gothic New',sans-serif;
       font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;
       color:var(--accent2);margin-bottom:8px;
     }
-    .sidebar-title{font-size:1.1rem;font-weight:800;letter-spacing:-0.03em;color:var(--white);}
-
-    .sidebar-body{flex:1;overflow-y:auto;padding:14px 0 14px;scrollbar-width:none;}
+    .sidebar-title{font-size:1.1rem;font-weight:800;letter-spacing:-0.03em;color:var(--fg);}
+    .sidebar-body{flex:1;overflow-y:auto;padding:14px 0;scrollbar-width:none;}
     .sidebar-body::-webkit-scrollbar{display:none;}
-
     .s-cat-label{
       font-family:'Zen Kaku Gothic New',sans-serif;
       font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;
       color:var(--dim);padding:0 18px 7px;
     }
-
     .s-cat-btn{
       display:flex;align-items:center;gap:11px;
       padding:10px 18px;width:100%;
@@ -85,81 +137,106 @@
       transition:background .2s,color .2s;
       position:relative;text-align:left;
     }
-    .s-cat-btn:hover{background:rgba(124,92,252,0.06);color:var(--white);}
-    .s-cat-btn.active{color:var(--white);}
+    .s-cat-btn:hover{background:rgba(124,92,252,0.06);color:var(--fg);}
+    .s-cat-btn.active{color:var(--fg);}
     .s-cat-btn.active::before{
       content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
       background:linear-gradient(180deg,var(--accent),var(--accent2));
       border-radius:0 2px 2px 0;
     }
-    .s-cat-dot{
-      width:8px;height:8px;border-radius:50%;flex-shrink:0;
-      box-shadow:0 0 6px currentColor;
-    }
-    .dot-all{background:var(--white);color:var(--white);box-shadow:none;}
+    .s-cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px currentColor;}
+    .dot-all{background:var(--muted);color:var(--muted);box-shadow:none;}
     .dot-web{background:var(--c-web);color:var(--c-web);}
     .dot-java{background:var(--c-java);color:var(--c-java);}
     .dot-game{background:var(--c-game);color:var(--c-game);}
     .s-cat-count{
-      margin-left:auto;
-      font-size:0.6rem;font-weight:700;font-family:'Zen Kaku Gothic New',sans-serif;
+      margin-left:auto;font-size:0.6rem;font-weight:700;
+      font-family:'Zen Kaku Gothic New',sans-serif;
       color:var(--dim);background:var(--surface);
-      border:1px solid var(--border);border-radius:100px;
-      padding:1px 7px;
+      border:1px solid var(--border);border-radius:100px;padding:1px 7px;
+      transition:all .25s;
     }
     .s-cat-btn.active .s-cat-count{color:var(--accent2);border-color:rgba(124,92,252,0.3);background:rgba(124,92,252,0.1);}
 
-    /* ── CONTENT ── */
+    /* â•â•â•â•â•â•â•â•â•â•â•â• CONTENT â€” flex column, no overflow â•â•â•â•â•â•â•â•â•â•â•â• */
     .content{
-      display:flex;flex-direction:column;overflow:hidden;
+      display:flex;flex-direction:column;
+      overflow:hidden; /* header is fixed, only grid scrolls */
       animation:contentIn .8s cubic-bezier(.22,1,.36,1) .08s both;
     }
     @keyframes contentIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
-    /* content header */
+    /* â•â•â•â•â•â•â•â•â•â•â•â• HEADER â€” never scrolls â•â•â•â•â•â•â•â•â•â•â•â• */
     .content-header{
       flex-shrink:0;
-      padding:24px 32px 16px;
+      padding:22px 30px 14px;
       border-bottom:1px solid var(--border);
-      display:flex;align-items:center;justify-content:space-between;
-      gap:16px;
+      background:var(--header-bg);
+      backdrop-filter:blur(20px);
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      z-index:6;
+      transition:background .35s,border-color .35s;
     }
-    .ch-left{}
-    .ch-pre{font-family:'Zen Kaku Gothic New',sans-serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px;}
-    .ch-title{font-size:1.25rem;font-weight:800;letter-spacing:-0.03em;color:var(--white);}
-    .ch-right{display:flex;gap:7px;flex-shrink:0;}
+    .ch-pre{
+      font-family:'Zen Kaku Gothic New',sans-serif;
+      font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;
+      color:var(--accent2);margin-bottom:4px;
+    }
+    .ch-title{font-size:1.2rem;font-weight:800;letter-spacing:-0.03em;color:var(--fg);}
+    .ch-right{display:flex;align-items:center;gap:7px;flex-shrink:0;}
     .filter-pill{
       padding:6px 14px;
-      font-family:'Outfit',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-      color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:100px;
+      font-family:'Outfit',sans-serif;font-size:0.62rem;font-weight:600;
+      letter-spacing:0.08em;text-transform:uppercase;
+      color:var(--muted);background:var(--surface);
+      border:1px solid var(--border);border-radius:100px;
       cursor:pointer;transition:all .25s;white-space:nowrap;
     }
     .filter-pill:hover{border-color:var(--border-hi);color:var(--accent2);background:rgba(124,92,252,0.08);}
-    .filter-pill.active{background:rgba(124,92,252,0.2);border-color:var(--border-hi);color:var(--white);box-shadow:0 0 10px var(--glow);}
+    .filter-pill.active{background:rgba(124,92,252,0.2);border-color:var(--border-hi);color:var(--fg);box-shadow:0 0 10px var(--glow);}
 
-    /* desktop card grid */
+    /* â•â•â• THEME TOGGLE â•â•â• */
+    .theme-btn{
+      width:32px;height:32px;border-radius:50%;
+      background:var(--toggle-bg);border:1px solid var(--border);
+      color:var(--muted);cursor:pointer;font-size:0.82rem;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .25s;flex-shrink:0;
+      position:relative;overflow:hidden;
+    }
+    .theme-btn:hover{border-color:var(--border-hi);background:rgba(124,92,252,0.1);}
+    .theme-btn .t-icon{
+      transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .25s;
+    }
+    .theme-btn .t-dark{ position:absolute; }
+    .theme-btn .t-light{ position:absolute;transform:translateY(20px);opacity:0; }
+    [data-theme="light"] .theme-btn .t-dark{transform:translateY(-20px);opacity:0;}
+    [data-theme="light"] .theme-btn .t-light{transform:translateY(0);opacity:1;}
+
+    /* â•â•â•â•â•â•â•â•â•â•â•â• CARD GRID â€” ONLY scrollable zone â•â•â•â•â•â•â•â•â•â•â•â• */
     .card-grid{
-      flex:1;overflow-y:auto;
-      padding:20px 28px 80px;
+      flex:1;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding:20px 26px 80px;
       display:grid;
       grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
       gap:13px;
       align-content:start;
       scrollbar-width:thin;
-      scrollbar-color:rgba(124,92,252,0.2) transparent;
+      scrollbar-color:rgba(124,92,252,0.18) transparent;
+      overscroll-behavior:contain;
     }
     .card-grid::-webkit-scrollbar{width:4px;}
-    .card-grid::-webkit-scrollbar-thumb{background:rgba(124,92,252,0.2);border-radius:4px;}
+    .card-grid::-webkit-scrollbar-thumb{background:rgba(124,92,252,0.18);border-radius:4px;}
 
-    /* ── PROJECT CARD ── */
+    /* â•â•â•â•â•â•â•â•â•â•â•â• PROJECT CARD â•â•â•â•â•â•â•â•â•â•â•â• */
     .p-card{
       background:var(--surface);border:1px solid var(--border);
       border-radius:var(--r);overflow:hidden;
-      /* FIX 1: use grid rows so thumb is fixed, body fills remaining space */
-      display:grid;
-      grid-template-rows:auto 1fr;
-      position:relative;
-      transition:transform .32s cubic-bezier(.4,0,.2,1),box-shadow .32s,border-color .32s;
+      display:grid;grid-template-rows:auto 1fr;
+      position:relative;cursor:pointer;
+      transition:transform .32s cubic-bezier(.4,0,.2,1),box-shadow .32s,border-color .32s,background .32s;
       animation:cardIn .55s cubic-bezier(.22,1,.36,1) both;
       will-change:transform;
     }
@@ -169,31 +246,34 @@
       background:linear-gradient(90deg,transparent,rgba(167,139,250,0.5),transparent);
       opacity:0;transition:opacity .3s;
     }
-    .p-card:hover{
-      transform:translateY(-6px) scale(1.01);
-      border-color:var(--border-hi);
-      box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 30px rgba(124,92,252,0.15);
-    }
+    .p-card:hover{transform:translateY(-5px) scale(1.01);border-color:var(--border-hi);box-shadow:var(--card-shadow);}
     .p-card:hover::after{opacity:1;}
 
-    /* thumb — fixed height, never shrinks */
-    .card-thumb-wrap{
-      /* FIX 1: fixed height so long descriptions don't push the image */
-      height:138px;
-      flex-shrink:0;
-      overflow:hidden;
-      position:relative;
+    /* thumbnail â€” lazy loads */
+    .card-thumb-wrap{height:138px;flex-shrink:0;overflow:hidden;position:relative;background:var(--surface2);}
+    .card-thumb{
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:var(--thumb-filter);
+      transition:transform .55s cubic-bezier(.4,0,.2,1),filter .35s,opacity .4s;
+      opacity:0;
     }
-    .card-thumb{width:100%;height:100%;object-fit:cover;display:block;
-      filter:saturate(.85) brightness(.9);
-      transition:transform .55s cubic-bezier(.4,0,.2,1),filter .35s;}
-    .p-card:hover .card-thumb{transform:scale(1.07);filter:saturate(1.05) brightness(1);}
+    .card-thumb.loaded{opacity:1;}
+    .card-skeleton{
+      position:absolute;inset:0;
+      background:linear-gradient(90deg,var(--shimmer-a) 25%,var(--shimmer-b) 50%,var(--shimmer-a) 75%);
+      background-size:200% 100%;
+      animation:shimmer 1.5s infinite;
+    }
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .card-thumb.loaded+.card-skeleton{display:none;}
+    .p-card:hover .card-thumb{transform:scale(1.07);filter:var(--thumb-filter-hi);}
     .card-overlay{
       position:absolute;inset:0;
-      background:linear-gradient(0deg,rgba(8,7,15,.75) 0%,rgba(8,7,15,.05) 55%,transparent 100%);
+      background:linear-gradient(0deg,rgba(8,7,15,.8) 0%,transparent 55%);
+      transition:opacity .3s;
     }
+    [data-theme="light"] .card-overlay{background:linear-gradient(0deg,rgba(240,237,248,.7) 0%,transparent 55%);}
 
-    /* badge */
     .card-badge{
       position:absolute;top:9px;left:9px;z-index:2;
       padding:3px 9px;border-radius:100px;
@@ -204,171 +284,176 @@
     .badge-java{background:rgba(251,146,60,.14);border:1px solid rgba(251,146,60,.4);color:var(--c-java);}
     .badge-game{background:rgba(167,139,250,.14);border:1px solid rgba(167,139,250,.4);color:var(--c-game);}
 
-    /* body — description clamped so cards stay uniform height */
-    .card-body{
-      padding:13px 14px 14px;
-      display:flex;flex-direction:column;gap:6px;
-    }
-    .card-title{font-size:0.83rem;font-weight:700;color:var(--white);letter-spacing:-.01em;line-height:1.3;}
+    /* card body */
+    .card-body{padding:12px 14px 13px;display:flex;flex-direction:column;gap:6px;min-height:0;}
+    .card-title-row{display:flex;align-items:center;gap:8px;width:100%;}
+    .card-title{font-size:0.83rem;font-weight:700;color:var(--fg);letter-spacing:-.01em;line-height:1.3;flex:1;min-width:0;}
+    .card-desc-wrap{min-height:0;}
     .card-desc{
       font-size:0.7rem;color:var(--muted);line-height:1.65;
-      /* FIX 1: clamp to 3 lines so long descriptions don't blow up the card */
       display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
     }
+    .card-seemore{
+      display:none;font-size:0.63rem;color:var(--accent2);
+      background:none;border:none;padding:2px 0 0;cursor:pointer;
+      font-family:'Outfit',sans-serif;font-weight:600;transition:color .2s;
+    }
+    .card-seemore:hover{color:var(--fg);}
     .card-link{
       display:inline-flex;align-items:center;gap:5px;
-      align-self:flex-start;margin-top:5px;
+      align-self:flex-start;margin-top:3px;
       padding:5px 12px;
       font-family:'Outfit',sans-serif;font-size:0.6rem;font-weight:700;
       letter-spacing:0.07em;text-transform:uppercase;
       color:var(--accent2);text-decoration:none;
       background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.28);border-radius:7px;
-      transition:all .25s;
+      transition:all .25s;position:relative;z-index:2;
     }
-    .card-link:hover{background:rgba(124,92,252,.22);border-color:var(--accent);color:var(--white);box-shadow:0 0 10px var(--glow);}
-    .card-link svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    .card-link:hover{background:rgba(124,92,252,.22);border-color:var(--accent);color:var(--fg);box-shadow:0 0 10px var(--glow);}
+    .card-link svg,.card-seemore svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 
-    /* ── MOBILE SECTION ── */
-    .mobile-section{display:none;}
+    /* view tag â€” shown at â‰¤380px when card collapses to title strip */
+    .card-view-tag{
+      display:none;align-items:center;gap:4px;margin-left:auto;flex-shrink:0;
+      padding:4px 10px;
+      font-family:'Zen Kaku Gothic New',sans-serif;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;
+      color:var(--accent2);background:rgba(124,92,252,0.1);
+      border:1px solid rgba(124,92,252,0.28);border-radius:100px;
+      cursor:pointer;transition:all .2s;white-space:nowrap;
+    }
+    .card-view-tag:hover{background:rgba(124,92,252,0.22);border-color:var(--accent);color:var(--fg);}
+    .card-view-tag svg{width:8px;height:8px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 
-    /* bottom nav */
-    .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:center;padding:8px 0 14px;background:linear-gradient(0deg,rgba(8,7,15,.96),transparent);}
-    .nav-pill{display:flex;gap:2px;background:rgba(15,13,26,0.9);border:1px solid var(--border);border-radius:100px;padding:5px 8px;backdrop-filter:blur(20px);box-shadow:0 8px 32px rgba(0,0,0,.5);}
-    .nav-pill a{padding:7px 18px;font-family:'Outfit',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-radius:100px;transition:all .25s;}
+    /* â•â•â•â•â•â•â•â•â•â•â•â• MODAL â•â•â•â•â•â•â•â•â•â•â•â• */
+    .modal-backdrop{
+      position:fixed;inset:0;z-index:100;
+      background:rgba(4,3,12,0.80);
+      backdrop-filter:blur(14px);
+      display:flex;align-items:center;justify-content:center;
+      padding:20px;
+      opacity:0;pointer-events:none;
+      transition:opacity .3s;
+    }
+    .modal-backdrop.open{opacity:1;pointer-events:all;}
+    .modal-card{
+      position:relative;width:100%;max-width:560px;
+      background:var(--modal-bg);
+      border:1px solid var(--border-hi);
+      border-radius:20px;overflow:hidden;
+      box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 60px rgba(124,92,252,0.18);
+      transform:translateY(32px) scale(.95);
+      transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .36s,background .35s;
+      opacity:0;max-height:90vh;
+      display:flex;flex-direction:column;
+    }
+    .modal-backdrop.open .modal-card{transform:none;opacity:1;}
+    .modal-shine{position:absolute;top:0;left:16px;right:16px;height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,.6),transparent);}
+    .modal-thumb-wrap{position:relative;flex-shrink:0;height:220px;overflow:hidden;}
+    .modal-thumb{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s;}
+    .modal-thumb.loaded{opacity:1;}
+    .modal-skeleton{
+      position:absolute;inset:0;
+      background:linear-gradient(90deg,var(--shimmer-a) 25%,var(--shimmer-b) 50%,var(--shimmer-a) 75%);
+      background-size:200% 100%;animation:shimmer 1.5s infinite;
+    }
+    .modal-thumb.loaded~.modal-skeleton{display:none;}
+    .modal-overlay{position:absolute;inset:0;background:var(--modal-overlay);}
+    .modal-badge{
+      position:absolute;top:14px;left:14px;z-index:2;
+      padding:4px 11px;border-radius:100px;
+      font-family:'Zen Kaku Gothic New',sans-serif;font-size:0.52rem;letter-spacing:.12em;text-transform:uppercase;
+    }
+    .modal-close{
+      position:absolute;top:14px;right:14px;z-index:10;
+      width:34px;height:34px;border-radius:50%;
+      background:rgba(8,7,15,0.65);border:1px solid var(--border);
+      color:var(--muted);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .22s;backdrop-filter:blur(8px);
+    }
+    [data-theme="light"] .modal-close{background:rgba(240,237,248,0.75);}
+    .modal-close:hover{background:rgba(124,92,252,.22);border-color:var(--border-hi);color:var(--fg);}
+    .modal-close svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;fill:none;}
+    .modal-body{padding:22px 26px 28px;overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:rgba(124,92,252,.2) transparent;}
+    .modal-body::-webkit-scrollbar{width:3px;}
+    .modal-body::-webkit-scrollbar-thumb{background:rgba(124,92,252,.2);border-radius:3px;}
+    .modal-title{font-size:1.25rem;font-weight:800;letter-spacing:-.02em;color:var(--fg);margin-bottom:10px;}
+    .modal-desc{font-size:0.8rem;color:var(--muted);line-height:1.78;margin-bottom:22px;}
+    .modal-link{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:10px 22px;font-family:'Outfit',sans-serif;font-size:0.65rem;font-weight:700;
+      letter-spacing:.09em;text-transform:uppercase;color:var(--fg);text-decoration:none;
+      background:linear-gradient(135deg,rgba(124,92,252,.35),rgba(124,92,252,.16));
+      border:1px solid var(--border-hi);border-radius:10px;
+      transition:all .25s;box-shadow:0 0 20px rgba(124,92,252,.12);
+    }
+    .modal-link:hover{background:linear-gradient(135deg,rgba(124,92,252,.55),rgba(124,92,252,.3));box-shadow:0 0 30px rgba(124,92,252,.28);}
+    .modal-link svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+        /* â•â•â•â•â•â•â•â•â•â•â•â• BOTTOM NAV â•â•â•â•â•â•â•â•â•â•â•â• */
+    .bottom-nav{
+      position:fixed;bottom:0;left:0;right:0;z-index:10;
+      display:flex;justify-content:center;padding:8px 0 14px;
+      background:var(--nav-grad);
+      transition:background .35s;
+    }
+    .nav-pill{
+      display:flex;gap:2px;
+      background:var(--nav-bg);border:1px solid var(--border);
+      border-radius:100px;padding:5px 8px;
+      backdrop-filter:blur(20px);box-shadow:0 8px 32px rgba(0,0,0,.4);
+      transition:background .35s,border-color .35s;
+    }
+    .nav-pill a{
+      padding:7px 18px;font-family:'Outfit',sans-serif;font-size:0.65rem;font-weight:600;
+      letter-spacing:.12em;text-transform:uppercase;
+      color:var(--muted);text-decoration:none;border-radius:100px;transition:all .25s;
+    }
     .nav-pill a:hover{color:var(--accent2);background:rgba(124,92,252,.1);}
-    .nav-pill a.active{background:linear-gradient(135deg,rgba(124,92,252,.35),rgba(124,92,252,.15));color:var(--white);border:1px solid var(--border-hi);box-shadow:0 0 12px var(--glow);}
+    .nav-pill a.active{background:linear-gradient(135deg,rgba(124,92,252,.35),rgba(124,92,252,.15));color:var(--fg);border:1px solid var(--border-hi);box-shadow:0 0 12px var(--glow);}
 
-    /* ── MOBILE (portrait) ── */
+    /* â•â•â•â•â•â•â•â•â•â•â•â• MOBILE â‰¤680px â•â•â•â•â•â•â•â•â•â•â•â• */
     @media(max-width:680px){
-      body{overflow:auto;}
-
-      .scene{
-        grid-template-columns:1fr;
-        grid-template-rows:auto 1fr;
-        height:auto;
-        min-height:100vh;
-      }
-
-      .sidebar{
-        border-right:none;
-        border-bottom:1px solid var(--border);
-      }
+      .scene{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;height:100vh;overflow:hidden;}
+      .sidebar{border-right:none;border-bottom:1px solid var(--border);flex-shrink:0;}
       .sidebar-body{display:none;}
-      .sidebar-top{padding:16px 18px;}
-
-      .content{
-        display:flex;
-        flex-direction:column;
-        min-height:0;
-      }
-
-      .content-header{
-        position:sticky;
-        top:0;
-        z-index:5;
-        background:rgba(8,7,15,0.95);
-        backdrop-filter:blur(12px);
-        padding:12px 16px 10px;
-        flex-wrap:wrap;
-        gap:10px;
-      }
-
-      /* FIX 3: make filter pills scroll horizontally so nothing gets squished */
-      .ch-right{
-        overflow-x:auto;
-        overflow-y:visible;
-        scrollbar-width:none;
-        flex-wrap:nowrap;
-        -webkit-overflow-scrolling:touch;
-        width:100%;
-      }
+      .sidebar-top{padding:14px 18px;}
+      .content{overflow:hidden;display:flex;flex-direction:column;flex:1;min-height:0;}
+      .content-header{padding:10px 16px;flex-wrap:wrap;gap:8px;}
+      .ch-right{overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;width:100%;}
       .ch-right::-webkit-scrollbar{display:none;}
       .filter-pill{white-space:nowrap;flex-shrink:0;}
-
-      /* FIX 2: card grid scrollable, no fixed height constraint */
-      .card-grid{
-        flex:unset;
-        overflow-y:visible;
-        overflow-x:hidden;
-        padding:16px 14px 100px;
-        grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
-        gap:10px;
-      }
-
-      /* FIX 1: smaller fixed thumb on mobile */
-      .card-thumb-wrap{height:110px;}
-
+      .card-grid{padding:12px 12px 80px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+      .card-thumb-wrap{height:108px;}
       .card-title{font-size:0.78rem;}
-      .card-desc{font-size:0.66rem;-webkit-line-clamp:2;}
-
-      .mobile-section{display:none;}
+      .card-desc{-webkit-line-clamp:2;font-size:0.66rem;}
+      .modal-backdrop{align-items:flex-end;padding:0;}
+      .modal-card{max-width:100%;border-radius:20px 20px 0 0;max-height:88vh;}
+      .modal-thumb-wrap{height:175px;}
     }
 
-    /* ── LANDSCAPE on phone ── */
-    /* FIX 2: landscape — sidebar goes horizontal strip, content fills full width */
-    @media(max-height:500px) and (orientation:landscape){
-      .scene{
-        grid-template-columns:1fr;
-        grid-template-rows:auto 1fr;
-        height:auto;
-        min-height:100vh;
-      }
-
-      .sidebar{
-        border-right:none;
-        border-bottom:1px solid var(--border);
-        /* collapse sidebar to just the top bar in landscape */
-      }
-      .sidebar-body{display:none;}
-      .sidebar-top{padding:10px 18px;}
-      .sidebar-tag{display:none;}
-      .sidebar-title{font-size:0.9rem;}
-
-      .content{
-        display:flex;
-        flex-direction:column;
-        overflow:auto;          /* allow scrolling in landscape */
-      }
-
-      .content-header{
-        padding:10px 20px 8px;
-        position:sticky;top:0;z-index:5;
-        background:rgba(8,7,15,0.95);
-        backdrop-filter:blur(12px);
-        flex-wrap:wrap;
-        gap:8px;
-      }
-      /* FIX 2: pills scroll horizontally in landscape, never squish text */
-      .ch-right{
-        overflow-x:auto;
-        overflow-y:visible;
-        scrollbar-width:none;
-        flex-wrap:nowrap;
-        -webkit-overflow-scrolling:touch;
-        width:100%;
-      }
-      .ch-right::-webkit-scrollbar{display:none;}
-      .filter-pill{white-space:nowrap;flex-shrink:0;padding:5px 11px;font-size:0.58rem;}
-
-      .ch-pre{font-size:0.48rem;}
-      .ch-title{font-size:1rem;}
-
-      /* FIX 3: card grid — allow natural height in landscape */
-      .card-grid{
-        flex:unset;
-        overflow-y:visible;
-        overflow-x:hidden;
-        padding:14px 20px 80px;
-        grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-        gap:11px;
-        align-content:start;
-      }
-
-      .card-thumb-wrap{height:120px;}
-    }
-
+    /* â•â•â•â•â•â•â•â•â•â•â•â• â‰¤380px: title-strip cards â•â•â•â•â•â•â•â•â•â•â•â• */
     @media(max-width:380px){
       .card-grid{grid-template-columns:1fr;}
+      .card-thumb-wrap,.card-desc-wrap,.card-link,.card-seemore{display:none!important;}
+      .card-view-tag{display:inline-flex;}
+      .card-body{padding:12px 14px;flex-direction:row;align-items:center;flex-wrap:nowrap;}
+      .card-title-row{flex:1;min-width:0;}
+      .card-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    }
+
+    /* â•â•â•â•â•â•â•â•â•â•â•â• LANDSCAPE PHONE â•â•â•â•â•â•â•â•â•â•â•â• */
+    @media(max-height:500px) and (orientation:landscape){
+      .scene{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;height:100vh;overflow:hidden;}
+      .sidebar{border-right:none;border-bottom:1px solid var(--border);flex-shrink:0;}
+      .sidebar-body{display:none;}
+      .sidebar-top{padding:8px 18px;}
+      .sidebar-tag{display:none;}
+      .content-header{padding:8px 20px;gap:6px;}
+      .ch-title{font-size:1rem;}
+      .filter-pill{padding:5px 11px;font-size:0.58rem;}
+      .card-grid{padding:10px 18px 70px;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:10px;}
+      .card-thumb-wrap{height:112px;}
     }
   </style>
 </head>
@@ -379,8 +464,7 @@
 <div class="bg-grid"></div>
 
 <div class="scene">
-
-  <!-- ── SIDEBAR ── -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-top">
       <p class="sidebar-tag">Dev Archive</p>
@@ -389,25 +473,22 @@
     <div class="sidebar-body">
       <p class="s-cat-label">Filter by type</p>
       <button class="s-cat-btn active" onclick="filterCat('all',this)">
-        <span class="s-cat-dot dot-all" style="background:var(--muted);box-shadow:none;"></span>All Projects
-        <span class="s-cat-count">8</span>
+        <span class="s-cat-dot dot-all"></span>All Projects<span class="s-cat-count">8</span>
       </button>
       <button class="s-cat-btn" onclick="filterCat('web',this)">
-        <span class="s-cat-dot dot-web"></span>Web
-        <span class="s-cat-count">1</span>
+        <span class="s-cat-dot dot-web"></span>Web<span class="s-cat-count">1</span>
       </button>
       <button class="s-cat-btn" onclick="filterCat('java',this)">
-        <span class="s-cat-dot dot-java"></span>Java
-        <span class="s-cat-count">3</span>
+        <span class="s-cat-dot dot-java"></span>Java<span class="s-cat-count">3</span>
       </button>
       <button class="s-cat-btn" onclick="filterCat('game',this)">
-        <span class="s-cat-dot dot-game"></span>Game
-        <span class="s-cat-count">4</span>
+        <span class="s-cat-dot dot-game"></span>Game<span class="s-cat-count">4</span>
       </button>
     </div>
   </aside>
 
   <div class="content">
+    <!-- HEADER â€” sticky, never scrolls -->
     <div class="content-header">
       <div class="ch-left">
         <p class="ch-pre">Jemmer Almoneda</p>
@@ -418,41 +499,224 @@
         <button class="filter-pill" onclick="filterPill('web',this)">Web</button>
         <button class="filter-pill" onclick="filterPill('java',this)">Java</button>
         <button class="filter-pill" onclick="filterPill('game',this)">Game</button>
+        <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
+          <span class="t-icon t-dark">â˜€</span>
+          <span class="t-icon t-light">ðŸŒ™</span>
+        </button>
       </div>
     </div>
+
+    <!-- CARD GRID â€” the ONLY thing that scrolls -->
     <div class="card-grid" id="desktop-grid">
 
       <!-- WEB -->
-      <div class="p-card" data-cat="web">
-        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/Screenshot_20260328-135058_1.png" alt="Portfolio Site"><div class="card-overlay"></div><span class="card-badge badge-web">Web</span></div>
-        <div class="card-body"><p class="card-title">Portfolio Site</p><p class="card-desc">A responsive personal portfolio website designed to showcase projects, skills, and experience, featuring interactive filtering, smooth animations, and modern UI design principles.</p><a class="card-link" href="https://github.com/shiruri/portfolio-page" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      <div class="p-card" data-cat="web"
+        data-title="Portfolio Site"
+        data-desc="A responsive personal portfolio website designed to showcase projects, skills, and experience, featuring interactive filtering, smooth animations, and modern UI design principles."
+        data-img="Documents/Screenshot_20260328-135058_1.png" data-badge="web"
+        data-link="https://github.com/shiruri/portfolio-page" onclick="openModal(this)">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" data-src="Documents/Screenshot_20260328-135058_1.png" alt="Portfolio Site" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <div class="card-skeleton"></div>
+          <div class="card-overlay"></div>
+          <span class="card-badge badge-web">Web</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <p class="card-title">Portfolio Site</p>
+            <button class="card-view-tag" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></button>
+          </div>
+          <div class="card-desc-wrap">
+            <p class="card-desc">A responsive personal portfolio website designed to showcase projects, skills, and experience, featuring interactive filtering, smooth animations, and modern UI design principles.</p>
+            <button class="card-seemore" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">See more</button>
+          </div>
+          <a class="card-link" href="https://github.com/shiruri/portfolio-page" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
+        </div>
       </div>
 
       <!-- JAVA -->
-      <div class="p-card" data-cat="java">
-        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/Javapass.png" alt="Password Manager"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
-        <div class="card-body"><p class="card-title">Password Manager</p><p class="card-desc">Secure CLI-based password manager with AES encryption and account handling.</p><a class="card-link" href="https://github.com/shiruri/passmanager" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      <div class="p-card" data-cat="java"
+        data-title="Password Manager"
+        data-desc="Secure CLI-based password manager with AES encryption and account handling."
+        data-img="Documents/Javapass.png" data-badge="java"
+        data-link="https://github.com/shiruri/passmanager" onclick="openModal(this)">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" data-src="Documents/Javapass.png" alt="Password Manager" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <div class="card-skeleton"></div><div class="card-overlay"></div>
+          <span class="card-badge badge-java">Java</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <p class="card-title">Password Manager</p>
+            <button class="card-view-tag" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></button>
+          </div>
+          <div class="card-desc-wrap">
+            <p class="card-desc">Secure CLI-based password manager with AES encryption and account handling.</p>
+            <button class="card-seemore" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">See more</button>
+          </div>
+          <a class="card-link" href="https://github.com/shiruri/passmanager" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
+        </div>
       </div>
 
-      <div class="p-card" data-cat="java">
-        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/mpos.png" alt="MPOS System"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
-        <div class="card-body"><p class="card-title">MPOS System</p><p class="card-desc">Point-of-sale system with transaction processing, admin features and Role based access.</p><a class="card-link" href="https://github.com/shiruri/MPOS" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      <div class="p-card" data-cat="java"
+        data-title="MPOS System"
+        data-desc="Point-of-sale system with transaction processing, admin features and role-based access."
+        data-img="Documents/mpos.png" data-badge="java"
+        data-link="https://github.com/shiruri/MPOS" onclick="openModal(this)">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" data-src="Documents/mpos.png" alt="MPOS System" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <div class="card-skeleton"></div><div class="card-overlay"></div>
+          <span class="card-badge badge-java">Java</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <p class="card-title">MPOS System</p>
+            <button class="card-view-tag" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></button>
+          </div>
+          <div class="card-desc-wrap">
+            <p class="card-desc">Point-of-sale system with transaction processing, admin features and role-based access.</p>
+            <button class="card-seemore" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">See more</button>
+          </div>
+          <a class="card-link" href="https://github.com/shiruri/MPOS" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
+        </div>
       </div>
 
-      <div class="p-card" data-cat="java">
-        <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/ELYSIUM.png" alt="Elysium"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
-        <div class="card-body"><p class="card-title">Elysium</p><p class="card-desc">A custom-built programming language inspired by BASIC, featuring its own syntax parsing, command execution, and interpreter logic written in Java.</p><a class="card-link" href="https://github.com/shiruri/Elysium/tree/main" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
+      <div class="p-card" data-cat="java"
+        data-title="Elysium"
+        data-desc="A custom-built programming language inspired by BASIC, featuring its own syntax parsing, command execution, and interpreter logic written in Java."
+        data-img="Documents/ELYSIUM.png" data-badge="java"
+        data-link="https://github.com/shiruri/Elysium/tree/main" onclick="openModal(this)">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" data-src="Documents/ELYSIUM.png" alt="Elysium" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <div class="card-skeleton"></div><div class="card-overlay"></div>
+          <span class="card-badge badge-java">Java</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <p class="card-title">Elysium</p>
+            <button class="card-view-tag" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></button>
+          </div>
+          <div class="card-desc-wrap">
+            <p class="card-desc">A custom-built programming language inspired by BASIC, featuring its own syntax parsing, command execution, and interpreter logic written in Java.</p>
+            <button class="card-seemore" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">See more</button>
+          </div>
+          <a class="card-link" href="https://github.com/shiruri/Elysium/tree/main" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
+        </div>
       </div>
 
-<!-- GAME -->
-      <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/between.png" alt="Between Shared Umbrella"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Between Shared Umbrella</p><p class="card-desc">A cozy, one-shot visual novel created in under an hour just for fun. It follows Kai Nakamura and Miyako Aihara, two high school students who cross paths on a rainy day</p><a class="card-link" href="https://shiroi26.itch.io/between-shared-umbrella-oneshot" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
-      <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/digital.png" alt="Digital Love"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Digital Love</p><p class="card-desc">Digital code is perfect for players who enjoy a mix of romance, educational content, and interactive gameplay. Dive into the world of coding and relationships.</p><a class="card-link" href="https://shiroi26.itch.io/digital-love" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
-      <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/calendar.png" alt="Paperweight"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Paperweight</p><p class="card-desc">A narrative-driven visual novel developed using Ren'Py that explores themes of mental health, emotional struggle, and student life.</p><a class="card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
-      <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/untitledNote.png" alt="Untitled Note"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Untitled Note</p><p class="card-desc">A short, dialogue-driven visual novel centered around a late-night conversation between two characters reconnecting after their first meeting.</p><a class="card-link" href="https://shiroi26.itch.io/untitled-note" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
+      <!-- GAME -->
+      <div class="p-card" data-cat="game"
+        data-title="Between Shared Umbrella"
+        data-desc="A cozy, one-shot visual novel created in under an hour just for fun. It follows Kai Nakamura and Miyako Aihara, two high school students who cross paths on a rainy day."
+        data-img="Documents/between.png" data-badge="game"
+        data-link="https://shiroi26.itch.io/between-shared-umbrella-oneshot" onclick="openModal(this)">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" data-src="Documents/between.png" alt="Between Shared Umbrella" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <div class="card-skeleton"></div><div class="card-overlay"></div>
+          <span class="card-badge badge-game">Game</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <p class="card-title">Between Shared Umbrella</p>
+            <button class="card-view-tag" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></button>
+          </div>
+          <div class="card-desc-wrap">
+            <p class="card-desc">A cozy, one-shot visual novel created in under an hour just for fun. It follows Kai Nakamura and Miyako Aihara, two high school students who cross paths on a rainy day.</p>
+            <button class="card-seemore" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">See more</button>
+          </div>
+          <a class="card-link" href="https://shiroi26.itch.io/between-shared-umbrella-oneshot" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
+        </div>
+      </div>
 
+      <div class="p-card" data-cat="game"
+        data-title="Digital Love"
+        data-desc="Digital code is perfect for players who enjoy a mix of romance, educational content, and interactive gameplay. Dive into the world of coding and relationships."
+        data-img="Documents/digital.png" data-badge="game"
+        data-link="https://shiroi26.itch.io/digital-love" onclick="openModal(this)">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" data-src="Documents/digital.png" alt="Digital Love" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <div class="card-skeleton"></div><div class="card-overlay"></div>
+          <span class="card-badge badge-game">Game</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <p class="card-title">Digital Love</p>
+            <button class="card-view-tag" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></button>
+          </div>
+          <div class="card-desc-wrap">
+            <p class="card-desc">Digital code is perfect for players who enjoy a mix of romance, educational content, and interactive gameplay. Dive into the world of coding and relationships.</p>
+            <button class="card-seemore" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">See more</button>
+          </div>
+          <a class="card-link" href="https://shiroi26.itch.io/digital-love" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
+        </div>
+      </div>
+
+      <div class="p-card" data-cat="game"
+        data-title="Paperweight"
+        data-desc="A narrative-driven visual novel developed using Ren'Py that explores themes of mental health, emotional struggle, and student life."
+        data-img="Documents/calendar.png" data-badge="game"
+        data-link="https://shiroi26.itch.io/paperweigth" onclick="openModal(this)">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" data-src="Documents/calendar.png" alt="Paperweight" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <div class="card-skeleton"></div><div class="card-overlay"></div>
+          <span class="card-badge badge-game">Game</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <p class="card-title">Paperweight</p>
+            <button class="card-view-tag" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></button>
+          </div>
+          <div class="card-desc-wrap">
+            <p class="card-desc">A narrative-driven visual novel developed using Ren'Py that explores themes of mental health, emotional struggle, and student life.</p>
+            <button class="card-seemore" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">See more</button>
+          </div>
+          <a class="card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
+        </div>
+      </div>
+
+      <div class="p-card" data-cat="game"
+        data-title="Untitled Note"
+        data-desc="A short, dialogue-driven visual novel centered around a late-night conversation between two characters reconnecting after their first meeting."
+        data-img="Documents/untitledNote.png" data-badge="game"
+        data-link="https://shiroi26.itch.io/untitled-note" onclick="openModal(this)">
+        <div class="card-thumb-wrap">
+          <img class="card-thumb" data-src="Documents/untitledNote.png" alt="Untitled Note" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <div class="card-skeleton"></div><div class="card-overlay"></div>
+          <span class="card-badge badge-game">Game</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <p class="card-title">Untitled Note</p>
+            <button class="card-view-tag" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></button>
+          </div>
+          <div class="card-desc-wrap">
+            <p class="card-desc">A short, dialogue-driven visual novel centered around a late-night conversation between two characters reconnecting after their first meeting.</p>
+            <button class="card-seemore" onclick="openModal(this.closest('.p-card'));event.stopPropagation()">See more</button>
+          </div>
+          <a class="card-link" href="https://shiroi26.itch.io/untitled-note" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
+        </div>
+      </div>
+
+    </div><!-- /card-grid -->
+  </div><!-- /content -->
+</div><!-- /scene -->
+<!-- MODAL -->
+<div class="modal-backdrop" id="modal" onclick="handleBackdropClick(event)">
+  <div class="modal-card" id="modal-card">
+    <div class="modal-shine"></div>
+    <button class="modal-close" id="modal-close-btn"><svg viewBox="0 0 14 14"><path d="M2 2L12 12M12 2L2 12"/></svg></button>
+    <div class="modal-thumb-wrap">
+      <img class="modal-thumb" id="modal-img" src="" alt="">
+      <div class="modal-skeleton" id="modal-skel"></div>
+      <div class="modal-overlay"></div>
+      <span class="modal-badge" id="modal-badge"></span>
+    </div>
+    <div class="modal-body">
+      <p class="modal-title" id="modal-title"></p>
+      <p class="modal-desc" id="modal-desc"></p>
+      <a class="modal-link" id="modal-link" href="#" target="_blank">View Project <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
     </div>
   </div>
-
 </div>
 
 <nav class="bottom-nav">
@@ -465,34 +729,92 @@
 </nav>
 
 <script>
-const CATS = {all:'All Projects',web:'Web',java:'Java',game:'Game'};
+/* â”€â”€ THEME â”€â”€ */
+(function(){
+  const saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+})();
+function toggleTheme(){
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+}
 
-/* stagger desktop cards */
-document.querySelectorAll('#desktop-grid .p-card').forEach((c,i)=>{
-  c.style.animationDelay=`${.04+i*.05}s`;
-});
-
-/* sync sidebar + pill filter */
-function syncFilter(cat){
-  document.getElementById('cat-display-title').textContent = CATS[cat]||'All Projects';
-  document.querySelectorAll('#desktop-grid .p-card').forEach(c=>{
-    const show = cat==='all' || c.dataset.cat===cat;
-    c.style.display = show ? '' : 'none';
-    if(show){c.style.animation='none';void c.offsetHeight;c.style.animation='cardIn .5s cubic-bezier(.22,1,.36,1) both';}
+/* â”€â”€ LAZY LOAD â”€â”€ */
+const lazyObs = new IntersectionObserver((entries, obs) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const img = e.target;
+    img.src = img.dataset.src;
+    img.onload = img.onerror = () => img.classList.add('loaded');
+    obs.unobserve(img);
   });
+}, { rootMargin:'120px' });
+document.querySelectorAll('.card-thumb[data-src]').forEach(img => lazyObs.observe(img));
+
+/* â”€â”€ STAGGER â”€â”€ */
+document.querySelectorAll('#desktop-grid .p-card').forEach((c,i)=>{c.style.animationDelay=`${.04+i*.05}s`;});
+
+/* â”€â”€ TRUNCATION â”€â”€ */
+function checkTruncation(){
+  document.querySelectorAll('.card-desc-wrap').forEach(w=>{
+    const d=w.querySelector('.card-desc'), b=w.querySelector('.card-seemore');
+    if(d&&b) b.style.display = d.scrollHeight > d.clientHeight+2 ? 'block' : 'none';
+  });
+}
+window.addEventListener('load', checkTruncation);
+window.addEventListener('resize', checkTruncation);
+
+/* â”€â”€ FILTER â”€â”€ */
+const CATS={all:'All Projects',web:'Web',java:'Java',game:'Game'};
+function syncFilter(cat){
+  document.getElementById('cat-display-title').textContent=CATS[cat]||'All Projects';
+  document.querySelectorAll('#desktop-grid .p-card').forEach(c=>{
+    const show=cat==='all'||c.dataset.cat===cat;
+    c.style.display=show?'':'none';
+    if(show){c.style.animation='none';void c.offsetHeight;c.style.animation='cardIn .45s cubic-bezier(.22,1,.36,1) both';}
+  });
+  setTimeout(checkTruncation,50);
 }
 function filterCat(cat,btn){
   document.querySelectorAll('.s-cat-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.filter-pill').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase().startsWith(cat==='all'?'all':cat));});
+  document.querySelectorAll('.filter-pill').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().startsWith(cat==='all'?'all':cat)));
   syncFilter(cat);
 }
 function filterPill(cat,btn){
   document.querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.s-cat-btn').forEach(b=>{const txt=b.textContent.trim().toLowerCase();b.classList.toggle('active',cat==='all'?txt.startsWith('all'):txt.startsWith(cat));});
+  document.querySelectorAll('.s-cat-btn').forEach(b=>{
+    const t=b.textContent.trim().toLowerCase();
+    b.classList.toggle('active',cat==='all'?t.startsWith('all'):t.startsWith(cat));
+  });
   syncFilter(cat);
 }
+
+/* â”€â”€ MODAL â”€â”€ */
+const BDGMAP={web:{cls:'badge-web',label:'Web'},java:{cls:'badge-java',label:'Java'},game:{cls:'badge-game',label:'Game'}};
+function openModal(card){
+  const d=card.dataset, info=BDGMAP[d.badge]||{cls:'badge-web',label:d.badge};
+  const img=document.getElementById('modal-img'), skel=document.getElementById('modal-skel');
+  img.classList.remove('loaded'); skel.style.display='';
+  img.alt=d.title||''; img.src=d.img||'';
+  img.onload=img.onerror=()=>{img.classList.add('loaded');skel.style.display='none';};
+  document.getElementById('modal-title').textContent=d.title||'';
+  document.getElementById('modal-desc').textContent=d.desc||'';
+  document.getElementById('modal-link').href=d.link||'#';
+  const bdg=document.getElementById('modal-badge');
+  bdg.textContent=info.label; bdg.className='modal-badge '+info.cls;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleBackdropClick(e){if(e.target===document.getElementById('modal'))closeModal();}
+document.getElementById('modal-close-btn').addEventListener('click',closeModal);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 </script>
 </body>
 </html>
