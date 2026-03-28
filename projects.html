@@ -151,11 +151,14 @@
     .card-grid::-webkit-scrollbar{width:4px;}
     .card-grid::-webkit-scrollbar-thumb{background:rgba(124,92,252,0.2);border-radius:4px;}
 
-    /* project card */
+    /* ── PROJECT CARD ── */
     .p-card{
       background:var(--surface);border:1px solid var(--border);
       border-radius:var(--r);overflow:hidden;
-      display:flex;flex-direction:column;position:relative;
+      /* FIX 1: use grid rows so thumb is fixed, body fills remaining space */
+      display:grid;
+      grid-template-rows:auto 1fr;
+      position:relative;
       transition:transform .32s cubic-bezier(.4,0,.2,1),box-shadow .32s,border-color .32s;
       animation:cardIn .55s cubic-bezier(.22,1,.36,1) both;
       will-change:transform;
@@ -173,8 +176,14 @@
     }
     .p-card:hover::after{opacity:1;}
 
-    /* thumb */
-    .card-thumb-wrap{overflow:hidden;position:relative;aspect-ratio:16/10;}
+    /* thumb — fixed height, never shrinks */
+    .card-thumb-wrap{
+      /* FIX 1: fixed height so long descriptions don't push the image */
+      height:138px;
+      flex-shrink:0;
+      overflow:hidden;
+      position:relative;
+    }
     .card-thumb{width:100%;height:100%;object-fit:cover;display:block;
       filter:saturate(.85) brightness(.9);
       transition:transform .55s cubic-bezier(.4,0,.2,1),filter .35s;}
@@ -195,10 +204,17 @@
     .badge-java{background:rgba(251,146,60,.14);border:1px solid rgba(251,146,60,.4);color:var(--c-java);}
     .badge-game{background:rgba(167,139,250,.14);border:1px solid rgba(167,139,250,.4);color:var(--c-game);}
 
-    /* body */
-    .card-body{padding:13px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1;}
+    /* body — description clamped so cards stay uniform height */
+    .card-body{
+      padding:13px 14px 14px;
+      display:flex;flex-direction:column;gap:6px;
+    }
     .card-title{font-size:0.83rem;font-weight:700;color:var(--white);letter-spacing:-.01em;line-height:1.3;}
-    .card-desc{font-size:0.7rem;color:var(--muted);line-height:1.65;flex:1;}
+    .card-desc{
+      font-size:0.7rem;color:var(--muted);line-height:1.65;
+      /* FIX 1: clamp to 3 lines so long descriptions don't blow up the card */
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+    }
     .card-link{
       display:inline-flex;align-items:center;gap:5px;
       align-self:flex-start;margin-top:5px;
@@ -222,121 +238,138 @@
     .nav-pill a:hover{color:var(--accent2);background:rgba(124,92,252,.1);}
     .nav-pill a.active{background:linear-gradient(135deg,rgba(124,92,252,.35),rgba(124,92,252,.15));color:var(--white);border:1px solid var(--border-hi);box-shadow:0 0 12px var(--glow);}
 
-    /* ── MOBILE BREAKPOINT ── */
-@media(max-width:680px){
-  body{overflow:auto;}
-  .scene{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
-  .sidebar{border-right:none;border-bottom:1px solid var(--border);}
-  .sidebar-body{display:none;}
-  .sidebar-top{padding:16px 18px;}
-  .content{display:flex;}   /* FIXED */
-  .mobile-section{display:none;} /* optional but safer */
-}
-@media(max-width:680px){
-  body{overflow:auto;}
+    /* ── MOBILE (portrait) ── */
+    @media(max-width:680px){
+      body{overflow:auto;}
 
-  .scene{
-    grid-template-columns:1fr;
-    grid-template-rows:auto 1fr;
-    height:auto;
-    min-height:100vh;
-  }
+      .scene{
+        grid-template-columns:1fr;
+        grid-template-rows:auto 1fr;
+        height:auto;
+        min-height:100vh;
+      }
 
-
-  }
-      @media(max-width:680px){
-
-  .content-header{
-    position:sticky;
-    top:0;
-    z-index:5;
-    background:rgba(8,7,15,0.95);
-    backdrop-filter:blur(12px);
-  }
-
-  .sidebar{
-    border-right:none;
-    border-bottom:1px solid var(--border);
-  }
-
-  .sidebar-body{display:none;}
-  .sidebar-top{padding:16px 18px;}
-
-  .content{display:flex;}
-  .mobile-section{display:none;}
-}
-
-    }
-
-      /* mobile header */
-      .mob-header{
-        flex-shrink:0;
-        padding:14px 18px 10px;
+      .sidebar{
+        border-right:none;
         border-bottom:1px solid var(--border);
-        display:flex;align-items:center;justify-content:space-between;
+      }
+      .sidebar-body{display:none;}
+      .sidebar-top{padding:16px 18px;}
+
+      .content{
+        display:flex;
+        flex-direction:column;
+        min-height:0;
+      }
+
+      .content-header{
+        position:sticky;
+        top:0;
+        z-index:5;
+        background:rgba(8,7,15,0.95);
+        backdrop-filter:blur(12px);
+        padding:12px 16px 10px;
+        flex-wrap:wrap;
         gap:10px;
       }
-      .mob-title{font-size:1rem;font-weight:800;letter-spacing:-.02em;}
-      .mob-filters{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
-      .mob-filters::-webkit-scrollbar{display:none;}
 
-      /* category rows */
-      .mob-scroll-outer{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:80px;}
-      .mob-scroll-outer::-webkit-scrollbar{display:none;}
-
-      .cat-section{padding-bottom:6px;}
-      .cat-section-header{
-        display:flex;align-items:center;gap:9px;
-        padding:12px 18px 8px;
-      }
-      .cat-dot-badge{
-        width:8px;height:8px;border-radius:50%;flex-shrink:0;
-        box-shadow:0 0 6px currentColor;
-      }
-      .dot-b-web{background:var(--c-web);color:var(--c-web);}
-      .dot-b-java{background:var(--c-java);color:var(--c-java);}
-      .dot-b-game{background:var(--c-game);color:var(--c-game);}
-      .cat-section-name{font-size:0.75rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--white);}
-      .cat-count-chip{
-        font-size:0.58rem;font-weight:700;font-family:'Zen Kaku Gothic New',sans-serif;
-        color:var(--dim);background:var(--surface);border:1px solid var(--border);
-        border-radius:100px;padding:2px 7px;
-      }
-
-      .card-track{
-        display:flex;gap:12px;
-        overflow-x:auto;overflow-y:visible;
-        padding:2px 18px 10px;
-        scroll-snap-type:x mandatory;
+      /* FIX 3: make filter pills scroll horizontally so nothing gets squished */
+      .ch-right{
+        overflow-x:auto;
+        overflow-y:visible;
         scrollbar-width:none;
+        flex-wrap:nowrap;
         -webkit-overflow-scrolling:touch;
+        width:100%;
       }
-      .card-track::-webkit-scrollbar{display:none;}
-      .card-track .p-card{
-        flex-shrink:0;width:210px;
-        scroll-snap-align:start;
-        animation:none!important;opacity:1!important;transform:none!important;
-      }
-      .card-track .p-card:hover{transform:translateY(-4px) scale(1.01);}
+      .ch-right::-webkit-scrollbar{display:none;}
+      .filter-pill{white-space:nowrap;flex-shrink:0;}
 
-      .track-dots{
-        display:flex;gap:5px;justify-content:center;padding:2px 0 0;
-      }
-      .t-dot{
-        width:5px;height:5px;border-radius:50%;
-        background:rgba(124,92,252,.2);transition:all .3s;cursor:pointer;
-      }
-      .t-dot.active{
-        background:var(--accent);box-shadow:0 0 6px var(--glow);
-        width:16px;border-radius:3px;
+      /* FIX 2: card grid scrollable, no fixed height constraint */
+      .card-grid{
+        flex:unset;
+        overflow-y:visible;
+        overflow-x:hidden;
+        padding:16px 14px 100px;
+        grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+        gap:10px;
       }
 
-      .cat-divider{height:1px;margin:4px 18px;background:var(--border);}
+      /* FIX 1: smaller fixed thumb on mobile */
+      .card-thumb-wrap{height:110px;}
+
+      .card-title{font-size:0.78rem;}
+      .card-desc{font-size:0.66rem;-webkit-line-clamp:2;}
+
+      .mobile-section{display:none;}
     }
-    
 
-    
-    @media(max-width:380px){.card-track .p-card{width:185px;}}
+    /* ── LANDSCAPE on phone ── */
+    /* FIX 2: landscape — sidebar goes horizontal strip, content fills full width */
+    @media(max-height:500px) and (orientation:landscape){
+      .scene{
+        grid-template-columns:1fr;
+        grid-template-rows:auto 1fr;
+        height:auto;
+        min-height:100vh;
+      }
+
+      .sidebar{
+        border-right:none;
+        border-bottom:1px solid var(--border);
+        /* collapse sidebar to just the top bar in landscape */
+      }
+      .sidebar-body{display:none;}
+      .sidebar-top{padding:10px 18px;}
+      .sidebar-tag{display:none;}
+      .sidebar-title{font-size:0.9rem;}
+
+      .content{
+        display:flex;
+        flex-direction:column;
+        overflow:auto;          /* allow scrolling in landscape */
+      }
+
+      .content-header{
+        padding:10px 20px 8px;
+        position:sticky;top:0;z-index:5;
+        background:rgba(8,7,15,0.95);
+        backdrop-filter:blur(12px);
+        flex-wrap:wrap;
+        gap:8px;
+      }
+      /* FIX 2: pills scroll horizontally in landscape, never squish text */
+      .ch-right{
+        overflow-x:auto;
+        overflow-y:visible;
+        scrollbar-width:none;
+        flex-wrap:nowrap;
+        -webkit-overflow-scrolling:touch;
+        width:100%;
+      }
+      .ch-right::-webkit-scrollbar{display:none;}
+      .filter-pill{white-space:nowrap;flex-shrink:0;padding:5px 11px;font-size:0.58rem;}
+
+      .ch-pre{font-size:0.48rem;}
+      .ch-title{font-size:1rem;}
+
+      /* FIX 3: card grid — allow natural height in landscape */
+      .card-grid{
+        flex:unset;
+        overflow-y:visible;
+        overflow-x:hidden;
+        padding:14px 20px 80px;
+        grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+        gap:11px;
+        align-content:start;
+      }
+
+      .card-thumb-wrap{height:120px;}
+    }
+
+    @media(max-width:380px){
+      .card-grid{grid-template-columns:1fr;}
+    }
   </style>
 </head>
 <body>
@@ -357,7 +390,7 @@
       <p class="s-cat-label">Filter by type</p>
       <button class="s-cat-btn active" onclick="filterCat('all',this)">
         <span class="s-cat-dot dot-all" style="background:var(--muted);box-shadow:none;"></span>All Projects
-        <span class="s-cat-count">11</span>
+        <span class="s-cat-count">8</span>
       </button>
       <button class="s-cat-btn" onclick="filterCat('web',this)">
         <span class="s-cat-dot dot-web"></span>Web
@@ -373,9 +406,8 @@
       </button>
     </div>
   </aside>
-  
 
-      <div class="content">
+  <div class="content">
     <div class="content-header">
       <div class="ch-left">
         <p class="ch-pre">Jemmer Almoneda</p>
@@ -389,10 +421,9 @@
       </div>
     </div>
     <div class="card-grid" id="desktop-grid">
-  
-  
-     <!-- project cards here -->
-          <div class="p-card" data-cat="web">
+
+      <!-- WEB -->
+      <div class="p-card" data-cat="web">
         <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/Screenshot_20260328-135058_1.png" alt="Portfolio Site"><div class="card-overlay"></div><span class="card-badge badge-web">Web</span></div>
         <div class="card-body"><p class="card-title">Portfolio Site</p><p class="card-desc">A responsive personal portfolio website designed to showcase projects, skills, and experience, featuring interactive filtering, smooth animations, and modern UI design principles.</p><a class="card-link" href="https://github.com/shiruri/portfolio-page" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
       </div>
@@ -407,30 +438,17 @@
         <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/mpos.png" alt="MPOS System"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
         <div class="card-body"><p class="card-title">MPOS System</p><p class="card-desc">Point-of-sale system with transaction processing, admin features and Role based access.</p><a class="card-link" href="https://github.com/shiruri/MPOS" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
       </div>
-      
+
       <div class="p-card" data-cat="java">
         <div class="card-thumb-wrap"><img class="card-thumb" src="Documents/ELYSIUM.png" alt="Elysium"><div class="card-overlay"></div><span class="card-badge badge-java">Java</span></div>
         <div class="card-body"><p class="card-title">Elysium</p><p class="card-desc">A custom-built programming language inspired by BASIC, featuring its own syntax parsing, command execution, and interpreter logic written in Java.</p><a class="card-link" href="https://github.com/shiruri/Elysium/tree/main" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a></div>
       </div>
 
-      <!-- GAME -->
-  
-                                               
-        
-          <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/between.png" alt="Between Shared Umbrella"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Between Shared Umbrella</p><p class="card-desc">A cozy, one-shot visual novel created in under an hour just for fun. It follows Kai Nakamura and Miyako Aihara, two high school students who cross paths on a rainy day</p><a class="card-link" href="https://shiroi26.itch.io/between-shared-umbrella-oneshot" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
-          <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/digital.png" alt="Digital Love"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Digital Love</p><p class="card-desc">Digital code is perfect for players who enjoy a mix of romance, educational content, and interactive gameplay. Dive into the world of coding and relationships and see how your decisions shape the future of your character’s journey.</p><a class="card-link" href="https://shiroi26.itch.io/digital-love" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
-          <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/calendar.png" alt="Paperweight"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Paperweight</p><p class="card-desc">A narrative-driven visual novel developed using Ren'Py that explores themes of mental health, emotional struggle, and student life.</p><a class="card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
-          <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/untitledNote.png" alt="Untitled Note"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Untitled Note</p><p class="card-desc">Untitled Note is a short, dialogue-driven visual novel centered around a late-night conversation between two characters reconnecting after their first meeting.</p><a class="card-link" href="https://shiroi26.itch.io/untitled-note" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
-        </div>
-    
-      
-  
-  
-  <!-- ── DESKTOP CONTENT ── -->
-
-
-      <!-- WEB -->
-
+<!-- GAME -->
+      <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/between.png" alt="Between Shared Umbrella"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Between Shared Umbrella</p><p class="card-desc">A cozy, one-shot visual novel created in under an hour just for fun. It follows Kai Nakamura and Miyako Aihara, two high school students who cross paths on a rainy day</p><a class="card-link" href="https://shiroi26.itch.io/between-shared-umbrella-oneshot" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
+      <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/digital.png" alt="Digital Love"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Digital Love</p><p class="card-desc">Digital code is perfect for players who enjoy a mix of romance, educational content, and interactive gameplay. Dive into the world of coding and relationships.</p><a class="card-link" href="https://shiroi26.itch.io/digital-love" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
+      <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/calendar.png" alt="Paperweight"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Paperweight</p><p class="card-desc">A narrative-driven visual novel developed using Ren'Py that explores themes of mental health, emotional struggle, and student life.</p><a class="card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
+      <div class="p-card" data-cat="game"><div class="card-thumb-wrap"><img class="card-thumb" src="Documents/untitledNote.png" alt="Untitled Note"><div class="card-overlay"></div><span class="card-badge badge-game">Game</span></div><div class="card-body"><p class="card-title">Untitled Note</p><p class="card-desc">A short, dialogue-driven visual novel centered around a late-night conversation between two characters reconnecting after their first meeting.</p><a class="card-link" href="https://shiroi26.itch.io/untitled-note" target="_blank">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a></div></div>
 
     </div>
   </div>
@@ -445,8 +463,6 @@
     <a href="contacts.html">Contact</a>
   </div>
 </nav>
-  
-
 
 <script>
 const CATS = {all:'All Projects',web:'Web',java:'Java',game:'Game'};
@@ -477,38 +493,6 @@ function filterPill(cat,btn){
   document.querySelectorAll('.s-cat-btn').forEach(b=>{const txt=b.textContent.trim().toLowerCase();b.classList.toggle('active',cat==='all'?txt.startsWith('all'):txt.startsWith(cat));});
   syncFilter(cat);
 }
-
-/* mobile filter */
-function mobFilter(cat,btn){
-  document.querySelectorAll('.mob-filters .filter-pill').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.cat-section').forEach(s=>{
-    const show = cat==='all' || s.dataset.mobCat===cat;
-    s.style.display = show ? '' : 'none';
-  });
-  document.querySelectorAll('.cat-divider').forEach(d=>{d.style.display=cat==='all'?'':'none';});
-}
-
-/* track dots */
-function setupDots(trackId,dotsId){
-  const track=document.getElementById(trackId);
-  const dotsEl=document.getElementById(dotsId);
-  if(!track||!dotsEl) return;
-  const cards=track.querySelectorAll('.p-card');
-  if(cards.length<=1) return;
-  cards.forEach((_,i)=>{
-    const d=document.createElement('div');d.className='t-dot'+(i===0?' active':'');
-    d.addEventListener('click',()=>track.scrollTo({left:i*(cards[0].offsetWidth+12),behavior:'smooth'}));
-    dotsEl.appendChild(d);
-  });
-  track.addEventListener('scroll',()=>{
-    const idx=Math.round(track.scrollLeft/(cards[0].offsetWidth+12));
-    dotsEl.querySelectorAll('.t-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-  },{passive:true});
-}
-setupDots('mob-track-web','mob-dots-web');
-setupDots('mob-track-java','mob-dots-java');
-setupDots('mob-track-game','mob-dots-game');
 </script>
 </body>
-  </html>
+</html>
