@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stellar Dashboard</title>
+    <title>Jemmer Almoneda Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
@@ -96,23 +96,14 @@
         }
         @keyframes curtain-rise { 0%{transform:scaleY(1);} 100%{transform:scaleY(0);} }
 
-        .reveal-overlay {
+.reveal-overlay {
             position: fixed; inset: 0;
-            background: repeating-linear-gradient(90deg,rgba(0,0,0,0.15) 0px,rgba(0,0,0,0.15) 2px,transparent 2px,transparent 16px),
-                        linear-gradient(180deg, #7a0000 0%, #9b0000 50%, #5c0000 100%);
             z-index: 9999;
-            transform: translateY(100%);
             pointer-events: none;
-            transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+            display: none;
+            overflow: hidden;
+            background: var(--bg-gradient);
         }
-        .reveal-overlay::after, .reveal-overlay::before {
-            content:''; position: absolute; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, transparent, #c8a000 20%, #ffd700 50%, #c8a000 80%, transparent);
-        }
-        .reveal-overlay::after { top: 0; }
-        .reveal-overlay::before { bottom: 0; }
-        .reveal-overlay.closing { transform: translateY(0); }
-        .reveal-overlay.opening { transform: translateY(-100%); transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
 
         body {
             background: var(--bg-gradient);
@@ -429,14 +420,25 @@
             max-width: 680px; 
             max-height: 85vh;
             background: var(--modal-bg);
-            border: none;
             border-radius: 20px;
             display: flex; flex-direction: column;
-            box-shadow: 0 0 0 1px var(--modal-border), 0 25px 60px rgba(0,0,0,0.8);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
             transform: translateY(20px) scale(0.98);
             transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), opacity 0.3s;
             opacity: 0;
             z-index: 20;
+        }
+        body:not(.light-mode) .master-modal {
+            border: 2px solid #e63946;
+            box-shadow: 0 0 25px rgba(230, 57, 70, 0.35), 0 25px 60px rgba(0,0,0,0.8);
+        }
+        body.light-mode .master-modal {
+            border: 2px solid #000;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+        }
+        body.light-mode .master-modal {
+            border: 2px solid #000;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
         }
         
         .master-modal.modal-right {
@@ -507,11 +509,11 @@
         .modal-scrollable { 
             overflow-y: auto; flex: 1; 
             margin: 24px 18px 18px;
-            background: rgba(250, 245, 240, 0.92);
+            background: var(--modal-bg);
             border-radius: 12px;
-            color: #1a0510;
+            color: var(--modal-fg);
             scrollbar-width: thin; 
-            scrollbar-color: #cc2222 transparent;
+            scrollbar-color: var(--accent) transparent;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
             overscroll-behavior: contain;
@@ -520,7 +522,7 @@
         }
         .modal-scrollable::-webkit-scrollbar { width: 4px; }
         .modal-scrollable::-webkit-scrollbar-thumb { 
-            background: #cc2222; border-radius: 4px; 
+            background: var(--accent); border-radius: 4px; 
         }
         .modal-scrollable::-webkit-scrollbar-track { background: transparent; }
         
@@ -533,7 +535,7 @@
         .modal-scrollable .skill-info span:first-child,
         .modal-scrollable .contact-card-handle,
         .modal-scrollable .simple-modal-title {
-            color: #1a0510;
+            color: var(--modal-fg);
         }
         
         .modal-scrollable .stats-sub,
@@ -544,7 +546,7 @@
         .modal-scrollable .simple-modal-sub,
         .modal-scrollable .stat-label,
         .modal-scrollable .about-body-text {
-            color: rgba(30, 5, 20, 0.6);
+            color: var(--modal-muted);
         }
         
         .modal-scrollable .stat-card,
@@ -555,27 +557,27 @@
         .modal-scrollable .contact-card-item,
         .modal-scrollable .skill-bar,
         .modal-scrollable .stat-bar {
-            background: rgba(255,255,255,0.55);
-            border-color: rgba(180, 30, 30, 0.15);
+            background: var(--modal-surface);
+            border-color: var(--modal-border);
         }
         
         .modal-scrollable .tech-tag {
-            background: rgba(200, 30, 30, 0.1);
-            border-color: rgba(200, 30, 30, 0.25);
-            color: #aa1111;
+            background: var(--modal-surface);
+            border-color: var(--modal-border);
+            color: var(--modal-accent);
         }
 
         .modal-scrollable .proj-filter-pill {
-            color: rgba(30, 5, 20, 0.7);
-            border-color: rgba(30, 5, 20, 0.15);
+            color: var(--modal-fg);
+            border-color: var(--modal-border);
         }
         .modal-scrollable .proj-filter-pill:hover {
-            color: #cc2222;
-            border-color: rgba(200, 30, 30, 0.3);
+            color: var(--accent);
+            border-color: var(--modal-border-hi);
         }
         .modal-scrollable .proj-filter-pill.active {
-            background: rgba(200, 30, 30, 0.1);
-            border-color: rgba(200, 30, 30, 0.3);
+            background: rgba(200, 30, 30, 0.15);
+            border-color: rgba(200, 30, 30, 0.4);
             color: #aa1111;
             box-shadow: none;
         }
@@ -677,8 +679,7 @@
         
         .stats-tech { padding: 16px; background: var(--modal-surface); border: 1px solid var(--modal-border); border-radius: 14px; }
         .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-        .tech-tag { padding: 4px 10px; background: rgba(255,77,77,0.15); border: 1px solid rgba(255,77,77,0.3); border-radius: 100px; font-size: 0.6rem; color: var(--accent); font-weight: 500; }
-        body.light-mode .tech-tag { background: rgba(232,60,122,0.15); border-color: rgba(232,60,122,0.3); color: #e83c7a; }
+        .tech-tag { padding: 4px 10px; background: var(--modal-surface); border: 1px solid var(--modal-border); border-radius: 100px; font-size: 0.6rem; color: var(--modal-accent); font-weight: 500; }
         
         .projects-modal-inner { padding: 24px 20px 32px; display: flex; flex-direction: column; gap: 16px; }
         .projects-header { padding-bottom: 16px; border-bottom: 1px solid var(--modal-border); }
@@ -689,8 +690,10 @@
         .proj-filter-pill { 
             padding: 6px 14px; border-radius: 20px; 
             font-size: 0.75rem; font-weight: 500;
-            background: transparent; border: 1px solid var(--modal-border);
-            color: var(--modal-muted); cursor: pointer;
+            background: var(--modal-surface);
+            border: 1px solid var(--modal-border);
+            color: var(--modal-muted); 
+            cursor: pointer;
             transition: all 0.2s;
         }
         .proj-filter-pill:hover { border-color: var(--modal-border-hi); color: var(--accent); }
@@ -716,7 +719,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s, border-color 0.2s;
             position: relative; will-change: transform;
         }
-        .proj-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 12px var(--accent-glow); }
+        .proj-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 12px var(--accent-glow); cursor: pointer; }
         .proj-card-thumb { height: 100px; overflow: hidden; position: relative; background: rgba(255,255,255,0.03); }
         .proj-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; filter: saturate(0.85) brightness(0.9); }
         .proj-card:hover .proj-card-thumb img { transform: scale(1.04); filter: saturate(1) brightness(1); }
@@ -741,6 +744,65 @@
         }
         .proj-card-link:hover { background: rgba(255,77,77,0.22); border-color: var(--modal-accent); color: var(--modal-fg); }
         .proj-card-link svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ══ PROJECT DETAIL PANEL ══ */
+        .project-detail-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 9999;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .project-detail-overlay.open { opacity: 1; pointer-events: auto; }
+
+        .project-detail {
+            position: fixed; top: 0; right: -500px;
+            width: 480px; max-width: 100%; height: 100vh;
+            background: var(--modal-bg);
+            z-index: 10000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+        }
+        body:not(.light-mode) .project-detail {
+            border-left: 3px solid #e63946;
+        }
+        body.light-mode .project-detail {
+            border-left: 4px solid #000;
+        }
+        .project-detail.open { right: 0; }
+        .project-detail-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--modal-surface);
+            border: 1px solid var(--modal-border);
+            color: var(--modal-fg);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .project-detail-close:hover { background: var(--accent); border-color: var(--accent); color: white; }
+        .project-detail-thumb { width: 100%; height: 220px; object-fit: cover; border-radius: 0; }
+        .project-detail-header { padding: 20px; border-bottom: 1px solid var(--modal-border); }
+        .project-detail-badge {
+            display: inline-block; padding: 4px 12px; border-radius: 100px;
+            font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;
+        }
+        .project-detail-title { font-size: 1.5rem; font-weight: 700; color: var(--modal-fg); margin-bottom: 8px; }
+        .project-detail-content { padding: 20px; }
+        .project-detail-desc { font-size: 0.9rem; color: var(--modal-muted); line-height: 1.7; margin-bottom: 20px; }
+        .project-detail-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px; background: var(--accent); color: white;
+            text-decoration: none; border-radius: 8px;
+            font-weight: 600; font-size: 0.85rem; transition: all 0.2s;
+        }
+        .project-detail-link:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,77,77,0.3); }
+
+        @media (max-width: 600px) {
+            .project-detail { width: 100%; right: -100%; }
+        }
 
         /* ══ CONTACT MODAL LAYOUT ══ */
         .contact-modal-inner { padding: 32px 28px 36px; display: flex; flex-direction: column; gap: 20px; }
@@ -848,7 +910,10 @@
         <div class="curtain-left"></div>
         <div class="curtain-right"></div>
     </div>
-    <div class="reveal-overlay" id="reveal-overlay"></div>
+    <div class="reveal-overlay" id="reveal-overlay">
+        <div class="reveal-curtain reveal-left"></div>
+        <div class="reveal-curtain reveal-right"></div>
+    </div>
 
     <!-- ══ MASTER MODAL WITH SPARKLE/SPARXIE HSR SVG THEME BORDERS ══ -->
     <div class="master-modal-backdrop" id="master-modal" onclick="handleModalBackdrop(event)">
@@ -1021,7 +1086,7 @@
             <!-- 2: Stats -->
             <div class="glass app-icon" onclick="openStatsModal()" title="Stats">
                 <div class="mini-stats">
-                    <span class="mini-stat-num">5</span>
+                    <span class="mini-stat-num" id="header-stat-num">-</span>
                     <span class="mini-stat-label">PROJ</span>
                 </div>
             </div>
@@ -1168,75 +1233,99 @@
 
     <!-- STATS TEMPLATE -->
     <template id="tpl-stats">
-        <div class="stats-modal-inner">
-            <div class="stats-header">
+        <div class="projects-modal-inner">
+            <div class="projects-header">
                 <p style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--modal-accent2);margin-bottom:6px;">Analytics</p>
-                <h2 class="stats-title">Dev Stats</h2>
-                <p class="stats-sub">Project breakdown &amp; skill analysis</p>
+                <h2 class="projects-title">Dev Stats</h2>
+                <p class="projects-sub">Project breakdown &amp; skill analysis</p>
             </div>
             
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-code"></i></div>
-                    <div class="stat-value">5</div>
-                    <div class="stat-label">Total Projects</div>
-                    <div class="stat-bar"><div class="stat-fill" style="width:100%"></div></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-globe"></i></div>
-                    <div class="stat-value">2</div>
-                    <div class="stat-label">Web</div>
-                    <div class="stat-bar"><div class="stat-fill" style="width:40%"></div></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-coffee"></i></div>
-                    <div class="stat-value">2</div>
-                    <div class="stat-label">Java</div>
-                    <div class="stat-bar"><div class="stat-fill" style="width:40%"></div></div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-gamepad"></i></div>
-                    <div class="stat-value">1</div>
-                    <div class="stat-label">Games</div>
-                    <div class="stat-bar"><div class="stat-fill" style="width:20%"></div></div>
-                </div>
-            </div>
-            
-            <div class="stats-skills">
-                <p class="panel-label">Skill Proficiency</p>
-                <div class="skill-bars">
-                    <div class="skill-item">
-                        <div class="skill-info"><span>Java</span><span class="skill-pct">90%</span></div>
-                        <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+            <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="proj-card" style="background: var(--modal-surface); border: 1px solid var(--modal-border);">
+                    <div style="padding: 16px; text-align: center;">
+                        <i class="fas fa-code" style="font-size:1.5rem; color: var(--modal-accent2); margin-bottom:8px;"></i>
+                        <div class="proj-card-title stats-total" style="font-size: 1.8rem; font-weight: 700;">-</div>
+                        <div style="font-size: 0.7rem; color: var(--modal-muted);">Total Projects</div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-info"><span>Spring Boot</span><span class="skill-pct">75%</span></div>
-                        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+                </div>
+                <div class="proj-card" style="background: var(--modal-surface); border: 1px solid var(--modal-border);">
+                    <div style="padding: 16px; text-align: center;">
+                        <i class="fas fa-globe" style="font-size:1.5rem; color: var(--modal-accent2); margin-bottom:8px;"></i>
+                        <div class="proj-card-title stats-web" style="font-size: 1.8rem; font-weight: 700;">-</div>
+                        <div style="font-size: 0.7rem; color: var(--modal-muted);">Web</div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-info"><span>HTML/CSS</span><span class="skill-pct">85%</span></div>
-                        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+                </div>
+                <div class="proj-card" style="background: var(--modal-surface); border: 1px solid var(--modal-border);">
+                    <div style="padding: 16px; text-align: center;">
+                        <i class="fas fa-coffee" style="font-size:1.5rem; color: var(--modal-accent2); margin-bottom:8px;"></i>
+                        <div class="proj-card-title stats-java" style="font-size: 1.8rem; font-weight: 700;">-</div>
+                        <div style="font-size: 0.7rem; color: var(--modal-muted);">Java</div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-info"><span>Ren'Py</span><span class="skill-pct">70%</span></div>
-                        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info"><span>MySQL</span><span class="skill-pct">80%</span></div>
-                        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+                </div>
+                <div class="proj-card" style="background: var(--modal-surface); border: 1px solid var(--modal-border);">
+                    <div style="padding: 16px; text-align: center;">
+                        <i class="fas fa-gamepad" style="font-size:1.5rem; color: var(--modal-accent2); margin-bottom:8px;"></i>
+                        <div class="proj-card-title stats-game" style="font-size: 1.8rem; font-weight: 700;">-</div>
+                        <div style="font-size: 0.7rem; color: var(--modal-muted);">Games</div>
                     </div>
                 </div>
             </div>
             
-            <div class="stats-tech">
-                <p class="panel-label">Tech Stack</p>
-                <div class="tech-tags">
+            <div>
+                <p class="panel-label" style="margin-bottom: 12px;">Skill Proficiency</p>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                            <span>Java</span><span style="color: var(--modal-accent2);">90%</span>
+                        </div>
+                        <div style="height: 6px; background: rgba(255,77,77,0.15); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 90%; height: 100%; background: var(--modal-accent); border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                            <span>Spring Boot</span><span style="color: var(--modal-accent2);">75%</span>
+                        </div>
+                        <div style="height: 6px; background: rgba(255,77,77,0.15); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 75%; height: 100%; background: var(--modal-accent); border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                            <span>HTML/CSS</span><span style="color: var(--modal-accent2);">85%</span>
+                        </div>
+                        <div style="height: 6px; background: rgba(255,77,77,0.15); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 85%; height: 100%; background: var(--modal-accent); border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                            <span>MySQL</span><span style="color: var(--modal-accent2);">80%</span>
+                        </div>
+                        <div style="height: 6px; background: rgba(255,77,77,0.15); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 80%; height: 100%; background: var(--modal-accent); border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px;">
+                            <span>Ren'Py</span><span style="color: var(--modal-accent2);">70%</span>
+                        </div>
+                        <div style="height: 6px; background: rgba(255,77,77,0.15); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 70%; height: 100%; background: var(--modal-accent); border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <p class="panel-label" style="margin-bottom: 10px;">Tech Stack</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
                     <span class="tech-tag">Java</span>
                     <span class="tech-tag">Spring Boot</span>
                     <span class="tech-tag">MySQL</span>
                     <span class="tech-tag">HTML</span>
                     <span class="tech-tag">CSS</span>
-                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">JS</span>
                     <span class="tech-tag">Ren'Py</span>
                     <span class="tech-tag">Swing</span>
                 </div>
@@ -1259,8 +1348,8 @@
                 <button class="proj-filter-pill" onclick="filterProjects('game',this)">Game</button>
             </div>
             <div class="proj-grid" id="proj-grid">
-                <!-- WEB -->
-                <div class="proj-card" data-cat="web">
+                <!-- Project cards will be clickable -->
+                <div class="proj-card" data-cat="web" onclick="openProjectDetail(this)">
                     <div class="proj-card-thumb">
                         <img src="Documents/Screenshot_20260328-135058_1.png" alt="Portfolio Site" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%237c5cfc%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Portfolio</text></svg>'">
                         <div class="proj-card-overlay"></div>
@@ -1273,7 +1362,7 @@
                     </div>
                 </div>
                 <!-- JAVA -->
-                <div class="proj-card" data-cat="java">
+                <div class="proj-card" data-cat="java" onclick="openProjectDetail(this)">
                     <div class="proj-card-thumb">
                         <img src="Documents/Javapass.png" alt="Password Manager" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23fb923c%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Java</text></svg>'">
                         <div class="proj-card-overlay"></div>
@@ -1285,7 +1374,7 @@
                         <a class="proj-card-link" href="https://github.com/shiruri/passmanager" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
                     </div>
                 </div>
-                <div class="proj-card" data-cat="java">
+                <div class="proj-card" data-cat="java" onclick="openProjectDetail(this)">
                     <div class="proj-card-thumb">
                         <img src="Documents/mpos.png" alt="MPOS System" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23fb923c%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>MPOS</text></svg>'">
                         <div class="proj-card-overlay"></div>
@@ -1297,7 +1386,7 @@
                         <a class="proj-card-link" href="https://github.com/shiruri/MPOS" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
                     </div>
                 </div>
-                <div class="proj-card" data-cat="java">
+                <div class="proj-card" data-cat="java" onclick="openProjectDetail(this)">
                     <div class="proj-card-thumb">
                         <img src="Documents/ELYSIUM.png" alt="Elysium" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23fb923c%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Elysium</text></svg>'">
                         <div class="proj-card-overlay"></div>
@@ -1309,7 +1398,7 @@
                         <a class="proj-card-link" href="https://github.com/shiruri/Elysium/tree/main" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
                     </div>
                 </div>
-                <div class="proj-card" data-cat="java">
+                <div class="proj-card" data-cat="java" onclick="openProjectDetail(this)">
                     <div class="proj-card-thumb">
                         <img src="Documents/Screenshot_27-4-2026_103128_.jpeg" alt="Cosnima" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23fb923c%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Cosnima</text></svg>'">
                         <div class="proj-card-overlay"></div>
@@ -1322,7 +1411,7 @@
                     </div>
                 </div>
                 <!-- GAME -->
-                <div class="proj-card" data-cat="game">
+                <div class="proj-card" data-cat="game" onclick="openProjectDetail(this)">
                     <div class="proj-card-thumb">
                         <img src="Documents/digital.png" alt="Digital Love" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23a78bfa%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Game</text></svg>'">
                         <div class="proj-card-overlay"></div>
@@ -1334,7 +1423,7 @@
                         <a class="proj-card-link" href="https://shiroi26.itch.io/digital-love" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
                     </div>
                 </div>
-                <div class="proj-card" data-cat="game">
+                <div class="proj-card" data-cat="game" onclick="openProjectDetail(this)">
                     <div class="proj-card-thumb">
                         <img src="Documents/calendar.png" alt="Paperweight" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23a78bfa%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Game</text></svg>'">
                         <div class="proj-card-overlay"></div>
@@ -1346,7 +1435,7 @@
                         <a class="proj-card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
                     </div>
                 </div>
-                <div class="proj-card" data-cat="game">
+                <div class="proj-card" data-cat="game" onclick="openProjectDetail(this)">
                     <div class="proj-card-thumb">
                         <img src="Documents/untitledNote.png" alt="Untitled Note" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23a78bfa%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Game</text></svg>'">
                         <div class="proj-card-overlay"></div>
@@ -1405,14 +1494,13 @@
                 <a class="contact-card-item" href="https://shiroi26.itch.io/" target="_blank">
                     <div class="contact-icon-wrap">
                         <svg viewBox="0 0 24 24" fill="var(--modal-accent2)"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.107 2.41 2.437 2.41h.024c1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.034 2.41 2.362 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612C19.948.768 12.17.73 11.977.73c-.193 0-7.977.038-8.848.608zm8.84 8.965c-.63.006-1.228.05-1.72.135-1.308.232-1.543.715-1.543 1.61v1.172H12v.39H8.336c-.78 0-1.46.468-1.675 1.358-.25.998-.26 1.622 0 2.665.193.777.655 1.292 1.435 1.292h.928v-1.404c0-.886.768-1.666 1.675-1.666h3.35c.746 0 1.343-.614 1.343-1.362V11.05c0-.726-.614-1.27-1.343-1.392-.46-.074-1.098-.12-1.702-.128-.173-.002-.338-.003-.496-.002v-.003c-.16-.002-.33-.004-.5-.002zm-1.78 1.02c.277 0 .503.226.503.505 0 .277-.226.503-.503.503-.278 0-.504-.226-.504-.503 0-.28.226-.504.504-.504zm3.165 4.63v1.366c0 .92-.786 1.708-1.675 1.708H8.336c-.737 0-1.343.63-1.343 1.362v2.546c0 .726.632 1.154 1.343 1.362.85.25 1.666.294 2.672 0 .673-.195 1.343-.586 1.343-1.362v-1.022H9.68v-.342h4.013c.78 0 1.07-.544 1.343-1.362.28-.845.268-1.656 0-2.74-.192-.78-.562-1.362-1.343-1.362l-.313-.003v-.002h-.003zm-2.21 3.706c.277 0 .503.226.503.504 0 .278-.226.504-.503.504-.278 0-.504-.226-.504-.504 0-.278.226-.504.504-.504z"/></svg>
-                            itch.io
-                        </a>
-                        <a class="about-link-chip" href="https://www.facebook.com/shirobako2" target="_blank">
-                            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                            Facebook
-                        </a>
                     </div>
-                </div>
+                    <div class="contact-card-info">
+                        <p class="contact-card-platform">itch.io</p>
+                        <p class="contact-card-handle">shiroi26.itch.io</p>
+                    </div>
+                    <div class="contact-arrow-btn"><svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></div>
+                </a>
             </div>
         </div>
     </template>
@@ -1476,17 +1564,42 @@
             startOverlay.style.opacity = '0';
             setTimeout(() => { startOverlay.style.display = 'none'; }, 800);
         }, 1200);
+        
+        // Set initial project count from template
+        updateStatsCounts();
     });
 
-    function playRevealTransition() {
-        revealOverlay.classList.remove('opening');
-        revealOverlay.classList.add('closing');
+function playRevealTransition() {
+        const overlay = revealOverlay;
+        
+        overlay.style.cssText = `
+            display: block;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            background: linear-gradient(135deg, #0a0510, #1a0a18, #0a0510);
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        `;
+        
+        // Fade in
+        requestAnimationFrame(() => {
+            overlay.style.opacity = '1';
+        });
+        
+        // Toggle and fade out
+        setTimeout(() => {
+            overlay.style.opacity = '0';
+        }, 700);
+        
         setTimeout(() => {
             document.body.classList.toggle('light-mode');
-            revealOverlay.classList.remove('closing');
-            revealOverlay.classList.add('opening');
-            setTimeout(() => { revealOverlay.classList.remove('opening'); }, 950);
-        }, 750);
+        }, 1000);
+        
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 1500);
     }
 
     function openModal(templateId) {
@@ -1503,10 +1616,14 @@
         document.body.style.overflow = 'hidden';
     }
 
-    function openProjectsModal() { 
-        openModal('tpl-projects'); 
-        setTimeout(() => masterModal.classList.add('modal-right'), 10);
-    }
+function openProjectsModal() { 
+            openModal('tpl-projects'); 
+            setTimeout(() => masterModal.classList.add('modal-right'), 10);
+            setTimeout(() => {
+                const projCards = document.querySelectorAll('#proj-grid .proj-card[data-cat]');
+                document.getElementById('header-stat-num').textContent = projCards.length;
+            }, 100);
+        }
 
     function closeModal() {
         masterModal.classList.remove('open', 'modal-right');
@@ -1521,7 +1638,11 @@
 
     function openAboutModal()    { openModal('tpl-about'); }
     function openContactModal()  { openModal('tpl-contact'); }
-    function openStatsModal()     { openModal('tpl-stats'); }
+    function openStatsModal()     { 
+            openModal('tpl-stats'); 
+            setTimeout(() => masterModal.classList.add('modal-right'), 10);
+            setTimeout(updateStatsCounts, 100);
+        }
     
     function filterProjects(cat, btn) {
         const cards = document.querySelectorAll('.proj-card');
@@ -1534,6 +1655,43 @@
                 card.style.display = 'none';
             }
         });
+    }
+    
+    function updateStatsCounts() {
+        // Get projects from template or modal
+        let allCards, webCards, javaCards, gameCards;
+        
+        const projGridInModal = document.querySelector('#proj-grid');
+        if (projGridInModal) {
+            allCards = projGridInModal.querySelectorAll('.proj-card[data-cat]');
+            webCards = projGridInModal.querySelectorAll('.proj-card[data-cat="web"]');
+            javaCards = projGridInModal.querySelectorAll('.proj-card[data-cat="java"]');
+            gameCards = projGridInModal.querySelectorAll('.proj-card[data-cat="game"]');
+        } else {
+            // Count from template
+            const tpl = document.getElementById('tpl-projects');
+            if (tpl) {
+                const content = tpl.content;
+                allCards = content.querySelectorAll('.proj-card[data-cat]');
+                webCards = content.querySelectorAll('.proj-card[data-cat="web"]');
+                javaCards = content.querySelectorAll('.proj-card[data-cat="java"]');
+                gameCards = content.querySelectorAll('.proj-card[data-cat="game"]');
+            }
+        }
+        
+        if (!allCards) return;
+        
+        const headerEl = document.getElementById('header-stat-num');
+        const totalEl = document.querySelector('.stats-total');
+        const webEl = document.querySelector('.stats-web');
+        const javaEl = document.querySelector('.stats-java');
+        const gameEl = document.querySelector('.stats-game');
+        
+        if (headerEl) headerEl.textContent = allCards.length;
+        if (totalEl) totalEl.textContent = allCards.length;
+        if (webEl) webEl.textContent = webCards.length;
+        if (javaEl) javaEl.textContent = javaCards.length;
+        if (gameEl) gameEl.textContent = gameCards.length;
     }
     
     function rollDice() {
@@ -1585,6 +1743,58 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
+
+    // Project Detail Panel
+    function openProjectDetail(card) {
+        const title = card.querySelector('.proj-card-title').textContent;
+        const desc = card.querySelector('.proj-card-desc').textContent;
+        const badge = card.querySelector('.proj-card-badge').textContent;
+        const img = card.querySelector('.proj-card-thumb img');
+        const imgSrc = img ? img.src : '';
+        const link = card.querySelector('.proj-card-link');
+
+        const panel = document.getElementById('project-detail-panel');
+        const overlay = document.getElementById('project-detail-overlay');
+
+        panel.querySelector('.project-detail-thumb').src = imgSrc || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22480%22 height=%22220%22><rect fill=%22%23161025%22 width=%22480%22 height=%22220%22/><text x=%22250%22 y=%22110%22 fill=%22%236366f4%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.3em%22>No Image</text></svg>';
+        panel.querySelector('.project-detail-badge').textContent = badge;
+        panel.querySelector('.project-detail-title').textContent = title;
+        panel.querySelector('.project-detail-desc').textContent = desc;
+
+        const linkEl = panel.querySelector('.project-detail-link');
+        if (link) {
+            linkEl.href = link.href;
+            linkEl.style.display = 'inline-flex';
+        } else {
+            linkEl.style.display = 'none';
+        }
+
+        overlay.classList.add('open');
+        panel.classList.add('open');
+    }
+
+    function closeProjectDetail() {
+        document.getElementById('project-detail-panel').classList.remove('open');
+        document.getElementById('project-detail-overlay').classList.remove('open');
+    }
 </script>
+
+<!-- Project Detail Panel -->
+<div class="project-detail-overlay" id="project-detail-overlay" onclick="closeProjectDetail()"></div>
+<div class="project-detail" id="project-detail-panel">
+    <div class="project-detail-header">
+        <button class="project-detail-close" onclick="closeProjectDetail()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <img class="project-detail-thumb" src="" alt="Project">
+    </div>
+    <div class="project-detail-content">
+        <span class="project-detail-badge"></span>
+        <h2 class="project-detail-title"></h2>
+        <p class="project-detail-desc"></p>
+        <a class="project-detail-link" href="" target="_blank">View Project <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+    </div>
+</div>
+
 </body>
 </html>
