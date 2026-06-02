@@ -435,15 +435,31 @@ body.no-anim .window.active{animation:none}
 .music-volume{width:120px;height:16px}
 .music-now{font-size:10px;color:#666;font-family:'MS Sans Serif',Tahoma,sans-serif;font-style:italic}
 
+/* ===== RESPONSIVE ===== */
+
+/* Tablet 701-1024 */
+@media(min-width:701px)and(max-width:1024px){
+  .window{left:10px!important;right:10px;width:auto!important;max-width:calc(100vw - 20px)!important;top:80px!important}
+  .window-body{max-height:55vh}
+  .icons{top:12px;left:12px;gap:16px}
+  .icon{width:68px}
+  .proj-explorer{height:300px}
+  .tb-btn{width:20px;height:18px;font-size:11px}
+  .taskbar{height:34px}
+  .task-tab{min-width:70px;font-size:12px;height:26px}
+  .shutdown-confirm-dialog{width:380px}
+}
+
+/* Mobile ≤700 */
 @media(max-width:700px){
   .resize-handle{display:none}
   .desktop{background:var(--win-bg) url('Documents/mob-wall.jpg') center/cover no-repeat}
   .icons{flex-direction:row;flex-wrap:wrap;gap:8px;top:8px;left:8px;max-height:60px;overflow:hidden}
-  .icon{width:60px;gap:2px;padding:3px}
+  .icon{width:60px;gap:2px;padding:3px;-webkit-tap-highlight-color:transparent}
   .icon img{width:28px;height:28px}
   .icon span{font-size:9px}
-  .window{left:4px!important;right:4px;width:auto!important;max-width:calc(100vw - 8px)!important;top:74px!important}
-  .window-body{max-height:50vh}
+  .window{left:4px!important;right:4px;width:auto!important;max-width:calc(100vw - 8px)!important;top:78px!important}
+  .window-body{max-height:50vh;padding:8px}
   .about-top{flex-direction:column;align-items:flex-start}
   .about-avatar{width:48px;height:48px}
   .proj-explorer{flex-direction:column;height:auto}
@@ -453,38 +469,62 @@ body.no-anim .window.active{animation:none}
   .shutdown-confirm-dialog{width:auto;margin:0 8px}
   .shutdown-confirm-body{flex-direction:column;align-items:center;text-align:center}
   .shutdown-confirm-img{max-height:48px}
-  .tb-btn{width:22px;height:20px;font-size:11px}
-  .taskbar{height:36px;padding:2px 4px}
-  .task-tab{min-width:50px;font-size:10px;padding:2px 6px;height:28px}
-  .taskbar-right{font-size:10px;padding:2px 6px;white-space:nowrap;flex-shrink:0}
-  .start-btn{font-size:10px;padding:2px 6px;height:28px}
-  .task-tabs{overflow-x:auto;gap:2px}
+  .tb-btn{width:32px;height:28px;font-size:14px}
+  .taskbar{height:40px;padding:2px 4px}
+  .task-tab{min-width:60px;font-size:11px;padding:2px 6px;height:32px}
+  .taskbar-right{font-size:11px;padding:2px 6px;white-space:nowrap;flex-shrink:0}
+  .start-btn{font-size:11px;padding:2px 6px;height:32px;min-width:60px}
+  .task-tabs{overflow-x:auto;gap:2px;scroll-behavior:smooth}
+  .titlebar{padding:3px 5px}
+  .titlebar-icon{width:18px;height:18px}
+  .titlebar-btns{gap:4px}
+  .menubar{font-size:13px;padding:3px 5px}
+  .addressbar{padding:3px 5px;gap:4px}
+  .addressbar span{font-size:10px;white-space:nowrap}
+  .contact-row{padding:10px 8px}
+  .music-controls{flex-wrap:wrap;gap:6px}
+  .music-volume{width:100%;margin-top:4px}
+  .ie-toolbar{gap:4px;padding:4px}
+  .ie-btn{width:28px;height:26px;font-size:12px}
+  .game-splash-img{max-height:160px}
+  .java-term{font-size:12px;padding:5px}
+  .start-menu{width:180px;left:2px;bottom:40px}
+  .start-item{padding:8px 10px;font-size:13px}
 }
 
+/* Small mobile ≤480 */
 @media(max-width:480px){
-  .window{min-width:auto}
+  .window{min-width:auto;top:72px!important}
   .window-body{max-height:40vh;padding:6px;font-size:11px}
   .titlebar-text{font-size:11px}
+  .titlebar{padding:2px 4px}
+  .titlebar-btns{gap:3px}
   .icons{gap:4px;top:4px;left:4px}
-  .icon{width:52px}
+  .icon{width:52px;padding:2px}
   .icon img{width:22px;height:22px}
   .icon span{font-size:8px}
-  .task-tab{min-width:44px;font-size:9px;padding:2px 4px}
-  .taskbar{height:34px}
-  .taskbar-right{font-size:9px}
-  .start-btn{font-size:9px;padding:2px 4px;height:26px}
-  .tb-btn{width:20px;height:18px;font-size:10px}
-}
-
-@media(max-width:480px){
-  .window{min-width:auto}
-  .task-tab{min-width:50px;font-size:10px;padding:2px 4px}
-  .start-btn{font-size:10px;padding:2px 4px}
+  .task-tab{min-width:54px;font-size:10px;padding:2px 4px;height:30px}
+  .taskbar{height:38px;padding:2px 3px}
   .taskbar-right{font-size:10px;padding:2px 4px}
-  .window-body{max-height:40vh;padding:6px;font-size:11px}
-  .titlebar-text{font-size:11px}
-  .icons{gap:4px;top:4px;left:4px}
-  .icon{width:52px}
-  .icon img{width:22px;height:22px}
-  .icon span{font-size:8px}
+  .start-btn{font-size:10px;padding:2px 4px;height:30px;min-width:50px}
+  .tb-btn{width:28px;height:24px;font-size:13px}
+  .start-logo{width:14px;height:14px}
+  .start-menu{width:160px;font-size:12px}
+  .start-item{padding:6px 8px;font-size:12px}
+  .start-menu-header{font-size:12px;padding:4px 6px}
+  .start-menu-header img{width:16px;height:16px}
+  .menubar{font-size:11px;gap:8px;padding:2px 4px}
+  .ie-btn{width:24px;height:22px;font-size:11px}
+  .ie-addr{font-size:10px;min-width:60px}
+  .proj-files{height:160px}
+  .game-splash-img{max-height:130px}
+  .game-launch-btn{font-size:15px;padding:8px 16px}
+  .java-term{font-size:11px;min-height:60px}
+  .music-gif-wrap{width:80px;height:80px}
+  .music-title{font-size:13px}
+  .music-btn{width:28px;height:26px;font-size:13px}
+  .shutdown-confirm-img{max-height:40px}
+  .contact-head{font-size:14px}
+  .contact-handle{font-size:11px}
+  .start-item img{width:14px;height:14px}
 }

@@ -75,6 +75,7 @@ function dragStart(e,id){
   if(id.indexOf('win-')!==0)id='win-'+id;
   var w=document.getElementById(id);
   if(!w||w.dataset.max==='true')return;
+  if(e.target.closest('.titlebar-btns')||e.target.closest('.menubar'))return;
   dragEl=w;
   var pos=getEventPos(e);
   dragOff.x=pos.x-w.offsetLeft;
