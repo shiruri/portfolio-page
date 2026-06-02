@@ -528,3 +528,19 @@ body.no-anim .window.active{animation:none}
   .contact-handle{font-size:11px}
   .start-item img{width:14px;height:14px}
 }
+
+/* ROTATE OVERLAY */
+.rotate-overlay{display:none}
+@media(max-width:768px)and(orientation:portrait){
+  .rotate-overlay{
+    display:flex;position:fixed;inset:0;z-index:99999;
+    background:#000080;color:#fff;
+    flex-direction:column;align-items:center;justify-content:center;
+    font-family:'MS Sans Serif',Tahoma,sans-serif;text-align:center;
+    padding:20px;
+  }
+  .rotate-icon{font-size:48px;margin-bottom:16px;animation:rotateHint 2s ease-in-out infinite}
+  .rotate-text{font-size:20px;font-weight:700;margin-bottom:8px}
+  .rotate-sub{font-size:13px;color:#c0c0ff}
+  @keyframes rotateHint{0%,100%{transform:rotate(0deg)}50%{transform:rotate(90deg)}}
+}
