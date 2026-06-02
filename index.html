@@ -1,1428 +1,503 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jemmer Almoneda Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --accent:           #ff4d4d;
-            --accent-glow:      rgba(255, 77, 77, 0.5);
-            --bg-dark:          #0f0c11;
-            --bg-gradient:      radial-gradient(circle at top left, #2d0a0a, #0f0c11);
-            --glass-bg:         rgba(255, 255, 255, 0.03);
-            --blur-val:         25px;
-            --text-color:       #e2e8f0;
-            --text-dim:         rgba(226, 232, 240, 0.4);
-            --border-color:     rgba(255, 255, 255, 0.1);
-            --transition-speed: 0.8s;
-            --spark-color:      #c8a0ff;
-            --star-fill:        #c8a0ff;
-            --scan-tint:        rgba(180, 120, 255, 0.10);
-            --scene-glow-out:   rgba(140, 60, 255, 0.40);
-            --scene-glow-in:    rgba(100, 30, 200, 0.18);
-            --curtain-color:    #5c0000;
-            --modal-bg:         rgba(12,10,22,0.98);
-            --modal-surface:    rgba(255,255,255,0.045);
-            --modal-border:     rgba(255,255,255,0.08);
-            --modal-border-hi:  rgba(255,77,77,0.45);
-            --modal-accent:     #ff4d4d;
-            --modal-accent2:    #ff6b6b;
-            --modal-glow:       rgba(255,77,77,0.28);
-            --modal-fg:         #f8f6ff;
-            --modal-muted:      rgba(248,246,255,0.52);
-            --modal-dim:        rgba(248,246,255,0.26);
-        }
-
-        body.light-mode {
-            --accent:           #e83c7a;
-            --accent-glow:      rgba(232, 60, 122, 0.30);
-            --bg-dark:          #1a0510;
-            --bg-gradient:      radial-gradient(ellipse at 30% 0%, #3d0820 0%, #1a0510 45%, #0a0018 100%);
-            --glass-bg:         rgba(255, 255, 255, 0.055);
-            --blur-val:         20px;
-            --text-color:       #f0e8f5;
-            --text-dim:         rgba(220, 195, 235, 0.45);
-            --border-color:     rgba(232, 60, 122, 0.18);
-            --spark-color:      #e83c7a;
-            --star-fill:        #00d4ff;
-            --scan-tint:        rgba(232, 60, 122, 0.10);
-            --scene-glow-out:   rgba(200, 16, 46, 0.45);
-            --scene-glow-in:    rgba(232, 60, 122, 0.15);
-            --curtain-color:    #8b0000;
-            --modal-bg:         rgba(26,5,16,0.99);
-            --modal-surface:    rgba(255,255,255,0.055);
-            --modal-border:     rgba(232,60,122,0.18);
-            --modal-border-hi:  rgba(232,60,122,0.55);
-            --modal-accent:     #e83c7a;
-            --modal-accent2:    #ff8ab5;
-            --modal-glow:       rgba(232,60,122,0.28);
-            --modal-fg:         #f0e8f5;
-            --modal-muted:      rgba(220,195,235,0.6);
-            --modal-dim:        rgba(220,195,235,0.35);
-        }
-
-        body.light-mode .theme-dark-only { display: none; }
-        body:not(.light-mode) .theme-light-only { display: none; }
-
-        /* ── THEME TRANSITION OVERLAY ── */
-        #theme-overlay {
-            position: fixed; inset: 0; z-index: 10001;
-            pointer-events: none;
-            opacity: 0;
-            background: var(--bg-gradient);
-            transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        #theme-overlay.fade-in  { opacity: 1; }
-        #theme-overlay.fade-out { opacity: 0; }
-
-        /* ── CURTAIN INTRO ── */
-        .initial-load-overlay {
-            position: fixed; inset: 0; z-index: 10000; pointer-events: none;
-            display: flex; flex-direction: column; overflow: hidden;
-            background: var(--bg-gradient);
-            transition: opacity 0.8s ease; opacity: 1;
-        }
-        .curtain-left, .curtain-right {
-            position: absolute; top: 0; bottom: 0; width: 50%;
-            background:
-                repeating-linear-gradient(90deg,rgba(0,0,0,0.18) 0px,rgba(0,0,0,0.18) 2px,transparent 2px,transparent 18px),
-                linear-gradient(180deg, #6b0000 0%, #8b0000 40%, #5c0000 100%);
-            transform-origin: top;
-            animation: curtain-rise 2.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-        }
-        .curtain-left  { left: 0; border-right: 3px solid rgba(255,180,0,0.35); }
-        .curtain-right { right: 0; border-left: 3px solid rgba(255,180,0,0.35); animation-delay: 0.15s; }
-        .curtain-left::after, .curtain-right::after {
-            content:''; position: absolute; bottom: 0; left: 0; right: 0; height: 22px;
-            background: repeating-linear-gradient(90deg,#c8a000 0px,#c8a000 4px,#8b6e00 4px,#8b6e00 10px);
-            opacity: 0.7;
-        }
-        @keyframes curtain-rise { 0%{transform:scaleY(1);} 100%{transform:scaleY(0);} }
-
-        body {
-            background: var(--bg-gradient);
-            color: var(--text-color);
-            font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh; margin: 0;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: flex-start;
-            overflow-x: hidden; overflow-y: auto;
-            padding: 10px;
-            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-        }
-
-        .glass, .app-icon, .quote-box, .clock-overlay, .highlight, .widget-action, p, span, i {
-            transition: background var(--transition-speed) ease, border var(--transition-speed) ease,
-                color var(--transition-speed) ease, box-shadow var(--transition-speed) ease,
-                backdrop-filter var(--transition-speed) ease, transform 0.3s ease;
-        }
-
-        @keyframes fadeInUp { from{opacity:0;transform:translateY(15px) scale(0.99);} to{opacity:1;transform:translateY(0) scale(1);} }
-        .animate-in { animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
-        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; } .delay-4 { animation-delay: 0.4s; }
-
-        .dashboard-container {
-            width: 100%; max-width: 860px;
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 8px; position: relative; padding-top: 10px;
-        }
-
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur-val));
-            -webkit-backdrop-filter: blur(var(--blur-val));
-            border: 1px solid var(--border-color);
-            border-radius: 24px; overflow: hidden;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        .glass:hover { border: 1px solid var(--accent); transform: translateY(-3px); z-index: 10; }
-
-        /* ── HERO ── */
-        .widget-hero {
-            grid-column: 1 / 5; height: 220px;
-            display: flex; align-items: center; justify-content: center;
-            background-size: cover; background-position: center;
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0) 50%, var(--bg-dark)), url('main-hero.jpg');
-        }
-        body.light-mode .widget-hero {
-            background-image: linear-gradient(to bottom, rgba(26,5,16,0) 40%, #1a0510 100%), url('main-hero-day.jpg');
-        }
-        .clock-overlay {
-            font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 100;
-            letter-spacing: 8px; color: var(--text-color);
-            text-shadow: 0 0 25px var(--accent-glow);
-        }
-
-        /* ── SCENE ── */
-        .widget-scene {
-            grid-column: 1 / 3; grid-row: span 2; min-height: 248px;
-            background-size: cover; background-position: center;
-            background-image: url('main-hero-WIDGETTWO.jpg');
-            position: relative; overflow: hidden;
-            box-shadow: 0 0 22px 4px var(--scene-glow-out), inset 0 0 30px var(--scene-glow-in);
-        }
-        body.light-mode .widget-scene { background-image: url('main-hero-day-WIDGETTWO.jpg'); }
-
-        .scene-scanline {
-            position: absolute; left: 0; width: 100%; height: 35%;
-            pointer-events: none; z-index: 3; top: -40%;
-            animation: scene-scan 6s linear infinite;
-            background: linear-gradient(180deg, transparent, var(--scan-tint), transparent);
-        }
-        @keyframes scene-scan { 0%{top:-40%;} 100%{top:120%;} }
-        .widget-scene:hover .scene-scanline { animation-duration: 3s; }
-
-        .scene-spark {
-            position: absolute; pointer-events: none; z-index: 4; opacity: 0;
-            animation: scene-rise var(--sp-dur, 3.5s) ease-in infinite;
-            animation-delay: var(--sp-delay, 0s);
-        }
-        .scene-spark::before {
-            content:''; display: block;
-            width: var(--sp-size, 6px); height: var(--sp-size, 6px);
-            clip-path: polygon(50% 0%,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0% 50%,40% 40%);
-            background: var(--spark-color);
-        }
-        @keyframes scene-rise {
-            0%{transform:translateY(0) scale(1) rotate(0deg); opacity:0;}
-            15%{opacity:1;} 85%{opacity:0.55;}
-            100%{transform:translateY(-110px) scale(0.15) rotate(200deg); opacity:0;}
-        }
-        .widget-scene:hover .scene-spark { animation-duration: calc(var(--sp-dur,3.5s) * 0.55); }
-
-        .scene-star {
-            position: absolute; z-index: 5; pointer-events: none;
-            display: block; line-height: 0;
-            animation: scene-twinkle var(--tw-dur,2s) ease-in-out infinite;
-            animation-delay: var(--tw-delay,0s);
-        }
-        .scene-star svg { fill: var(--star-fill); }
-        @keyframes scene-twinkle { 0%,100%{opacity:0.9;transform:scale(1) rotate(0deg);} 50%{opacity:0.1;transform:scale(0.35) rotate(45deg);} }
-
-        /* ── APP ICONS ── */
-        .widget-apps {
-            grid-column: 3 / 4;
-            display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr);
-            gap: 8px;
-        }
-        .widget-image {
-            grid-column: 4 / 5; min-height: 120px;
-            background-size: cover; background-position: center;
-            background-image: url('wideget-three.jpg');
-        }
-        body.light-mode .widget-image {
-            background-image: url('widget-three-day.jpg');
-            filter: brightness(0.9) saturate(1.1);
-        }
-        .app-icon {
-            aspect-ratio: 1/1; border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem; color: var(--accent);
-            background: rgba(255,77,77,0.05); cursor: pointer;
-            position: relative; overflow: hidden;
-        }
-        body.light-mode .app-icon { background: rgba(232,60,122,0.07); }
-        .app-icon:hover { background: rgba(255,77,77,0.12); }
-        body.light-mode .app-icon:hover { background: rgba(232,60,122,0.15); }
-
-        .mini-stats {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-family: 'Outfit', sans-serif; line-height: 1;
-        }
-        .mini-stat-num { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
-        .mini-stat-label { font-size: 0.45rem; font-weight: 600; letter-spacing: 0.1em; color: var(--accent); opacity: 0.7; }
-
-        /* ── STATUS BAR (replaces search/roll) ── */
-        .widget-status {
-            grid-column: 3 / 5;
-            display: flex; align-items: center; gap: 10px;
-            padding: 0 18px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur-val));
-            -webkit-backdrop-filter: blur(var(--blur-val));
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            height: 44px;
-            cursor: default;
-        }
-        .widget-status:hover { border: 1px solid var(--accent); transform: translateY(-2px); }
-        .status-pill-dot {
-            width: 6px; height: 6px; border-radius: 50%;
-            background: #34d399; box-shadow: 0 0 6px rgba(52,211,153,0.7);
-            flex-shrink: 0;
-            animation: status-pulse 2s ease-in-out infinite;
-        }
-        @keyframes status-pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(0.8);} }
-        .status-pill-text {
-            font-size: 0.75rem; color: var(--text-dim); flex: 1;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .status-pill-tag {
-            font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
-            padding: 3px 9px; border-radius: 100px;
-            background: rgba(255,77,77,0.12); border: 1px solid rgba(255,77,77,0.28);
-            color: var(--accent); white-space: nowrap;
-        }
-
-        /* ── QUOTE STACK ── */
-        .widget-quote-stack { grid-column: 1 / 3; display: flex; flex-direction: column; gap: 8px; }
-        .quote-box {
-            height: 120px; background-size: cover; background-position: center;
-            padding: 18px; display: flex; flex-direction: column;
-            justify-content: flex-end; text-decoration: none; color: inherit;
-            position: relative; overflow: hidden;
-        }
-        .quote-box.q1 { background-image: url('git-banner.png'); }
-        body.light-mode .quote-box.q1 { background-image: url('git-banner-day.png'); }
-        .quote-box.q2 { background-image: url('itch-banner.png'); }
-        body.light-mode .quote-box.q2 { background-image: url('itch-banner-day.png'); }
-
-        .quote-box.q2::after {
-            content:''; position: absolute; inset: 0;
-            background: radial-gradient(circle at center, rgba(232,60,122,0.15) 0%, transparent 70%);
-            opacity: 0; transition: opacity 0.5s ease; pointer-events: none; z-index: 2;
-        }
-        .quote-box.q2:hover::after { opacity: 1; animation: sparkle-flicker 2s infinite alternate; }
-        @keyframes sparkle-flicker { 0%{transform:scale(1);opacity:0.4;} 100%{transform:scale(1.1);opacity:0.8;} }
-
-        .quote-box::before {
-            content:''; position: absolute; inset: 0; z-index: 1;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-        }
-        body.light-mode .quote-box::before {
-            background: linear-gradient(to top, rgba(10,0,24,0.88) 0%, rgba(10,0,24,0.50) 55%, transparent 100%);
-        }
-        .quote-box div { position: relative; z-index: 6; font-size: 0.8rem; line-height: 1.3; font-weight: 500; }
-        .highlight { color: #fff; background: var(--accent); padding: 2px 6px; border-radius: 6px; }
-
-        /* ── PROFILE ── */
-        .widget-profile {
-            grid-column: 3 / 5; padding: 18px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            cursor: pointer; position: relative; overflow: hidden;
-            background-size: cover; background-position: center;
-            background-image: url('card-bg.jpg');
-        }
-        body.light-mode .widget-profile { background-image: url('card-bg-day.jpg'); }
-        body.light-mode .widget-profile::before {
-            content:''; position: absolute; inset: 0;
-            background: rgba(255,255,255,0.5); pointer-events: none;
-        }
-        body.light-mode .widget-profile .profile-name  { color: #000; font-weight: 800; text-shadow: 0 1px 0 rgba(255,255,255,0.8); }
-        body.light-mode .widget-profile .profile-handle { color: #000; text-shadow: 0 0 3px rgba(255,255,255,0.9); }
-        body.light-mode .widget-profile .profile-role   { color: #000; font-weight: 700; }
-        body.light-mode .widget-profile .profile-action { color: #000; }
-
-        .widget-profile { color: #fff; }
-        .widget-profile .profile-name { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
-        .widget-profile .profile-handle, .widget-profile .profile-action { color: #ff8888; }
-        .widget-profile .profile-role { color: rgba(255,255,255,0.8); }
-        .widget-profile::before {
-            content:''; position: absolute; inset: 0;
-            background: radial-gradient(circle at 80% 20%, var(--accent-glow) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        body.light-mode .widget-profile::before { background: radial-gradient(circle at 80% 20%, rgba(232,60,122,0.12) 0%, transparent 50%); }
-        .widget-profile::after {
-            content:''; position: absolute; top: 0; left: 14px; right: 14px; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.4;
-        }
-        .profile-header { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
-        .profile-avatar {
-            width: 48px; height: 48px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; flex-shrink: 0;
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-        body.light-mode .profile-avatar { box-shadow: 0 0 0 3px rgba(232,60,122,0.3), 0 0 20px rgba(232,60,122,0.2); }
-        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-name { font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text-color); line-height: 1.2; }
-        .profile-handle {
-            display: inline-flex; align-items: center; gap: 5px;
-            font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.64rem;
-            letter-spacing: 0.08em; color: var(--accent); margin-top: 4px;
-        }
-        .profile-handle::before {
-            content:''; width: 5px; height: 5px; border-radius: 50%;
-            background: var(--accent); box-shadow: 0 0 6px var(--accent-glow);
-            animation: status-pulse 2s ease-in-out infinite;
-        }
-        .profile-body { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 8px; position: relative; z-index: 1; }
-        .profile-role { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); }
-        .profile-action { font-size: 0.7rem; color: var(--accent); display: flex; align-items: center; gap: 6px; }
-        .profile-action i { font-size: 0.6rem; }
-
-        /* ── FOOTER ── */
-        .footer-nav {
-            grid-column: 1 / 5;
-            display: flex; justify-content: space-between;
-            padding: 15px 5px 30px;
-            font-size: 0.6rem; color: var(--text-dim);
-            letter-spacing: 2px; text-transform: uppercase;
-        }
-
-        body.light-mode .dark-icon { display: none; }
-        body:not(.light-mode) .light-icon { display: none; }
-
-        /* ══════════════════════════════════
-           MASTER MODAL SYSTEM
-        ══════════════════════════════════ */
-        .master-modal-backdrop {
-            position: fixed; inset: 0; z-index: 9000;
-            background: rgba(10, 5, 15, 0.75);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            display: flex; align-items: center; justify-content: center;
-            padding: 32px;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.25s ease;
-        }
-        body.light-mode .master-modal-backdrop { background: rgba(26,5,16,0.92); }
-        .master-modal-backdrop.open { opacity: 1; pointer-events: all; }
-
-        .master-modal {
-            position: relative; width: 100%; max-width: 680px; max-height: 85vh;
-            background: var(--modal-bg); border-radius: 20px;
-            display: flex; flex-direction: column;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-            transform: translateY(20px) scale(0.98);
-            transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), opacity 0.3s;
-            opacity: 0; z-index: 20;
-        }
-        body:not(.light-mode) .master-modal {
-            border: 2px solid #e63946;
-            box-shadow: 0 0 25px rgba(230, 57, 70, 0.35), 0 25px 60px rgba(0,0,0,0.8);
-        }
-        body.light-mode .master-modal { border: 2px solid #000; box-shadow: 0 25px 60px rgba(0,0,0,0.5); }
-
-        .master-modal.modal-right {
-            position: fixed; right: 0; left: auto;
-            top: 16px; bottom: 16px;
-            max-width: 480px; width: 90%;
-            max-height: calc(100vh - 32px);
-            border-radius: 16px;
-            background: #0c0a16;
-            transform: translateX(100%);
-            box-shadow: -10px 0 40px rgba(0,0,0,0.6);
-            transition: transform 0.35s ease-out;
-        }
-        .master-modal-backdrop.open .master-modal.modal-right { transform: translateX(0); }
-        .master-modal.modal-right .modal-close-btn { position: fixed; top: 16px; right: 16px; z-index: 100; background: rgba(255,77,77,0.2); border-color: #ff4d4d; }
-        .master-modal.modal-right .modal-ornament { display: none; }
-
-        @media (max-width: 600px) {
-            .master-modal.modal-right { width: 100%; max-width: 100%; }
-        }
-        .master-modal-backdrop.open .master-modal { transform: none; opacity: 1; }
-
-        .modal-close-btn {
-            position: absolute; top: 16px; right: 16px; z-index: 50;
-            width: 28px; height: 28px; border-radius: 50%;
-            background: rgba(200,30,30,0.12); border: 1.5px solid rgba(200,30,30,0.35);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .modal-close-btn:hover { background: rgba(200,30,30,0.25); border-color: #cc2222; }
-        .modal-close-btn svg { width: 10px; height: 10px; fill: none; stroke: #cc2222; stroke-width: 2; stroke-linecap: round; }
-
-        .modal-scrollable {
-            overflow-y: auto; flex: 1;
-            margin: 24px 18px 18px;
-            background: var(--modal-bg); border-radius: 12px;
-            color: var(--modal-fg);
-            scrollbar-width: thin; scrollbar-color: var(--accent) transparent;
-            -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
-            overscroll-behavior: contain; position: relative; z-index: 30;
-        }
-        .modal-scrollable::-webkit-scrollbar { width: 4px; }
-        .modal-scrollable::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-        .modal-scrollable::-webkit-scrollbar-track { background: transparent; }
-
-        .modal-scrollable .stats-title, .modal-scrollable .projects-title,
-        .modal-scrollable .contact-modal-title, .modal-scrollable .about-name,
-        .modal-scrollable .proj-card-title, .modal-scrollable .stat-value,
-        .modal-scrollable .skill-info span:first-child, .modal-scrollable .contact-card-handle,
-        .modal-scrollable .simple-modal-title { color: var(--modal-fg); }
-
-        .modal-scrollable .stats-sub, .modal-scrollable .projects-sub,
-        .modal-scrollable .about-role, .modal-scrollable .proj-card-desc,
-        .modal-scrollable .contact-modal-sub, .modal-scrollable .simple-modal-sub,
-        .modal-scrollable .stat-label, .modal-scrollable .about-body-text { color: var(--modal-muted); }
-
-        .modal-scrollable .stat-card, .modal-scrollable .about-panel,
-        .modal-scrollable .stats-skills, .modal-scrollable .stats-tech,
-        .modal-scrollable .proj-card, .modal-scrollable .contact-card-item,
-        .modal-scrollable .skill-bar, .modal-scrollable .stat-bar {
-            background: var(--modal-surface); border-color: var(--modal-border);
-        }
-        .modal-scrollable .tech-tag {
-            background: var(--modal-surface); border-color: var(--modal-border); color: var(--modal-accent);
-        }
-        .modal-scrollable .proj-filter-pill {
-            color: var(--modal-fg); border-color: var(--modal-border);
-        }
-        .modal-scrollable .proj-filter-pill:hover { color: var(--accent); border-color: var(--modal-border-hi); }
-        .modal-scrollable .proj-filter-pill.active {
-            background: rgba(200, 30, 30, 0.15); border-color: rgba(200, 30, 30, 0.4);
-            color: #aa1111; box-shadow: none;
-        }
-        .master-modal.modal-right .modal-scrollable .proj-filter-pill { color: var(--modal-muted); border-color: var(--modal-border); }
-        .master-modal.modal-right .modal-scrollable .proj-filter-pill:hover { color: var(--accent); border-color: var(--modal-border-hi); }
-        .master-modal.modal-right .modal-scrollable .proj-filter-pill.active {
-            background: rgba(255, 77, 77, 0.2); color: var(--modal-fg);
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.28);
-        }
-
-        /* ── ABOUT MODAL ── */
-        .about-modal-inner { padding: 24px 20px 28px; display: flex; flex-direction: column; gap: 16px; }
-        .about-header { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--modal-border); }
-        .about-avatar {
-            width: 60px; height: 60px; border-radius: 50%; flex-shrink: 0;
-            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; font-weight: 700; color: white;
-            box-shadow: 0 0 0 3px var(--accent-glow), 0 0 15px var(--accent-glow);
-        }
-        .about-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-        .about-header-text { flex: 1; }
-        .about-pre { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.48rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
-        .about-name { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; color: var(--modal-fg); }
-        .about-role { font-size: 0.68rem; color: var(--modal-muted); margin-top: 2px; }
-        .about-status { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; }
-        .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; box-shadow: 0 0 6px rgba(52,211,153,0.6); animation: status-pulse 2s ease-in-out infinite; }
-        .status-text { font-size: 0.6rem; color: #6ee7b7; font-weight: 500; }
-        .about-panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .about-panel { background: var(--modal-surface); border: 1px solid var(--modal-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
-        .about-panel.full { grid-column: 1 / -1; }
-        .panel-label { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
-        .tech-list { display: flex; flex-direction: column; gap: 5px; }
-        .tech-item { display: flex; align-items: center; gap: 8px; font-size: 0.68rem; color: var(--modal-fg); font-weight: 500; }
-        .tech-item:hover { border-color: var(--accent); background: rgba(255,77,77,0.08); transform: translateX(3px); }
-        .tech-ico { width: 18px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
-        .tech-badge { margin-left: auto; font-size: 0.5rem; padding: 2px 6px; background: rgba(255,77,77,0.1); border: 1px solid rgba(255,77,77,0.25); border-radius: 100px; color: var(--accent); font-weight: 600; }
-        .about-body-text { font-size: 0.74rem; line-height: 1.7; color: var(--modal-muted); border-left: 2px solid var(--accent); padding-left: 10px; }
-        .about-body-text strong { color: var(--accent); font-weight: 600; }
-        .about-links { display: flex; flex-wrap: wrap; gap: 6px; }
-        .about-link-chip {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 6px 12px; font-size: 0.62rem; font-weight: 600;
-            color: var(--modal-muted); text-decoration: none;
-            background: var(--modal-surface); border: 1px solid var(--modal-border);
-            border-radius: 100px; transition: all 0.2s;
-        }
-        .about-link-chip:hover { border-color: var(--accent); color: var(--modal-fg); background: rgba(255,77,77,0.1); transform: translateY(-2px); }
-        .about-link-chip svg { width: 12px; height: 12px; fill: currentColor; flex-shrink: 0; }
-
-        /* ── STATS MODAL ── */
-        .stats-modal-inner { padding: 24px 20px 32px; display: flex; flex-direction: column; gap: 16px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .stat-card { background: var(--modal-surface); border: 1px solid var(--modal-border); border-radius: 14px; padding: 14px 12px; display: flex; flex-direction: column; gap: 6px; }
-        .stat-icon { font-size: 1rem; color: var(--accent); }
-        .stat-value { font-size: 1.4rem; font-weight: 800; color: var(--modal-fg); }
-        .stat-label { font-size: 0.58rem; color: var(--modal-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-        .stat-bar { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-top: 4px; overflow: hidden; }
-        .stat-fill { height: 100%; background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); border-radius: 2px; }
-        .stats-skills { padding: 16px; background: var(--modal-surface); border: 1px solid var(--modal-border); border-radius: 14px; }
-        .skill-bars { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-        .skill-item { display: flex; flex-direction: column; gap: 4px; }
-        .skill-info { display: flex; justify-content: space-between; font-size: 0.7rem; }
-        .skill-info span:first-child { color: var(--modal-fg); font-weight: 500; }
-        .skill-pct { color: var(--accent); font-weight: 600; }
-        .skill-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
-        .skill-fill { height: 100%; background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); border-radius: 2px; }
-        .stats-tech { padding: 16px; background: var(--modal-surface); border: 1px solid var(--modal-border); border-radius: 14px; }
-        .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-        .tech-tag { padding: 4px 10px; background: var(--modal-surface); border: 1px solid var(--modal-border); border-radius: 100px; font-size: 0.6rem; color: var(--modal-accent); font-weight: 500; }
-
-        /* ── PROJECTS MODAL ── */
-        .projects-modal-inner { padding: 24px 20px 32px; display: flex; flex-direction: column; gap: 16px; }
-        .projects-header { padding-bottom: 16px; border-bottom: 1px solid var(--modal-border); }
-        .projects-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.03em; color: var(--modal-fg); }
-        .projects-sub { font-size: 0.72rem; color: var(--modal-muted); margin-top: 4px; }
-        .projects-filter { display: flex; gap: 6px; flex-wrap: wrap; }
-        .proj-filter-pill {
-            padding: 6px 14px; border-radius: 20px;
-            font-size: 0.75rem; font-weight: 500;
-            background: var(--modal-surface); border: 1px solid var(--modal-border);
-            color: var(--modal-muted); cursor: pointer; transition: all 0.2s;
-        }
-        .proj-filter-pill:hover { border-color: var(--modal-border-hi); color: var(--accent); }
-        .proj-filter-pill.active { background: rgba(255,77,77,0.2); border-color: var(--modal-border-hi); color: var(--modal-fg); box-shadow: 0 0 10px var(--modal-glow); }
-        body.light-mode .proj-filter-pill.active { background: rgba(232,60,122,0.2); }
-
-        .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
-        .proj-card {
-            background: var(--modal-surface); border: 1px solid var(--modal-border);
-            border-radius: 12px; overflow: hidden; cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s, border-color 0.2s;
-            position: relative; will-change: transform;
-        }
-        .proj-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 12px var(--accent-glow); }
-        .proj-card-thumb { height: 100px; overflow: hidden; position: relative; background: rgba(255,255,255,0.03); }
-        .proj-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; filter: saturate(0.85) brightness(0.9); }
-        .proj-card:hover .proj-card-thumb img { transform: scale(1.04); filter: saturate(1) brightness(1); }
-        .proj-card-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8,7,15,0.75) 0%, transparent 55%); }
-        .proj-card-badge {
-            position: absolute; top: 8px; left: 8px; z-index: 2;
-            padding: 3px 8px; border-radius: 100px;
-            font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.48rem; letter-spacing: 0.1em; text-transform: uppercase;
-        }
-        .badge-web  { background: rgba(56,189,248,.14); border: 1px solid rgba(56,189,248,.4); color: #38bdf8; }
-        .badge-java { background: rgba(251,146,60,.14); border: 1px solid rgba(251,146,60,.4); color: #fb923c; }
-        .badge-game { background: rgba(167,139,250,.14); border: 1px solid rgba(167,139,250,.4); color: #a78bfa; }
-        .proj-card-body { padding: 10px 12px 12px; }
-        .proj-card-title { font-size: 0.8rem; font-weight: 700; color: var(--modal-fg); margin-bottom: 4px; }
-        .proj-card-desc { font-size: 0.67rem; color: var(--modal-muted); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .proj-card-link {
-            display: inline-flex; align-items: center; gap: 5px; margin-top: 8px;
-            padding: 4px 10px; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-            color: var(--modal-accent2); text-decoration: none;
-            background: rgba(255,77,77,0.1); border: 1px solid rgba(255,77,77,0.28); border-radius: 7px;
-            transition: all 0.22s; position: relative; z-index: 2;
-        }
-        .proj-card-link:hover { background: rgba(255,77,77,0.22); border-color: var(--modal-accent); color: var(--modal-fg); }
-        .proj-card-link svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-
-        /* ── PROJECT DETAIL PANEL ── */
-        .project-detail-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s;
-        }
-        .project-detail-overlay.open { opacity: 1; pointer-events: auto; }
-        .project-detail {
-            position: fixed; top: 0; right: -500px;
-            width: 480px; max-width: 100%; height: 100vh;
-            background: var(--modal-bg); z-index: 10000;
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto; box-shadow: -20px 0 60px rgba(0,0,0,0.5);
-        }
-        body:not(.light-mode) .project-detail { border-left: 3px solid #e63946; }
-        body.light-mode .project-detail { border-left: 4px solid #000; }
-        .project-detail.open { right: 0; }
-        .project-detail-close {
-            position: absolute; top: 16px; right: 16px;
-            width: 32px; height: 32px; border-radius: 50%;
-            background: var(--modal-surface); border: 1px solid var(--modal-border);
-            color: var(--modal-fg); cursor: pointer;
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-        }
-        .project-detail-close:hover { background: var(--accent); border-color: var(--accent); color: white; }
-        .project-detail-thumb { width: 100%; height: 220px; object-fit: cover; }
-        .project-detail-header { padding: 20px; border-bottom: 1px solid var(--modal-border); }
-        .project-detail-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
-        .project-detail-title { font-size: 1.5rem; font-weight: 700; color: var(--modal-fg); margin-bottom: 8px; }
-        .project-detail-content { padding: 20px; }
-        .project-detail-desc { font-size: 0.88rem; color: var(--modal-muted); line-height: 1.8; margin-bottom: 20px; }
-        .project-detail-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-        .project-detail-tag { padding: 4px 12px; border-radius: 100px; font-size: 0.62rem; font-weight: 600; background: var(--modal-surface); border: 1px solid var(--modal-border); color: var(--modal-accent2); }
-        .project-detail-link {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 12px 24px; background: var(--accent); color: white;
-            text-decoration: none; border-radius: 8px;
-            font-weight: 600; font-size: 0.85rem; transition: all 0.2s;
-        }
-        .project-detail-link:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,77,77,0.3); }
-
-        @media (max-width: 600px) { .project-detail { width: 100%; right: -100%; } }
-
-        /* ── CONTACT MODAL ── */
-        .contact-modal-inner { padding: 32px 28px 36px; display: flex; flex-direction: column; gap: 20px; }
-        .contact-modal-header { padding-bottom: 20px; border-bottom: 1px solid var(--modal-border); text-align: center; }
-        .contact-modal-pre { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.52rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--modal-accent2); margin-bottom: 8px; }
-        .contact-modal-title { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em; color: var(--modal-fg); }
-        .contact-modal-sub { font-size: 0.78rem; color: var(--modal-muted); margin-top: 6px; line-height: 1.6; }
-        .contact-modal-hl { width: 40px; height: 2px; background: linear-gradient(90deg, var(--modal-accent), transparent); border-radius: 2px; margin: 12px auto 0; }
-        .contact-stack { display: flex; flex-direction: column; gap: 10px; }
-        .contact-card-item {
-            display: flex; align-items: center; gap: 14px; padding: 16px 18px;
-            background: var(--modal-surface); border: 1px solid var(--modal-border);
-            border-radius: 14px; text-decoration: none; position: relative; overflow: hidden;
-            transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), box-shadow 0.28s, border-color 0.28s;
-        }
-        .contact-card-item::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-            background: linear-gradient(180deg, var(--modal-accent), var(--modal-accent2));
-            opacity: 0; border-radius: 0 2px 2px 0; transition: opacity 0.3s;
-        }
-        .contact-card-item:hover { transform: translateX(5px); border-color: var(--modal-border-hi); box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 16px rgba(255,77,77,0.15); }
-        .contact-card-item:hover::before { opacity: 1; }
-        .contact-icon-wrap {
-            width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
-            background: rgba(255,77,77,0.1); border: 1px solid rgba(255,77,77,0.2);
-            display: flex; align-items: center; justify-content: center; transition: all 0.25s;
-        }
-        .contact-card-item:hover .contact-icon-wrap { background: rgba(255,77,77,0.18); border-color: rgba(255,77,77,0.4); }
-        .contact-icon-wrap svg { width: 18px; height: 18px; }
-        .contact-card-info { flex: 1; }
-        .contact-card-platform { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--modal-accent2); margin-bottom: 3px; }
-        .contact-card-handle { font-size: 0.8rem; font-weight: 600; color: var(--modal-fg); }
-        .contact-arrow-btn {
-            width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-            background: var(--modal-surface); border: 1px solid var(--modal-border);
-            display: flex; align-items: center; justify-content: center; transition: all 0.25s;
-        }
-        .contact-card-item:hover .contact-arrow-btn { background: rgba(255,77,77,0.18); border-color: var(--modal-border-hi); transform: translateX(2px); }
-        .contact-arrow-btn svg { width: 11px; height: 11px; fill: none; stroke: var(--modal-accent2); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-            .dashboard-container { grid-template-columns: 1fr 1fr; }
-            .widget-hero { grid-column: 1/3; height: 180px; }
-            .widget-scene { grid-column: 1/3; grid-row: auto; min-height: 200px; }
-            .widget-apps { grid-column: 1/3; }
-            .widget-image { grid-column: 1/3; }
-            .widget-status { grid-column: 1/3; }
-            .widget-quote-stack { grid-column: 1/3; }
-            .widget-profile { grid-column: 1/3; }
-            .footer-nav { grid-column: 1/3; }
-            .about-panel-grid { grid-template-columns: 1fr; }
-            .proj-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-        }
-        @media (max-width: 600px) {
-            .master-modal { border-radius: 20px 20px 0 0; max-height: 88vh; }
-            .master-modal-backdrop { align-items: flex-end; padding: 0; }
-        }
-        @media (max-width: 480px) {
-            body { padding: 8px; }
-            .dashboard-container { grid-template-columns: 1fr; gap: 6px; }
-            .widget-hero { grid-column: 1; height: 150px; }
-            .widget-scene { grid-column: 1; grid-row: auto; min-height: 200px; }
-            .widget-apps { grid-column: 1; }
-            .widget-status { grid-column: 1; }
-            .widget-quote-stack { grid-column: 1; }
-            .widget-profile { grid-column: 1; }
-            .footer-nav { grid-column: 1; flex-wrap: wrap; gap: 8px; }
-            .clock-overlay { font-size: 3rem; letter-spacing: 4px; }
-            .quote-box { height: 100px; }
-            .proj-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (min-width: 1100px) { .dashboard-container { max-width: 960px; } }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jemmer Almoneda - Portfolio</title>
+  <link rel="icon" type="image/png" href="https://win98icons.alexmeub.com/icons/png/windows-0.png">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Theme transition overlay -->
-    <div id="theme-overlay"></div>
-
-    <!-- Curtain intro -->
-    <div class="initial-load-overlay" id="start-overlay">
-        <div class="curtain-left"></div>
-        <div class="curtain-right"></div>
+<div id="overlayWrap" class="overlay-wrap hidden">
+  <div id="bootScreen" class="overlay-screen boot-screen">
+    <div class="boot-content">
+      <div class="boot-logo">
+        <div class="boot-flag">
+          <span class="flag-bar b1"></span><span class="flag-bar b2"></span>
+          <span class="flag-bar b3"></span><span class="flag-bar b4"></span>
+        </div>
+        <div class="boot-title-wrap">
+          <img src="Documents/boot.webp" class="boot-img">
+          <div class="boot-title">Mikusoft<br>Win39</div>
+        </div>
+      </div>
+      <div class="boot-progress-wrap">
+        <div class="boot-progress-bar" id="bootProgressBar"></div>
+      </div>
+      <div class="boot-text">Starting Win39...</div>
     </div>
-
-    <!-- MASTER MODAL -->
-    <div class="master-modal-backdrop" id="master-modal" onclick="handleModalBackdrop(event)">
-        <div class="master-modal" id="master-modal-card">
-
-            <!-- ORNAMENTAL SVG FRAME -->
-            <svg class="modal-ornament" width="100%" height="100%" style="position:absolute; inset:0; pointer-events:none; z-index:40; overflow:visible;">
-                <defs>
-                    <filter id="glow-heavy" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur stdDeviation="3" result="blur"/>
-                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                    </filter>
-                    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ffd700"/>
-                        <stop offset="100%" stop-color="#ff8c00"/>
-                    </linearGradient>
-                    <linearGradient id="pink-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ffb6c1"/>
-                        <stop offset="100%" stop-color="#ff69b4"/>
-                    </linearGradient>
-                </defs>
-                <rect x="0" y="0" width="100%" height="100%" rx="20" fill="none" stroke="var(--modal-accent)" stroke-width="3" filter="url(#glow-heavy)"/>
-                <rect x="6" y="6" width="calc(100% - 12px)" height="calc(100% - 12px)" rx="14" fill="none" stroke="var(--modal-accent2)" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.6"/>
-                <!-- Left deco -->
-                <svg x="0" y="20%" width="20" height="60%" style="overflow:visible;">
-                    <path d="M -16,0 C 12,25 12,calc(100% - 25) -16,100% L 0,100% L 0,0 Z" fill="var(--modal-accent)" opacity="0.9"/>
-                </svg>
-                <!-- Top-left corner -->
-                <svg x="0" y="0" style="overflow:visible;">
-                    <g class="theme-dark-only" transform="translate(-16, -16)">
-                        <path d="M 0,55 Q 0,0 55,0 L 80,0 C 35,12 12,35 0,80 Z" fill="var(--modal-accent)"/>
-                        <path d="M 8,48 Q 8,8 48,8 L 56,8 C 28,15 15,28 8,56 Z" fill="#0c0a16"/>
-                        <path d="M 18,18 Q 40,-8 60,18 Q 70,45 40,65 Q 10,45 18,18 Z" fill="var(--modal-bg)" stroke="var(--modal-accent)" stroke-width="2.5" filter="url(#glow-heavy)"/>
-                        <polygon points="18,18 12,-5 30,5" fill="var(--modal-accent)"/>
-                        <polygon points="60,18 66,-5 48,5" fill="var(--modal-accent)"/>
-                        <path d="M 26,28 Q 32,23 38,28" stroke="var(--modal-accent2)" stroke-width="2.5" fill="none"/>
-                        <path d="M 52,28 Q 46,23 40,28" stroke="var(--modal-accent2)" stroke-width="2.5" fill="none"/>
-                        <polygon points="39,12 43,20 39,28 35,20" fill="url(#gold-grad)"/>
-                    </g>
-                    <g class="theme-light-only" transform="translate(-16, -16)">
-                        <path d="M 0,55 Q 0,0 55,0 L 80,0 C 35,12 12,35 0,80 Z" fill="var(--modal-accent)"/>
-                        <path d="M 8,48 Q 8,8 48,8 L 56,8 C 28,15 15,28 8,56 Z" fill="#1a0510"/>
-                        <circle cx="40" cy="30" r="20" fill="var(--modal-bg)" stroke="var(--modal-accent2)" stroke-width="2.5" filter="url(#glow-heavy)"/>
-                        <path d="M 40,18 C 50,8 56,18 40,30 C 24,18 30,8 40,18 Z" fill="url(#pink-grad)"/>
-                        <path d="M 40,42 C 50,52 56,42 40,30 C 24,42 30,52 40,42 Z" fill="url(#pink-grad)"/>
-                        <circle cx="40" cy="30" r="4.5" fill="#ffd700"/>
-                    </g>
-                </svg>
-                <!-- Top-right corner -->
-                <svg x="100%" y="0" style="overflow:visible;">
-                    <g transform="scale(-1, 1) translate(-10, -10)">
-                        <path d="M 0,45 Q 0,0 45,0 L 65,0 C 30,12 12,30 0,65 Z" fill="var(--modal-accent)"/>
-                        <path d="M 6,38 Q 6,6 38,6 L 45,6 C 22,12 12,22 6,45 Z" fill="var(--modal-bg)"/>
-                        <polygon points="25,-8 28,12 48,15 28,18 25,38 22,18 2,15 22,12" fill="var(--star-fill)" filter="url(#glow-heavy)"/>
-                    </g>
-                </svg>
-                <!-- Bottom-left corner -->
-                <svg x="0" y="100%" style="overflow:visible;">
-                    <g transform="scale(1, -1) translate(-10, -10)">
-                        <path d="M 0,45 Q 0,0 45,0 L 65,0 C 30,12 12,30 0,65 Z" fill="var(--modal-accent)"/>
-                        <path d="M 6,38 Q 6,6 38,6 L 45,6 C 22,12 12,22 6,45 Z" fill="var(--modal-bg)"/>
-                        <circle cx="25" cy="18" r="7" fill="var(--star-fill)" filter="url(#glow-heavy)"/>
-                        <circle cx="40" cy="10" r="4" fill="var(--modal-accent2)"/>
-                    </g>
-                </svg>
-                <!-- Bottom-right corner -->
-                <svg x="100%" y="100%" style="overflow:visible;">
-                    <g transform="scale(-1, -1) translate(-10, -10)">
-                        <path d="M 0,45 Q 0,0 45,0 L 65,0 C 30,12 12,30 0,65 Z" fill="var(--modal-accent)"/>
-                        <path d="M 6,38 Q 6,6 38,6 L 45,6 C 22,12 12,22 6,45 Z" fill="var(--modal-bg)"/>
-                        <g class="theme-dark-only">
-                            <polygon points="25,5 35,20 25,35 15,20" fill="var(--modal-accent2)" filter="url(#glow-heavy)"/>
-                        </g>
-                        <g class="theme-light-only">
-                            <circle cx="25" cy="22" r="12" fill="var(--modal-bg)" stroke="var(--modal-accent2)" stroke-width="2"/>
-                            <circle cx="25" cy="22" r="5" fill="url(#pink-grad)"/>
-                        </g>
-                    </g>
-                </svg>
-                <!-- Top ribbon -->
-                <svg x="50%" y="0" style="overflow:visible;">
-                    <g transform="translate(-100, -22)">
-                        <path d="M 0,0 L 200,0 L 185,26 L 15,26 Z" fill="var(--modal-bg)" stroke="var(--modal-accent)" stroke-width="2.5" filter="url(#glow-heavy)"/>
-                        <path d="M 12,4 L 188,4 L 175,21 L 25,21 Z" fill="none" stroke="var(--modal-accent2)" stroke-dasharray="5 3"/>
-                        <polygon points="-12,12 -9,18 -2,19 -8,24 -6,32 -12,28 -18,32 -16,24 -22,19 -15,18" fill="var(--star-fill)"/>
-                        <polygon points="212,12 215,18 222,19 216,24 218,32 212,28 206,32 208,24 202,19 209,18" fill="var(--star-fill)"/>
-                        <circle cx="100" cy="13" r="3" fill="var(--modal-accent2)"/>
-                    </g>
-                </svg>
-            </svg>
-            <!-- END ORNAMENTAL SVG -->
-
-            <button class="modal-close-btn" onclick="closeModal()">
-                <svg viewBox="0 0 14 14"><path d="M2 2L12 12M12 2L2 12"/></svg>
-            </button>
-            <div class="modal-scrollable" id="modal-content-area"></div>
+  </div>
+  <div id="shutdownScreen" class="overlay-screen shutdown-screen">
+    <div class="shutdown-content">
+      <div class="shutdown-logo">
+        <div class="boot-flag">
+          <span class="flag-bar b1"></span><span class="flag-bar b2"></span>
+          <span class="flag-bar b3"></span><span class="flag-bar b4"></span>
         </div>
+        <div class="boot-title-wrap">
+          <img src="Documents/boot.webp" class="boot-img">
+          <div class="boot-title">Mikusoft<br>Win39</div>
+        </div>
+      </div>
+      <div class="shutdown-text">Windows is shutting down...</div>
     </div>
-
-    <!-- DASHBOARD -->
-    <div class="dashboard-container">
-
-        <!-- HERO CLOCK -->
-        <div class="glass widget-hero animate-in">
-            <div class="clock-overlay" id="clock">00:00</div>
-        </div>
-
-        <!-- SCENE WIDGET -->
-        <div class="glass widget-scene animate-in delay-1">
-            <div class="scene-scanline"></div>
-            <div class="scene-spark" style="left:8%;bottom:12%;--sp-size:5px;--sp-dur:3.0s;--sp-delay:0s;"></div>
-            <div class="scene-spark" style="left:20%;bottom:30%;--sp-size:4px;--sp-dur:3.8s;--sp-delay:0.5s;"></div>
-            <div class="scene-spark" style="left:33%;bottom:8%;--sp-size:6px;--sp-dur:2.8s;--sp-delay:1.0s;"></div>
-            <div class="scene-spark" style="left:48%;bottom:40%;--sp-size:4px;--sp-dur:4.2s;--sp-delay:0.3s;"></div>
-            <div class="scene-spark" style="left:62%;bottom:18%;--sp-size:5px;--sp-dur:3.4s;--sp-delay:1.6s;"></div>
-            <div class="scene-spark" style="left:75%;bottom:50%;--sp-size:3px;--sp-dur:4.6s;--sp-delay:0.8s;"></div>
-            <div class="scene-spark" style="left:88%;bottom:25%;--sp-size:5px;--sp-dur:3.1s;--sp-delay:2.1s;"></div>
-            <div class="scene-spark" style="left:15%;bottom:60%;--sp-size:3px;--sp-dur:4.0s;--sp-delay:1.3s;"></div>
-            <div class="scene-spark" style="left:42%;bottom:70%;--sp-size:4px;--sp-dur:3.6s;--sp-delay:0.7s;"></div>
-            <div class="scene-spark" style="left:58%;bottom:78%;--sp-size:3px;--sp-dur:5.0s;--sp-delay:2.5s;"></div>
-            <div class="scene-spark" style="left:78%;bottom:68%;--sp-size:4px;--sp-dur:3.3s;--sp-delay:1.9s;"></div>
-            <span class="scene-star" style="top:10px;left:12px;--tw-dur:2.3s;--tw-delay:0s;"><svg width="13" height="13" viewBox="0 0 12 12"><polygon points="6,0 7.5,4.5 12,6 7.5,7.5 6,12 4.5,7.5 0,6 4.5,4.5"/></svg></span>
-            <span class="scene-star" style="top:10px;right:12px;--tw-dur:1.9s;--tw-delay:0.8s;"><svg width="11" height="11" viewBox="0 0 12 12"><polygon points="6,0 7.5,4.5 12,6 7.5,7.5 6,12 4.5,7.5 0,6 4.5,4.5"/></svg></span>
-            <span class="scene-star" style="bottom:12px;left:12px;--tw-dur:2.7s;--tw-delay:1.4s;"><svg width="9" height="9" viewBox="0 0 12 12"><polygon points="6,0 7.5,4.5 12,6 7.5,7.5 6,12 4.5,7.5 0,6 4.5,4.5"/></svg></span>
-            <span class="scene-star" style="bottom:12px;right:12px;--tw-dur:2.1s;--tw-delay:0.5s;"><svg width="11" height="11" viewBox="0 0 12 12"><polygon points="6,0 7.5,4.5 12,6 7.5,7.5 6,12 4.5,7.5 0,6 4.5,4.5"/></svg></span>
-        </div>
-
-        <!-- APP ICONS -->
-        <div class="widget-apps animate-in delay-1">
-            <!-- Theme toggle -->
-            <div class="glass app-icon" onclick="toggleTheme()" title="Toggle Light/Dark Mode">
-                <i class="fas fa-sun light-icon"></i>
-                <i class="fas fa-moon dark-icon"></i>
-            </div>
-            <!-- Stats -->
-            <div class="glass app-icon" onclick="openStatsModal()" title="Dev Stats">
-                <div class="mini-stats">
-                    <span class="mini-stat-num" id="header-stat-num">7</span>
-                    <span class="mini-stat-label">PROJ</span>
-                </div>
-            </div>
-            <!-- Projects -->
-            <div class="glass app-icon" onclick="openProjectsModal()" title="Projects">
-                <i class="fas fa-code-branch"></i>
-            </div>
-            <!-- Contact -->
-            <div class="glass app-icon" onclick="openContactModal()" title="Contact">
-                <i class="fas fa-satellite-dish"></i>
-            </div>
-        </div>
-
-        <!-- IMAGE WIDGET -->
-        <div class="glass widget-image animate-in delay-2"></div>
-
-        <!-- STATUS BAR (replaces roll/search) -->
-        <div class="glass widget-status animate-in delay-2">
-            <span class="status-pill-dot"></span>
-            <span class="status-pill-text">Open to opportunities · Java Dev · Game Dev · Web</span>
-            <span class="status-pill-tag">@Shiroi26</span>
-        </div>
-
-        <!-- QUOTE STACK -->
-        <div class="widget-quote-stack animate-in delay-3">
-            <a href="https://github.com/shiruri" target="_blank" class="glass quote-box q1">
-                <div><span class="highlight">Git</span> Hub Repository</div>
-            </a>
-            <a href="https://shiroi26.itch.io/" target="_blank" class="glass quote-box q2">
-                <div><br><span class="highlight">Shiroi26 — itch.io</span></div>
-            </a>
-        </div>
-
-        <!-- PROFILE -->
-        <div class="glass widget-profile animate-in delay-3" onclick="openAboutModal()">
-            <div class="profile-header">
-                <div class="profile-avatar">
-                    <img src="logo.png" alt="Logo">
-                </div>
-                <div class="profile-info">
-                    <div class="profile-name">Jemmer Almoneda</div>
-                    <div class="profile-handle">@Shiro</div>
-                </div>
-            </div>
-            <div class="profile-body">
-                <div class="profile-role">Java Dev · Game Dev</div>
-                <div class="profile-action">
-                    <span>Portfolio</span>
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- FOOTER -->
-        <footer class="footer-nav animate-in delay-4">
-            <span>Terminal: Astral</span>
-            <span>OS 2.1.0</span>
-            <div class="flex gap-4 items-center">
-                <i class="fas fa-wifi"></i>
-                <i class="fas fa-battery-three-quarters"></i>
-                <span>@Shiroi26</span>
-            </div>
-        </footer>
-
+  </div>
+  <div id="biosScreen" class="overlay-screen bios-screen">
+    <div class="bios-content">
+      <div class="bios-line">MikuSoft Win39 BIOS v3.9.0</div>
+      <div class="bios-line">Copyright (C) 1984-2026 MikuSoft Corp.</div>
+      <div class="bios-line">&nbsp;</div>
+      <div class="bios-line">CPU: Miku Core 39 @ 3.9GHz</div>
+      <div class="bios-line">Memory Test: 3939MB OK</div>
+      <div class="bios-line">Primary Master: MikuDisk 39GB</div>
+      <div class="bios-line">Secondary Slave: MikCD-ROM 39x</div>
+      <div class="bios-line">&nbsp;</div>
+      <div class="bios-line bios-cursor" id="biosLastLine">Click to boot...</div>
     </div>
+  </div>
+  <div id="loadScreen" class="overlay-screen bios-screen">
+    <div class="bios-content" id="loadText"></div>
+  </div>
+  <div id="projLoadScreen" class="overlay-screen bios-screen">
+    <div class="bios-content" id="projLoadText"></div>
+  </div>
+</div>
 
-    <!-- ══ MODAL TEMPLATES ══ -->
+<div id="imgModal" class="img-modal-overlay hidden" onclick="closeImgModal()">
+  <div class="img-modal-content" onclick="event.stopPropagation()">
+    <div class="img-modal-bar"><span id="imgModalTitle">Screenshot</span><button class="img-modal-close" onclick="closeImgModal()">X</button></div>
+    <img id="imgModalImg" src="" alt="">
+  </div>
+</div>
 
-    <!-- ABOUT -->
-    <template id="tpl-about">
-        <div class="about-modal-inner">
-            <div class="about-header">
-                <div class="about-avatar">
-                    <img src="Documents/icon.jpg" alt="Jemmer Almoneda" onerror="this.style.display='none';this.parentElement.innerHTML='JA'">
-                </div>
-                <div class="about-header-text">
-                    <p class="about-pre">Traveler's Dossier</p>
-                    <h2 class="about-name">Jemmer Almoneda</h2>
-                    <p class="about-role">Java Developer · Game Dev · Web</p>
-                    <div class="about-status">
-                        <span class="status-dot"></span>
-                        <span class="status-text">Open to opportunities</span>
-                    </div>
-                </div>
-            </div>
-            <div class="about-panel-grid">
-                <div class="about-panel">
-                    <p class="panel-label">Education</p>
-                    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,77,77,0.08);border:1px solid rgba(255,77,77,0.2);border-radius:10px;">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--modal-accent2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1l6 3-6 3-6-3 6-3z"/><path d="M1 7l6 3 6-3"/><path d="M1 10l6 3 6-3"/></svg>
-                        <span style="font-size:0.76rem;font-weight:500;color:var(--modal-accent2);">ACLC College Manila</span>
-                    </div>
-                    <div style="margin-top:12px;">
-                        <p class="panel-label" style="margin-bottom:8px;">Status</p>
-                        <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                            <span style="padding:4px 10px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);border-radius:100px;font-size:0.62rem;font-weight:600;color:#6ee7b7;">Active</span>
-                            <span style="padding:4px 10px;background:rgba(255,77,77,0.1);border:1px solid rgba(255,77,77,0.25);border-radius:100px;font-size:0.62rem;font-weight:600;color:var(--modal-accent2);">@shiros</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-panel">
-                    <p class="panel-label">Technologies</p>
-                    <div class="tech-list">
-                        <div class="tech-item"><span class="tech-ico">☕</span>Java · OOP · Swing<span class="tech-badge">Primary</span></div>
-                        <div class="tech-item"><span class="tech-ico">🗄️</span>MySQL &amp; Oracle<span class="tech-badge">Database</span></div>
-                        <div class="tech-item"><span class="tech-ico">🌱</span>Spring Boot + JWT<span class="tech-badge">Backend</span></div>
-                        <div class="tech-item"><span class="tech-ico">🎮</span>Ren'Py Engine<span class="tech-badge">Games</span></div>
-                        <div class="tech-item"><span class="tech-ico">🌐</span>HTML · CSS · JS<span class="tech-badge">Web</span></div>
-                    </div>
-                </div>
-                <div class="about-panel full">
-                    <p class="panel-label">About Me</p>
-                    <p class="about-body-text">
-                        Student at <strong>ACLC College Manila</strong>, building things across the full stack. My core is <strong>Java</strong> — from Swing desktop apps and custom programming language interpreters to production-grade <strong>Spring Boot REST APIs</strong> secured with JWT and connected to <strong>MySQL and Oracle</strong> databases.<br><br>
-                        Beyond back-end systems, I build community platforms like <strong>Cosnima</strong> (a full-stack cosplay/anime social site) and large-scale management systems like <strong>Elysiae</strong> — an 8-role hospital management system covering everything from patient intake to lab requests, pharmacy, and billing.<br><br>
-                        On the creative side, I write and develop <strong>visual novels</strong> using Ren'Py, blending interactive storytelling with themes of mental health, education, and everyday student life. The goal is always the same: <strong>precise engineering paired with a human experience</strong>.
-                    </p>
-                </div>
-                <div class="about-panel full">
-                    <p class="panel-label">Links</p>
-                    <div class="about-links">
-                        <a class="about-link-chip" href="https://github.com/shiruri" target="_blank">
-                            <svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                            GitHub
-                        </a>
-                        <a class="about-link-chip" href="https://shiroi26.itch.io/" target="_blank">
-                            <svg viewBox="0 0 24 24"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.107 2.41 2.437 2.41h.024c1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.034 2.41 2.362 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612C19.948.768 12.17.73 11.977.73c-.193 0-7.977.038-8.848.608zm8.84 8.965c-.63.006-1.228.05-1.72.135-1.308.232-1.543.715-1.543 1.61v1.172H12v.39H8.336c-.78 0-1.46.468-1.675 1.358-.25.998-.26 1.622 0 2.665.193.777.655 1.292 1.435 1.292h.928v-1.404c0-.886.768-1.666 1.675-1.666h3.35c.746 0 1.343-.614 1.343-1.362V11.05c0-.726-.614-1.27-1.343-1.392-.46-.074-1.098-.12-1.702-.128-.173-.002-.338-.003-.496-.002v-.003c-.16-.002-.33-.004-.5-.002zm-1.78 1.02c.277 0 .503.226.503.505 0 .277-.226.503-.503.503-.278 0-.504-.226-.504-.503 0-.28.226-.504.504-.504zm3.165 4.63v1.366c0 .92-.786 1.708-1.675 1.708H8.336c-.737 0-1.343.63-1.343 1.362v2.546c0 .726.632 1.154 1.343 1.362.85.25 1.666.294 2.672 0 .673-.195 1.343-.586 1.343-1.362v-1.022H9.68v-.342h4.013c.78 0 1.07-.544 1.343-1.362.28-.845.268-1.656 0-2.74-.192-.78-.562-1.362-1.343-1.362l-.313-.003v-.002h-.003zm-2.21 3.706c.277 0 .503.226.503.504 0 .278-.226.504-.503.504-.278 0-.504-.226-.504-.504 0-.278.226-.504.504-.504z"/></svg>
-                            itch.io
-                        </a>
-                        <a class="about-link-chip" href="https://www.facebook.com/shirobako2" target="_blank">
-                            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                            Facebook
-                        </a>
-                        <a class="about-link-chip" href="mailto:jemmeralmoneda58@gmail.com">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                            Email
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </template>
+<div class="desktop">
 
-    <!-- STATS -->
-    <template id="tpl-stats">
-        <div class="projects-modal-inner">
-            <div class="projects-header">
-                <p style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--modal-accent2);margin-bottom:6px;">Analytics</p>
-                <h2 class="projects-title">Dev Stats</h2>
-                <p class="projects-sub">Project breakdown &amp; skill proficiency</p>
-            </div>
-            <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);">
-                <div class="proj-card" style="background:var(--modal-surface);border:1px solid var(--modal-border);">
-                    <div style="padding:16px;text-align:center;">
-                        <i class="fas fa-code" style="font-size:1.5rem;color:var(--modal-accent2);margin-bottom:8px;display:block;"></i>
-                        <div class="proj-card-title stats-total" style="font-size:1.8rem;font-weight:700;">7</div>
-                        <div style="font-size:0.7rem;color:var(--modal-muted);">Total Projects</div>
-                    </div>
-                </div>
-                <div class="proj-card" style="background:var(--modal-surface);border:1px solid var(--modal-border);">
-                    <div style="padding:16px;text-align:center;">
-                        <i class="fas fa-globe" style="font-size:1.5rem;color:var(--modal-accent2);margin-bottom:8px;display:block;"></i>
-                        <div class="proj-card-title" style="font-size:1.8rem;font-weight:700;">1</div>
-                        <div style="font-size:0.7rem;color:var(--modal-muted);">Web</div>
-                    </div>
-                </div>
-                <div class="proj-card" style="background:var(--modal-surface);border:1px solid var(--modal-border);">
-                    <div style="padding:16px;text-align:center;">
-                        <i class="fas fa-coffee" style="font-size:1.5rem;color:var(--modal-accent2);margin-bottom:8px;display:block;"></i>
-                        <div class="proj-card-title" style="font-size:1.8rem;font-weight:700;">4</div>
-                        <div style="font-size:0.7rem;color:var(--modal-muted);">Java</div>
-                    </div>
-                </div>
-                <div class="proj-card" style="background:var(--modal-surface);border:1px solid var(--modal-border);">
-                    <div style="padding:16px;text-align:center;">
-                        <i class="fas fa-gamepad" style="font-size:1.5rem;color:var(--modal-accent2);margin-bottom:8px;display:block;"></i>
-                        <div class="proj-card-title" style="font-size:1.8rem;font-weight:700;">2</div>
-                        <div style="font-size:0.7rem;color:var(--modal-muted);">Games</div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p class="panel-label" style="margin-bottom:12px;">Skill Proficiency</p>
-                <div style="display:flex;flex-direction:column;gap:12px;">
-                    <div>
-                        <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--modal-fg);">Java</span><span style="color:var(--modal-accent2);">90%</span></div>
-                        <div style="height:6px;background:rgba(255,77,77,0.15);border-radius:3px;overflow:hidden;"><div style="width:90%;height:100%;background:var(--modal-accent);border-radius:3px;"></div></div>
-                    </div>
-                    <div>
-                        <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--modal-fg);">Spring Boot</span><span style="color:var(--modal-accent2);">75%</span></div>
-                        <div style="height:6px;background:rgba(255,77,77,0.15);border-radius:3px;overflow:hidden;"><div style="width:75%;height:100%;background:var(--modal-accent);border-radius:3px;"></div></div>
-                    </div>
-                    <div>
-                        <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--modal-fg);">HTML / CSS / JS</span><span style="color:var(--modal-accent2);">85%</span></div>
-                        <div style="height:6px;background:rgba(255,77,77,0.15);border-radius:3px;overflow:hidden;"><div style="width:85%;height:100%;background:var(--modal-accent);border-radius:3px;"></div></div>
-                    </div>
-                    <div>
-                        <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--modal-fg);">MySQL / Oracle</span><span style="color:var(--modal-accent2);">80%</span></div>
-                        <div style="height:6px;background:rgba(255,77,77,0.15);border-radius:3px;overflow:hidden;"><div style="width:80%;height:100%;background:var(--modal-accent);border-radius:3px;"></div></div>
-                    </div>
-                    <div>
-                        <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span style="color:var(--modal-fg);">Ren'Py</span><span style="color:var(--modal-accent2);">70%</span></div>
-                        <div style="height:6px;background:rgba(255,77,77,0.15);border-radius:3px;overflow:hidden;"><div style="width:70%;height:100%;background:var(--modal-accent);border-radius:3px;"></div></div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p class="panel-label" style="margin-bottom:10px;">Tech Stack</p>
-                <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                    <span class="tech-tag">Java</span><span class="tech-tag">Spring Boot</span><span class="tech-tag">Spring Security</span>
-                    <span class="tech-tag">JWT</span><span class="tech-tag">MySQL</span><span class="tech-tag">Oracle DB</span>
-                    <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span>
-                    <span class="tech-tag">Ren'Py</span><span class="tech-tag">Swing</span><span class="tech-tag">REST API</span>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <!-- PROJECTS -->
-    <template id="tpl-projects">
-        <div class="projects-modal-inner">
-            <div class="projects-header">
-                <p style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--modal-accent2);margin-bottom:6px;">Dev Archive</p>
-                <h2 class="projects-title">Projects</h2>
-                <p class="projects-sub">Web, Java, Spring Boot &amp; Game Dev work</p>
-            </div>
-            <div class="projects-filter">
-                <button class="proj-filter-pill active" onclick="filterProjects('all',this)">All</button>
-                <button class="proj-filter-pill" onclick="filterProjects('web',this)">Web</button>
-                <button class="proj-filter-pill" onclick="filterProjects('java',this)">Java</button>
-                <button class="proj-filter-pill" onclick="filterProjects('game',this)">Game</button>
-            </div>
-            <div class="proj-grid" id="proj-grid">
-
-                <!-- WEB -->
-                <div class="proj-card" data-cat="web"
-                     data-title="Portfolio Site"
-                     data-desc="A responsive personal portfolio website designed as an interactive OS-style dashboard. Built with vanilla HTML, CSS, and JavaScript — no frameworks. Features a glassmorphism widget grid, animated curtain intro, dark/light mode with smooth theme transitions, modals with ornamental SVG borders, real-time Manila clock, project cards with detail panels, and mobile-responsive layout. Everything is self-contained in a single file."
-                     data-tags="HTML,CSS,JavaScript,Responsive,Glassmorphism"
-                     data-link="https://github.com/shiruri/portfolio-page"
-                     onclick="openProjectDetail(this)">
-                    <div class="proj-card-thumb">
-                        <img src="Documents/Screenshot_20260328-135058_1.png" alt="Portfolio Site" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%237c5cfc%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Portfolio</text></svg>'">
-                        <div class="proj-card-overlay"></div>
-                        <span class="proj-card-badge badge-web">Web</span>
-                    </div>
-                    <div class="proj-card-body">
-                        <p class="proj-card-title">Portfolio Site</p>
-                        <p class="proj-card-desc">OS-style dashboard portfolio with glassmorphism widgets, curtain intro, and real-time Manila clock.</p>
-                        <a class="proj-card-link" href="https://github.com/shiruri/portfolio-page" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
-                    </div>
-                </div>
-
-                <!-- JAVA: MPOS -->
-                <div class="proj-card" data-cat="java"
-                     data-title="MPOS System"
-                     data-desc="A Java-based point-of-sale system built with Swing. Handles full transaction processing — product lookup, cart management, receipt generation, and sales history. Includes an admin panel with inventory control, user management, and role-based access so staff and administrators have separate permission levels. Connects to a MySQL backend for persistent data. Designed with practical retail workflows in mind."
-                     data-tags="Java,Swing,MySQL,OOP,RBAC"
-                     data-link="https://github.com/shiruri/MPOS"
-                     onclick="openProjectDetail(this)">
-                    <div class="proj-card-thumb">
-                        <img src="Documents/mpos.png" alt="MPOS System" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23fb923c%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>MPOS</text></svg>'">
-                        <div class="proj-card-overlay"></div>
-                        <span class="proj-card-badge badge-java">Java</span>
-                    </div>
-                    <div class="proj-card-body">
-                        <p class="proj-card-title">MPOS System</p>
-                        <p class="proj-card-desc">Full point-of-sale system with inventory, admin panel, and role-based access built in Java Swing.</p>
-                        <a class="proj-card-link" href="https://github.com/shiruri/MPOS" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
-                    </div>
-                </div>
-
-                <!-- JAVA: Elysium -->
-                <div class="proj-card" data-cat="java"
-                     data-title="Elysium"
-                     data-desc="A custom programming language interpreter built entirely in Java. Elysium has its own syntax inspired by BASIC, with a hand-written tokenizer, parser, and command executor. Supports variables, arithmetic expressions, conditional branches, loops, and print statements. The interpreter reads Elysium source files and executes them through a multi-stage pipeline — scanning tokens, building an AST, and walking the tree at runtime. A deep dive into language theory and compiler design."
-                     data-tags="Java,Language Design,Interpreter,AST,OOP"
-                     data-link="https://github.com/shiruri/Elysium/tree/main"
-                     onclick="openProjectDetail(this)">
-                    <div class="proj-card-thumb">
-                        <img src="Documents/ELYSIUM.png" alt="Elysium" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23fb923c%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Elysium</text></svg>'">
-                        <div class="proj-card-overlay"></div>
-                        <span class="proj-card-badge badge-java">Java</span>
-                    </div>
-                    <div class="proj-card-body">
-                        <p class="proj-card-title">Elysium</p>
-                        <p class="proj-card-desc">Custom BASIC-inspired programming language with its own tokenizer, parser, AST, and interpreter.</p>
-                        <a class="proj-card-link" href="https://github.com/shiruri/Elysium/tree/main" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
-                    </div>
-                </div>
-
-                <!-- JAVA: Cosnima -->
-                <div class="proj-card" data-cat="java"
-                     data-title="Cosnima"
-                     data-desc="A full-stack community platform for cosplay and anime enthusiasts. Built with Spring Boot on the backend and vanilla JavaScript on the frontend. Users can create profiles, share costume photos, interact with posts in real time, and explore community content. Features JWT authentication, a RESTful API layer, and a MySQL database. The project was built to explore real-world social platform architecture — feed rendering, media uploads, and user relationships — while serving a niche community."
-                     data-tags="Java,Spring Boot,MySQL,JWT,REST API,JavaScript"
-                     data-link="https://github.com/shiruri/Cosnima"
-                     onclick="openProjectDetail(this)">
-                    <div class="proj-card-thumb">
-                        <img src="Documents/Screenshot_27-4-2026_103128_.jpeg" alt="Cosnima" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23fb923c%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Cosnima</text></svg>'">
-                        <div class="proj-card-overlay"></div>
-                        <span class="proj-card-badge badge-java">Java</span>
-                    </div>
-                    <div class="proj-card-body">
-                        <p class="proj-card-title">Cosnima</p>
-                        <p class="proj-card-desc">Full-stack social platform for cosplay and anime — profiles, posts, real-time interactions, and JWT auth.</p>
-                        <a class="proj-card-link" href="https://github.com/shiruri/Cosnima" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
-                    </div>
-                </div>
-
-                <!-- JAVA: Elysiae HMS -->
-                <div class="proj-card" data-cat="java"
-                     data-title="Elysiae — Hospital Management System"
-                     data-desc="A production-scale Hospital Management System built with Spring Boot, Spring Security (JWT), and MySQL — paired with a custom vanilla JS frontend. Covers the full patient lifecycle: registration, appointments, electronic health records (EHR), ward and bed management, admissions, lab requests, pharmacy dispensing, billing, and audit logging. Supports 8 distinct role-based access levels (admin, doctor, nurse, pharmacist, lab tech, billing, receptionist, patient). The frontend includes a collapsible sidebar, dark mode, keyboard navigation shortcuts, and an accessibility widget with profiles for dyslexia, low vision, and ADHD. A flagship project demonstrating enterprise-level system design."
-                     data-tags="Java,Spring Boot,Spring Security,JWT,MySQL,REST API,JavaScript,RBAC,Accessibility"
-                     data-link="https://github.com/shiruri/Elysiae"
-                     onclick="openProjectDetail(this)">
-                    <div class="proj-card-thumb">
-                        <img src="Documents/Elysiae_HMS.PNG" alt="Elysiae HMS" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23fb923c%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Elysiae</text></svg>'">
-                        <div class="proj-card-overlay"></div>
-                        <span class="proj-card-badge badge-java">Java</span>
-                    </div>
-                    <div class="proj-card-body">
-                        <p class="proj-card-title">Elysiae HMS</p>
-                        <p class="proj-card-desc">Enterprise hospital management with 8-role RBAC, full patient lifecycle, and accessibility features.</p>
-                        <a class="proj-card-link" href="https://github.com/shiruri/Elysiae" target="_blank" onclick="event.stopPropagation()">View <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
-                    </div>
-                </div>
-
-                <!-- GAME: Digital Love -->
-                <div class="proj-card" data-cat="game"
-                     data-title="Digital Love"
-                     data-desc="A Ren'Py visual novel that blends romance with programming education. The story follows a student navigating relationships and academic life, with interactive coding challenges woven into the narrative. Players make choices that affect both the story's outcome and what they learn — turning the act of studying into something emotionally engaging. Explores how games can teach technical concepts without losing the warmth of a good story."
-                     data-tags="Ren'Py,Python,Visual Novel,Game Dev,Education"
-                     data-link="https://shiroi26.itch.io/digital-love"
-                     onclick="openProjectDetail(this)">
-                    <div class="proj-card-thumb">
-                        <img src="Documents/digital.png" alt="Digital Love" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23a78bfa%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Game</text></svg>'">
-                        <div class="proj-card-overlay"></div>
-                        <span class="proj-card-badge badge-game">Game</span>
-                    </div>
-                    <div class="proj-card-body">
-                        <p class="proj-card-title">Digital Love</p>
-                        <p class="proj-card-desc">Romance visual novel with embedded coding challenges — learning programming through interactive storytelling.</p>
-                        <a class="proj-card-link" href="https://shiroi26.itch.io/digital-love" target="_blank" onclick="event.stopPropagation()">Play <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
-                    </div>
-                </div>
-
-                <!-- GAME: Paperweight -->
-                <div class="proj-card" data-cat="game"
-                     data-title="Paperweight"
-                     data-desc="A narrative-driven Ren'Py visual novel exploring student life, mental health, and the quiet weight of unspoken feelings. The story centers on a college student carrying the pressures of academic expectations, strained relationships, and self-doubt. Through branching dialogue and meaningful choices, players experience different emotional outcomes. Paperweight was written and developed as a way to open conversation around topics that often go unaddressed — burnout, loneliness, and the importance of asking for help."
-                     data-tags="Ren'Py,Python,Visual Novel,Mental Health,Narrative"
-                     data-link="https://shiroi26.itch.io/paperweigth"
-                     onclick="openProjectDetail(this)">
-                    <div class="proj-card-thumb">
-                        <img src="Documents/calendar.png" alt="Paperweight" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22110%22><rect fill=%22%23161025%22 width=%22200%22 height=%22110%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23a78bfa%22 font-size=%2214%22 text-anchor=%22middle%22 dy=%22.3em%22>Game</text></svg>'">
-                        <div class="proj-card-overlay"></div>
-                        <span class="proj-card-badge badge-game">Game</span>
-                    </div>
-                    <div class="proj-card-body">
-                        <p class="proj-card-title">Paperweight</p>
-                        <p class="proj-card-desc">Visual novel about student burnout and mental health — branching choices, quiet emotions, honest storytelling.</p>
-                        <a class="proj-card-link" href="https://shiroi26.itch.io/paperweigth" target="_blank" onclick="event.stopPropagation()">Play <svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </template>
-
-    <!-- CONTACT -->
-    <template id="tpl-contact">
-        <div class="contact-modal-inner">
-            <div class="contact-modal-header">
-                <p class="contact-modal-pre">Transmission Channel</p>
-                <h2 class="contact-modal-title">Get in Touch</h2>
-                <p class="contact-modal-sub">Reach out via any of the channels below.</p>
-                <div class="contact-modal-hl"></div>
-            </div>
-            <div class="contact-stack">
-                <a class="contact-card-item" href="https://github.com/shiruri" target="_blank">
-                    <div class="contact-icon-wrap">
-                        <svg viewBox="0 0 16 16" fill="var(--modal-accent2)"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                    </div>
-                    <div class="contact-card-info">
-                        <p class="contact-card-platform">GitHub</p>
-                        <p class="contact-card-handle">github.com/shiruri</p>
-                    </div>
-                    <div class="contact-arrow-btn"><svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></div>
-                </a>
-                <a class="contact-card-item" href="https://www.facebook.com/shirobako2" target="_blank">
-                    <div class="contact-icon-wrap">
-                        <svg viewBox="0 0 24 24" fill="var(--modal-accent2)"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </div>
-                    <div class="contact-card-info">
-                        <p class="contact-card-platform">Facebook</p>
-                        <p class="contact-card-handle">facebook.com/shirobako2</p>
-                    </div>
-                    <div class="contact-arrow-btn"><svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></div>
-                </a>
-                <a class="contact-card-item" href="mailto:jemmeralmoneda58@gmail.com">
-                    <div class="contact-icon-wrap">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--modal-accent2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    </div>
-                    <div class="contact-card-info">
-                        <p class="contact-card-platform">Email</p>
-                        <p class="contact-card-handle">jemmeralmoneda58@gmail.com</p>
-                    </div>
-                    <div class="contact-arrow-btn"><svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></div>
-                </a>
-                <a class="contact-card-item" href="https://shiroi26.itch.io/" target="_blank">
-                    <div class="contact-icon-wrap">
-                        <svg viewBox="0 0 24 24" fill="var(--modal-accent2)"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.107 2.41 2.437 2.41h.024c1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.034 2.41 2.362 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612C19.948.768 12.17.73 11.977.73c-.193 0-7.977.038-8.848.608zm8.84 8.965c-.63.006-1.228.05-1.72.135-1.308.232-1.543.715-1.543 1.61v1.172H12v.39H8.336c-.78 0-1.46.468-1.675 1.358-.25.998-.26 1.622 0 2.665.193.777.655 1.292 1.435 1.292h.928v-1.404c0-.886.768-1.666 1.675-1.666h3.35c.746 0 1.343-.614 1.343-1.362V11.05c0-.726-.614-1.27-1.343-1.392-.46-.074-1.098-.12-1.702-.128-.173-.002-.338-.003-.496-.002v-.003c-.16-.002-.33-.004-.5-.002zm-1.78 1.02c.277 0 .503.226.503.505 0 .277-.226.503-.503.503-.278 0-.504-.226-.504-.503 0-.28.226-.504.504-.504zm3.165 4.63v1.366c0 .92-.786 1.708-1.675 1.708H8.336c-.737 0-1.343.63-1.343 1.362v2.546c0 .726.632 1.154 1.343 1.362.85.25 1.666.294 2.672 0 .673-.195 1.343-.586 1.343-1.362v-1.022H9.68v-.342h4.013c.78 0 1.07-.544 1.343-1.362.28-.845.268-1.656 0-2.74-.192-.78-.562-1.362-1.343-1.362l-.313-.003v-.002h-.003zm-2.21 3.706c.277 0 .503.226.503.504 0 .278-.226.504-.503.504-.278 0-.504-.226-.504-.504 0-.278.226-.504.504-.504z"/></svg>
-                    </div>
-                    <div class="contact-card-info">
-                        <p class="contact-card-platform">itch.io</p>
-                        <p class="contact-card-handle">shiroi26.itch.io</p>
-                    </div>
-                    <div class="contact-arrow-btn"><svg viewBox="0 0 12 12"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5"/></svg></div>
-                </a>
-            </div>
-        </div>
-    </template>
-
-    <script>
-    const masterModal  = document.getElementById('master-modal');
-    const contentArea  = document.getElementById('modal-content-area');
-    const themeOverlay = document.getElementById('theme-overlay');
-
-    // ── Curtain intro ──
-    window.addEventListener('load', () => {
-        const startOverlay = document.getElementById('start-overlay');
-        setTimeout(() => {
-            startOverlay.style.opacity = '0';
-            setTimeout(() => { startOverlay.style.display = 'none'; }, 800);
-        }, 1200);
-    });
-
-    // ── Smooth theme toggle ──
-    function toggleTheme() {
-        // Fade in overlay
-        themeOverlay.style.transition = 'opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
-        themeOverlay.style.opacity = '1';
-
-        setTimeout(() => {
-            document.body.classList.toggle('light-mode');
-            // Update overlay background to match new theme (it reads CSS var)
-        }, 280);
-
-        setTimeout(() => {
-            themeOverlay.style.transition = 'opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1)';
-            themeOverlay.style.opacity = '0';
-        }, 480);
-    }
-
-    // ── Modal helpers ──
-    function openModal(templateId) {
-        masterModal.classList.remove('modal-right');
-        const template = document.getElementById(templateId);
-        contentArea.innerHTML = '';
-        if (template) contentArea.appendChild(template.content.cloneNode(true));
-        masterModal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function openProjectsModal() {
-        openModal('tpl-projects');
-        setTimeout(() => masterModal.classList.add('modal-right'), 10);
-    }
-
-    function openStatsModal() {
-        openModal('tpl-stats');
-        setTimeout(() => masterModal.classList.add('modal-right'), 10);
-    }
-
-    function closeModal() {
-        masterModal.classList.remove('open', 'modal-right');
-        document.body.style.overflow = '';
-    }
-
-    function handleModalBackdrop(e) {
-        if (e.target === masterModal) closeModal();
-    }
-
-    function openAboutModal()   { openModal('tpl-about'); }
-    function openContactModal() { openModal('tpl-contact'); }
-
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-    // ── Filter projects ──
-    function filterProjects(cat, btn) {
-        document.querySelectorAll('.proj-filter-pill').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.proj-card').forEach(card => {
-            card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none';
-        });
-    }
-
-    // ── Project detail panel (reads from data-* attributes) ──
-    function openProjectDetail(card) {
-        const title = card.dataset.title || card.querySelector('.proj-card-title').textContent;
-        const desc  = card.dataset.desc  || card.querySelector('.proj-card-desc').textContent;
-        const tags  = (card.dataset.tags || '').split(',').filter(Boolean);
-        const link  = card.dataset.link  || '';
-        const badge = card.querySelector('.proj-card-badge')?.textContent || '';
-        const img   = card.querySelector('.proj-card-thumb img');
-
-        const panel   = document.getElementById('project-detail-panel');
-        const overlay = document.getElementById('project-detail-overlay');
-
-        panel.querySelector('.project-detail-thumb').src = img ? img.src : '';
-        panel.querySelector('.project-detail-badge').textContent = badge;
-
-        const badgeEl = panel.querySelector('.project-detail-badge');
-        badgeEl.className = 'project-detail-badge ' + (card.querySelector('.proj-card-badge')?.className.replace('proj-card-badge','').trim() || '');
-
-        panel.querySelector('.project-detail-title').textContent = title;
-        panel.querySelector('.project-detail-desc').textContent  = desc;
-
-        const metaEl = panel.querySelector('.project-detail-meta');
-        metaEl.innerHTML = tags.map(t => `<span class="project-detail-tag">${t.trim()}</span>`).join('');
-
-        const linkEl = panel.querySelector('.project-detail-link');
-        if (link) { linkEl.href = link; linkEl.style.display = 'inline-flex'; }
-        else { linkEl.style.display = 'none'; }
-
-        overlay.classList.add('open');
-        panel.classList.add('open');
-    }
-
-    function closeProjectDetail() {
-        document.getElementById('project-detail-panel').classList.remove('open');
-        document.getElementById('project-detail-overlay').classList.remove('open');
-    }
-
-    // ── Clock (Manila time) ──
-    function updateClock() {
-        const now  = new Date();
-        const ph   = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
-        let h      = ph.getHours();
-        const m    = String(ph.getMinutes()).padStart(2,'0');
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        h = h % 12 || 12;
-        const el = document.getElementById('clock');
-        if (el) el.textContent = h + ':' + m + ' ' + ampm;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-    </script>
-
-    <!-- Project Detail Panel -->
-    <div class="project-detail-overlay" id="project-detail-overlay" onclick="closeProjectDetail()"></div>
-    <div class="project-detail" id="project-detail-panel">
-        <div class="project-detail-header">
-            <button class="project-detail-close" onclick="closeProjectDetail()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-            <img class="project-detail-thumb" src="" alt="Project">
-        </div>
-        <div class="project-detail-content">
-            <span class="project-detail-badge"></span>
-            <h2 class="project-detail-title"></h2>
-            <p class="project-detail-desc"></p>
-            <div class="project-detail-meta"></div>
-            <a class="project-detail-link" href="" target="_blank">
-                View Project
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-            </a>
-        </div>
+  <!-- Desktop Icons -->
+  <div class="icons">
+    <div class="icon" ondblclick="openWindow('about')" onclick="openWindow('about')">
+      <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="">
+      <span>My Computer</span>
     </div>
+    <div class="icon" ondblclick="openWindow('projects')" onclick="openWindow('projects')">
+      <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" alt="">
+      <span>Projects</span>
+    </div>
+    <div class="icon" ondblclick="openWindow('contact')" onclick="openWindow('contact')">
+      <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" alt="">
+      <span>Internet Explorer</span>
+    </div>
+    <div class="icon" ondblclick="openWindow('win-config')" onclick="openWindow('win-config')">
+      <img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png" alt="">
+      <span>Settings</span>
+    </div>
+    <div class="icon" ondblclick="openWindow('win-music')" onclick="openWindow('win-music')">
+      <img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd-0.png" alt="">
+      <span>Music Player</span>
+    </div>
+  </div>
 
+  <!-- ABOUT WINDOW -->
+  <div class="window active" id="win-about" style="top:40px;left:60px;width:420px">
+    <div class="titlebar" onmousedown="dragStart(event,'win-about')" ontouchstart="dragStart(event,'win-about')">
+      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" class="titlebar-icon"> Jemmer Almoneda - About</div>
+      <div class="titlebar-btns">
+        <button class="tb-btn" onclick="minimizeWin('win-about')">_</button>
+        <button class="tb-btn" onclick="maximizeWin('win-about')">[]</button>
+        <button class="tb-btn close-btn" onclick="closeWin('win-about')">X</button>
+      </div>
+    </div>
+    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+    <div class="window-body about-content">
+      <div class="about-top">
+        <div class="about-avatar">
+          <img src="Documents/avatar.jpg" alt="Jemmer" onerror="this.style.display='none'">
+        </div>
+        <div class="about-info">
+          <div class="about-name">Jemmer Almoneda</div>
+          <div class="about-role">Java Developer / Game Dev / Web</div>
+          <div class="about-status">&#128994; Open to opportunities</div>
+        </div>
+      </div>
+      <div class="win98-box">
+        <div class="box-label">Education</div>
+        <div class="box-content">
+          <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" class="box-icon"> ACLC College Manila
+        </div>
+      </div>
+      <div class="win98-box">
+        <div class="box-label">Technologies</div>
+        <div class="tech-grid">
+          <div class="tech-item"><span class="tech-emoji">&#9749;</span> Java / OOP / Swing <span class="tech-tag">Primary</span></div>
+          <div class="tech-item"><span class="tech-emoji">&#128451;</span> MySQL &amp; Oracle <span class="tech-tag">Database</span></div>
+          <div class="tech-item"><span class="tech-emoji">&#127793;</span> Spring Boot + JWT <span class="tech-tag">Backend</span></div>
+          <div class="tech-item"><span class="tech-emoji">&#127918;</span> Ren'Py Engine <span class="tech-tag">Games</span></div>
+          <div class="tech-item"><span class="tech-emoji">&#127760;</span> HTML / CSS / JS <span class="tech-tag">Web</span></div>
+        </div>
+      </div>
+      <div class="win98-box">
+        <div class="box-label">About Me</div>
+        <p class="bio-text">
+          Student at <b>ACLC College Manila</b>, building things across the full stack. My core is <b>Java</b> - from Swing desktop apps and custom programming language interpreters to production-grade <b>Spring Boot REST APIs</b> secured with JWT and connected to <b>MySQL and Oracle</b> databases.<br><br>
+          Beyond back-end systems, I build community platforms like <b>Cosnima</b> and large-scale management systems like <b>Elysiae</b> - an 8-role hospital management system. On the creative side, I write and develop <b>visual novels</b> using Ren'Py.
+        </p>
+      </div>
+      <div class="win98-box">
+        <div class="box-label">Links</div>
+        <div class="link-row">
+          <a href="https://github.com/shiruri" target="_blank" class="win98-link">GitHub</a>
+          <a href="https://shiroi26.itch.io/" target="_blank" class="win98-link">itch.io</a>
+          <a href="https://www.facebook.com/shirobako2" target="_blank" class="win98-link">Facebook</a>
+          <a href="mailto:jemmeralmoneda58@gmail.com" class="win98-link">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS WINDOW -->
+  <div class="window" id="win-projects" style="top:60px;left:100px;width:560px">
+    <div class="titlebar" onmousedown="dragStart(event,'win-projects')" ontouchstart="dragStart(event,'win-projects')">
+      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="titlebar-icon"> Projects</div>
+      <div class="titlebar-btns">
+        <button class="tb-btn" onclick="minimizeWin('win-projects')">_</button>
+        <button class="tb-btn" onclick="maximizeWin('win-projects')">[]</button>
+        <button class="tb-btn close-btn" onclick="closeWin('win-projects')">X</button>
+      </div>
+    </div>
+    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Help</span></div>
+    <div class="addressbar">
+      <span>Address</span>
+      <div class="address-input" id="projPath">C:\My Projects\</div>
+    </div>
+    <div class="window-body proj-body">
+      <div class="proj-explorer">
+        <div class="proj-tree">
+          <div class="tree-item tree-root" onclick="navigateFolder('all',this)">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="tree-icon"> My Projects
+          </div>
+          <div class="tree-item" onclick="navigateFolder('web',this)">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="tree-icon"> Web
+          </div>
+          <div class="tree-item" onclick="navigateFolder('java',this)">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="tree-icon"> Java
+          </div>
+          <div class="tree-item" onclick="navigateFolder('game',this)">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="tree-icon"> Game
+          </div>
+        </div>
+        <div class="proj-files" id="projFiles">
+          <!-- files rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT WINDOW -->
+  <div class="window" id="win-contact" style="top:80px;left:140px;width:380px">
+    <div class="titlebar" onmousedown="dragStart(event,'win-contact')" ontouchstart="dragStart(event,'win-contact')">
+      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" class="titlebar-icon"> Contact - Internet Explorer</div>
+      <div class="titlebar-btns">
+        <button class="tb-btn" onclick="minimizeWin('win-contact')">_</button>
+        <button class="tb-btn" onclick="maximizeWin('win-contact')">[]</button>
+        <button class="tb-btn close-btn" onclick="closeWin('win-contact')">X</button>
+      </div>
+    </div>
+    <div class="addressbar">
+      <span>Address</span>
+      <div class="address-input">https://www.cyworld.com/shiroi26/contact</div>
+    </div>
+    <div class="window-body contact-content">
+      <div class="contact-head">Get in Touch</div>
+      <div class="contact-sub">Reach out via any of the channels below.</div>
+      <a class="contact-row" href="https://github.com/shiruri" target="_blank">
+        <img src="https://win98icons.alexmeub.com/icons/png/folder_closed-4.png" class="contact-icon">
+        <div class="contact-info"><div class="contact-plat">GitHub</div><div class="contact-handle">github.com/shiruri</div></div>
+        <span class="contact-arrow">&gt;</span>
+      </a>
+      <a class="contact-row" href="https://www.facebook.com/shirobako2" target="_blank">
+        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png" class="contact-icon">
+        <div class="contact-info"><div class="contact-plat">Facebook</div><div class="contact-handle">facebook.com/shirobako2</div></div>
+        <span class="contact-arrow">&gt;</span>
+      </a>
+      <a class="contact-row" href="mailto:jemmeralmoneda58@gmail.com">
+        <img src="https://win98icons.alexmeub.com/icons/png/mail-2.png" class="contact-icon">
+        <div class="contact-info"><div class="contact-plat">Email</div><div class="contact-handle">jemmeralmoneda58@gmail.com</div></div>
+        <span class="contact-arrow">&gt;</span>
+      </a>
+      <a class="contact-row" href="https://shiroi26.itch.io/" target="_blank">
+        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" class="contact-icon">
+        <div class="contact-info"><div class="contact-plat">itch.io</div><div class="contact-handle">shiroi26.itch.io</div></div>
+        <span class="contact-arrow">&gt;</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- PROJECT DETAIL WINDOW (multi-mode) -->
+  <div class="window" id="win-projdetail" style="top:60px;left:140px;width:460px;height:440px">
+    <div class="titlebar" onmousedown="dragStart(event,'win-projdetail')" ontouchstart="dragStart(event,'win-projdetail')">
+      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png" class="titlebar-icon" id="pdetail-icon"> <span id="pdetail-title">Project Properties</span></div>
+      <div class="titlebar-btns">
+        <button class="tb-btn" onclick="minimizeWin('win-projdetail')">_</button>
+        <button class="tb-btn" onclick="maximizeWin('win-projdetail')">[]</button>
+        <button class="tb-btn close-btn" onclick="closeWin('win-projdetail')">X</button>
+      </div>
+    </div>
+    <div class="menubar" id="pdetail-menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+    <div class="window-body" id="pdetail-body">
+      <!-- === WEB: Internet Explorer mode === -->
+      <div id="pdetail-web" class="pdetail-mode" style="display:none">
+        <div class="ie-toolbar">
+          <button class="ie-btn" title="Back">&larr;</button>
+          <button class="ie-btn" title="Forward">&rarr;</button>
+          <button class="ie-btn" title="Stop">&#10005;</button>
+          <button class="ie-btn" title="Refresh">&#8635;</button>
+          <button class="ie-btn" title="Home">&#8962;</button>
+          <span class="ie-addr-label">Address</span>
+          <span class="ie-addr" id="pdetail-web-url">about:project</span>
+        </div>
+        <div class="ie-body">
+          <div class="pdetail-img-wrap" id="pdetail-imgwrap-w">
+            <img class="pdetail-screenshot" id="pdetail-screenshot-w">
+            <span class="pdetail-zoomhint">Click to view full size</span>
+          </div>
+          <div class="pdetail-badge" id="pdetail-badge-w"></div>
+          <p class="pdetail-desc" id="pdetail-desc-w"></p>
+          <div class="pdetail-tags" id="pdetail-tags-w"></div>
+          <div class="pdetail-actions">
+            <a class="win98-link" id="pdetail-link-w" target="_blank">View Project</a>
+            <button class="win98-link" onclick="closeWin('win-projdetail')">Close</button>
+          </div>
+        </div>
+      </div>
+      <!-- === JAVA: Terminal mode === -->
+      <div id="pdetail-java" class="pdetail-mode" style="display:none">
+        <div class="pdetail-img-wrap" id="pdetail-imgwrap-j">
+          <img class="pdetail-screenshot" id="pdetail-screenshot-j">
+          <span class="pdetail-zoomhint">Click to view full size</span>
+        </div>
+        <div class="java-term" id="java-term">
+          <div class="term-line" id="java-term-lines"></div>
+        </div>
+        <div class="pdetail-actions" style="margin-top:4px">
+          <a class="win98-link" id="pdetail-link-j" target="_blank">View Project</a>
+          <button class="win98-link" onclick="closeWin('win-projdetail')" style="margin-left:4px">Close</button>
+        </div>
+      </div>
+      <!-- === GAME: Splash + Launcher mode === -->
+      <div id="pdetail-game" class="pdetail-mode" style="display:none">
+        <div class="game-wrap" id="game-wrap">
+          <div class="game-splash" id="game-splash">
+            <img class="game-splash-img" id="game-splash-img" alt="">
+            <div class="game-splash-overlay" onclick="launchGame()">
+              <span class="game-launch-btn">&#9654; Click to Launch</span>
+            </div>
+          </div>
+          <div class="game-info" id="game-info">
+            <div class="pdetail-badge" id="pdetail-badge-g"></div>
+            <p class="pdetail-desc" id="pdetail-desc-g"></p>
+            <div class="pdetail-tags" id="pdetail-tags-g"></div>
+            <div class="pdetail-actions">
+              <a class="win98-link" id="pdetail-link-g" target="_blank">View Project</a>
+              <button class="win98-link" onclick="closeWin('win-projdetail')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS WINDOW -->
+  <div class="window" id="win-config" style="top:50px;left:180px;width:340px">
+    <div class="titlebar" onmousedown="dragStart(event,'win-config')" ontouchstart="dragStart(event,'win-config')">
+      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png" class="titlebar-icon"> Display Settings</div>
+      <div class="titlebar-btns">
+        <button class="tb-btn" onclick="minimizeWin('win-config')">_</button>
+        <button class="tb-btn" onclick="maximizeWin('win-config')">[]</button>
+        <button class="tb-btn close-btn" onclick="closeWin('win-config')">X</button>
+      </div>
+    </div>
+    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+    <div class="window-body config-body">
+      <div class="config-section">
+        <div class="box-label">Appearance</div>
+        <div class="config-row">
+          <span class="config-label">Window Animation</span>
+          <button class="config-toggle" onclick="toggleAnim(this)">Off</button>
+        </div>
+        <div class="config-row">
+          <span class="config-label">Show Desktop Icons</span>
+          <button class="config-toggle" onclick="toggleIcons(this)">Off</button>
+        </div>
+      </div>
+      <div class="config-section">
+        <div class="box-label">Sounds</div>
+        <div class="config-row">
+          <span class="config-label">Sound Effects</span>
+          <button class="config-toggle" onclick="toggleSound(this)">Off</button>
+        </div>
+      </div>
+      <div class="config-section">
+        <div class="box-label">About This Site</div>
+        <div class="config-info">
+          Windows 98 themed portfolio built with vanilla HTML, CSS, and JavaScript.<br><br>
+          <b>Version:</b> 2.0<br>
+          <b>Engine:</b> Vanilla JS Window Manager<br>
+          <b>Fonts:</b> VT323 + MS Sans Serif
+        </div>
+      </div>
+      <div style="text-align:right;margin-top:10px">
+        <button class="win98-link" onclick="saveSettings()">OK</button>
+        <button class="win98-link" onclick="closeWin('win-config')" style="margin-left:4px">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MUSIC PLAYER WINDOW -->
+  <div class="window" id="win-music" style="top:80px;left:280px;width:380px">
+    <div class="titlebar" onmousedown="dragStart(event,'win-music')" ontouchstart="dragStart(event,'win-music')">
+      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd-0.png" class="titlebar-icon"> Music Player</div>
+      <div class="titlebar-btns">
+        <button class="tb-btn" onclick="minimizeWin('win-music')">_</button>
+        <button class="tb-btn" onclick="maximizeWin('win-music')">[]</button>
+        <button class="tb-btn close-btn" onclick="closeWin('win-music')">X</button>
+      </div>
+    </div>
+    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+    <div class="window-body music-body">
+      <div class="music-display">
+        <div class="music-gif-wrap">
+          <img src="Documents/music-paused.gif" class="music-gif" id="musicGifPaused">
+          <img src="Documents/music.gif" class="music-gif music-gif-play" id="musicGifPlay">
+        </div>
+        <div class="music-info">
+          <div class="music-title">Senbonzakura</div>
+          <div class="music-artist">Hatsune Miku</div>
+        </div>
+      </div>
+      <div class="music-controls">
+        <button class="music-btn" onclick="playMusic()" id="playBtn">&#9654;</button>
+        <div class="music-progress-wrap">
+          <div class="music-progress-bar" id="musicProgress"></div>
+        </div>
+        <span class="music-time" id="musicTime">0:00 / 0:00</span>
+      </div>
+      <div class="music-volume-row">
+        <span>Volume</span>
+        <input type="range" min="0" max="100" value="70" class="music-volume" id="musicVolume" oninput="setVolume(this.value)">
+      </div>
+      <div class="music-now">Now Playing: Senbonzakura (8-bit chiptune cover)</div>
+    </div>
+  </div>
+
+  <!-- TASKBAR -->
+  <div class="taskbar">
+    <button class="start-btn" onclick="toggleStartMenu()">
+      <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" class="start-logo"> Start
+    </button>
+    <div class="taskbar-divider"></div>
+    <div class="task-tabs">
+      <button class="task-tab active" data-win="win-about" onclick="switchWindow('win-about')">
+        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png"> <span class="tabtext">About</span>
+      </button>
+      <button class="task-tab" data-win="win-projects" onclick="switchWindow('win-projects')">
+        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png"> <span class="tabtext">Projects</span>
+      </button>
+      <button class="task-tab" data-win="win-contact" onclick="switchWindow('win-contact')">
+        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png"> <span class="tabtext">Contact</span>
+      </button>
+      <button class="task-tab" data-win="win-config" onclick="switchWindow('win-config')">
+        <img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png"> <span class="tabtext">Settings</span>
+      </button>
+      <button class="task-tab" data-win="win-music" onclick="switchWindow('win-music')">
+        <img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd-0.png"> <span class="tabtext">Music</span>
+      </button>
+      <button class="task-tab" data-win="win-projdetail" onclick="switchWindow('win-projdetail')" id="tab-projdetail" style="display:none">
+        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png" id="tab-projdetail-icon"> <span class="tabtext" id="tab-projdetail-text">Project</span>
+      </button>
+      <button class="task-tab" data-win="win-projdetail" onclick="switchWindow('win-projdetail')" id="tab-projdetail-web" style="display:none">
+        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" id="tab-projdetail-icon-web"> <span class="tabtext" id="tab-projdetail-text-web">Project</span>
+      </button>
+      <button class="task-tab" data-win="win-projdetail" onclick="switchWindow('win-projdetail')" id="tab-projdetail-java" style="display:none">
+        <img src="https://win98icons.alexmeub.com/icons/png/regedit-0.png" id="tab-projdetail-icon-java"> <span class="tabtext" id="tab-projdetail-text-java">Project</span>
+      </button>
+      <button class="task-tab" data-win="win-projdetail" onclick="switchWindow('win-projdetail')" id="tab-projdetail-game" style="display:none">
+        <img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" id="tab-projdetail-icon-game"> <span class="tabtext" id="tab-projdetail-text-game">Project</span>
+      </button>
+    </div>
+    <div class="taskbar-right">
+      <div class="clock" id="clock">5:26 PM</div>
+    </div>
+  </div>
+
+  <!-- Start Menu -->
+  <div class="start-menu hidden" id="startMenu">
+    <div class="start-menu-header">
+      <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png">
+      <b>Windows98</b>
+    </div>
+    <div class="start-menu-items">
+      <div class="start-item" onclick="openWindow('about');toggleStartMenu()">
+        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png"> About Me
+      </div>
+      <div class="start-item" onclick="openWindow('projects');toggleStartMenu()">
+        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png"> Projects
+      </div>
+      <div class="start-item" onclick="openWindow('contact');toggleStartMenu()">
+        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png"> Contact
+      </div>
+      <div class="start-item" onclick="openWindow('win-config');toggleStartMenu()">
+        <img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png"> Settings
+      </div>
+      <div class="start-item" onclick="openWindow('win-music');toggleStartMenu()">
+        <img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd-0.png"> Music Player
+      </div>
+      <div class="start-divider"></div>
+      <div class="start-item" onclick="showRestartConfirm()">
+        <img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png"> Restart...
+      </div>
+      <div class="start-item" onclick="showShutdownConfirm()">
+        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png"> Shut Down...
+      </div>
+    </div>
+  </div>
+
+  <!-- SHUTDOWN CONFIRMATION DIALOG -->
+  <div id="shutdownConfirm" class="shutdown-confirm-overlay hidden" onclick="closeShutdownConfirm()">
+    <div class="shutdown-confirm-dialog" onclick="event.stopPropagation()">
+      <div class="shutdown-confirm-title">
+        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" class="sc-icon"> Shut Down Windows
+      </div>
+      <div class="shutdown-confirm-body">
+        <div class="sc-text">Are you sure you want to shut down your computer?</div>
+        <img src="Documents/confirmation.png" class="shutdown-confirm-img">
+      </div>
+      <div class="shutdown-confirm-actions">
+        <button class="win98-link" onclick="confirmShutdown()">Yes</button>
+        <button class="win98-link" onclick="closeShutdownConfirm()" style="margin-left:4px">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESTART CONFIRMATION DIALOG -->
+  <div id="restartConfirm" class="shutdown-confirm-overlay hidden" onclick="closeRestartConfirm()">
+    <div class="shutdown-confirm-dialog" onclick="event.stopPropagation()">
+      <div class="shutdown-confirm-title">
+        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" class="sc-icon"> Restart Windows
+      </div>
+      <div class="shutdown-confirm-body">
+        <div class="sc-text">Are you sure you want to restart your computer?</div>
+        <img src="Documents/confirmation.png" class="shutdown-confirm-img">
+      </div>
+      <div class="shutdown-confirm-actions">
+        <button class="win98-link" onclick="confirmRestart()">Yes</button>
+        <button class="win98-link" onclick="closeRestartConfirm()" style="margin-left:4px">No</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
