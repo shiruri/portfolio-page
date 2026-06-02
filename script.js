@@ -13,6 +13,11 @@ function closeWin(id){
   if(id.indexOf('win-')!==0)id='win-'+id;
   var w=document.getElementById(id);
   if(w){w.classList.remove('active');playClickSound()}
+  if(id==='win-projdetail'){
+    ['tab-projdetail','tab-projdetail-web','tab-projdetail-java','tab-projdetail-game'].forEach(function(t){
+      document.getElementById(t).style.display='none';
+    });
+  }
   updateTabs();
 }
 
