@@ -478,7 +478,7 @@ function playMusic(){
   var btn=document.getElementById('playBtn');
   if(audio&&audio.paused===false){
     audio.pause();
-    btn.innerHTML='&#9654;';
+    btn.textContent='PLAY';
     document.getElementById('musicGifPlay').style.opacity='0';
     return;
   }
@@ -487,12 +487,12 @@ function playMusic(){
     audio.volume=document.getElementById('musicVolume').value/100;
     audio.addEventListener('timeupdate',updateMusicProgress);
     audio.addEventListener('ended',function(){
-      document.getElementById('playBtn').innerHTML='&#9654;';
+      document.getElementById('playBtn').textContent='PLAY';
       document.getElementById('musicGifPlay').style.opacity='0';
     });
   }
   audio.play();
-  btn.innerHTML='&#9646;&#9646;';
+  btn.textContent='PAUSE';
   document.getElementById('musicGifPlay').style.opacity='1';
 }
 function updateMusicProgress(){
@@ -874,18 +874,48 @@ if(window.innerWidth<=700){
 
   function boot(){
     state='boot';
+    var bt=[];
     scr.innerHTML=
       '<div class="gba-boot">'+
       '<img src="Documents/boot.webp" class="gba-boot-img">'+
-      '<div class="gba-boot-sub">GAME BOY ADVANCE</div>'+
+      '<div class="gba-boot-sub">MIKU ADVANCE</div>'+
       '<div class="gba-boot-anim"><span></span></div>'+
       '</div>';
-    setTimeout(showMenu,2800);
+  bt.push(setTimeout(showMenu,2800));
+    bt.push(setTimeout(function(){
+      var tt=document.getElementById('gbaTooltip');
+      if(!tt)return;
+      var kc2=document.getElementById('gbaKeychain');
+      if(!kc2)return;
+      var idleMsgs=['grab me!','pull me!','hey!','over here!','psst!','look!','wave!'];
+      var idleTimer=null;
+      function pTT(){
+        var kr=kc2.getBoundingClientRect();
+        var pr=kc2.parentElement.getBoundingClientRect();
+        tt.style.left=(kr.left-pr.left-tt.offsetWidth-6)+'px';
+        tt.style.top=(kr.top-pr.top+6)+'px';
+      }
+      function sTT(t){
+        if(!t)t=idleMsgs[Math.floor(Math.random()*idleMsgs.length)];
+        tt.textContent=t;tt.classList.add('show');pTT();
+      }
+      function hTT(){tt.classList.remove('show');if(idleTimer){clearInterval(idleTimer);idleTimer=null;}}
+      sTT('grab me!');
+      idleTimer=setInterval(function(){sTT();},5000);
+      bt.push(idleTimer);
+      bt.push(setTimeout(function(){hTT();},12000));
+      if(!kc2._ttSet){
+        kc2._ttSet=true;
+        kc2.addEventListener('mousedown',function(){hTT();});
+        kc2.addEventListener('touchstart',function(){hTT();});
+      }
+    },2900));
+    bootTimers=bt;
   }
 
   function renderMenu(){
-    var h='<div class="gba-menu"><div class="gba-menu-title">WinBoy v1.0</div>';
-    h+='<div class="gba-menu-div">────────────────</div><div class="gba-menu-list">';
+    var h='<div class="gba-menu"><div class="gba-menu-title">MIKU WinBoy v1.0</div>';
+    h+='<div class="gba-menu-div">~ ~ ~ ~ ~ ~ ~ ~ ~ ~</div><div class="gba-menu-list">';
     apps.forEach(function(a,i){
       h+='<div class="gba-menu-item'+(i===cursor?' active':'')+'">'+
         (i===cursor?'\u25b8 ':'  ')+a.name+'</div>';
@@ -996,7 +1026,7 @@ if(window.innerWidth<=700){
       '<div class="gba-music-time"><span>1:23</span><span>3:45</span></div>'+
       '</div>'+
       '<div class="gba-music-controls">'+
-      '<button class="gba-music-btn" id="gbaPlay">'+(isPlaying?'\u23F8':'\u25B6')+'</button>'+
+      '<button class="gba-music-btn" id="gbaPlay">'+(isPlaying?'PAUSE':'PLAY')+'</button>'+
       '</div>'+
       '<div class="gba-music-status" id="gbaMusicStatus">'+(isPlaying?'NOW PLAYING':'PAUSED')+'</div>'+
       '</div><div class="gba-app-foot">\u25b2\u25bc SCROLL &bull; A PLAY &bull; B BACK</div></div>';
@@ -1192,46 +1222,84 @@ if(window.innerWidth<=700){
   (function(){
     var kc=document.getElementById('gbaKeychain');
     if(!kc)return;
-    var aL=6,aT=6,rad=40;
+    var parent=kc.parentElement;
+    var tt=document.getElementById('gbaTooltip');
+    var rad=55,hs=28;
     var raf=null;
-    function sp(){
-      var cl=parseFloat(kc.style.left)||aL;
-      var ct=parseFloat(kc.style.top)||aT;
-      var st=Date.now(),dur=350;
+    var aX=0,aY=0,dragging=false;
+    var idleMsgs=['grab me!','pull me!','hey!','over here!','psst!','look!','wave!'];
+    var moveMsgs=['whee!','whee!','hehe','wee!','more!','again!','yeah!'];
+    var idler=null,mover=null;
+    function pTT(){
+      if(!tt)return;
+      var kr=kc.getBoundingClientRect();
+      var pr=parent.getBoundingClientRect();
+      tt.style.left=(kr.left-pr.left-tt.offsetWidth-6)+'px';
+      tt.style.top=(kr.top-pr.top+4)+'px';
+    }
+    function sTT(t){
+      if(!tt)return;
+      tt.textContent=t||idleMsgs[Math.floor(Math.random()*idleMsgs.length)];
+      tt.classList.add('show');pTT();
+    }
+    function hTT(){
+      if(!tt)return;
+      tt.classList.remove('show');
+      if(idler){clearInterval(idler);idler=null;}
+      if(mover){clearTimeout(mover);mover=null;}
+    }
+    setTimeout(function(){
+      sTT('grab me!');
+      idler=setInterval(function(){if(!dragging)sTT();},5000);
+      setTimeout(hTT,12000);
+    },2900);
+    function snap(){
+      var sL=kc.style.left, sT=kc.style.top;
+      var cl=sL&&sL!=='auto'?parseFloat(sL):aX;
+      var ct=sT&&sT!=='auto'?parseFloat(sT):aY;
+      var st=Date.now(),dur=280;
+      dragging=false;
       function f(){
-        var t=Math.min((Date.now()-st)/dur,1);
-        var e=1-Math.pow(1-t,3);
-        kc.style.left=(cl+(aL-cl)*e)+'px';
-        kc.style.top=(ct+(aT-ct)*e)+'px';
-        if(t<1)raf=requestAnimationFrame(f);
-        else{raf=null;kc.style.left='';kc.style.top='';kc.style.right='6px';}
+        var p=Math.min((Date.now()-st)/dur,1);
+        var e=1-Math.pow(1-p,3);
+        kc.style.left=(cl+(aX-cl)*e)+'px';
+        kc.style.top=(ct+(aY-ct)*e)+'px';
+        pTT();
+        if(p<1)raf=requestAnimationFrame(f);
+        else{raf=null;kc.style.left='';kc.style.top='';kc.style.right='8px';pTT();}
       }
       f();
     }
     function sd(e){
-      if(raf){cancelAnimationFrame(raf);raf=null;}
       e.preventDefault();
+      hTT();
+      dragging=true;
+      if(raf){cancelAnimationFrame(raf);raf=null;}
       var cx=e.clientX||(e.touches?e.touches[0].clientX:0);
       var cy=e.clientY||(e.touches?e.touches[0].clientY:0);
+      var pr=parent.getBoundingClientRect();
       var rc=kc.getBoundingClientRect();
-      var ox=cx-rc.left,oy=cy-rc.top;
-      kc.style.right='auto';
-      kc.style.left=(aL-6)+'px';kc.style.top=(aT-6)+'px';
+      aX=rc.left-pr.left; aY=rc.top-pr.top;
+      var ox=cx-rc.left-hs, oy=cy-rc.top-hs;
+      kc.style.right='auto';kc.style.left=aX+'px';kc.style.top=aY+'px';
       function om(e2){
         var mx=e2.clientX||(e2.touches?e2.touches[0].clientX:0);
         var my=e2.clientY||(e2.touches?e2.touches[0].clientY:0);
-        var dx=mx-cx,dy=my-cy;
-        var dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist>rad){dx=dx/dist*rad;dy=dy/dist*rad;}
-        kc.style.left=(aL+dx-6)+'px';
-        kc.style.top=(aT+dy-6)+'px';
+        var nx=aX+(mx-cx-ox), ny=aY+(my-cy-oy);
+        var dx=nx-aX, dy=ny-aY;
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d>rad){dx=dx/d*rad;dy=dy/d*rad;}
+        kc.style.left=(aX+dx)+'px';
+        kc.style.top=(aY+dy)+'px';
+        if(!mover){sTT(moveMsgs[Math.floor(Math.random()*moveMsgs.length)]);mover=setTimeout(function(){mover=null;},600);}
+        else pTT();
       }
       function ou(){
         document.removeEventListener('mousemove',om);
         document.removeEventListener('mouseup',ou);
         document.removeEventListener('touchmove',om);
         document.removeEventListener('touchend',ou);
-        sp();
+        snap();
       }
       document.addEventListener('mousemove',om);
       document.addEventListener('mouseup',ou);
@@ -1243,6 +1311,23 @@ if(window.innerWidth<=700){
   })();
 
   boot();
+
+  var wasMobile=window.innerWidth<=700;
+  window.addEventListener('resize',function(){
+    var nowMobile=window.innerWidth<=700;
+    if(nowMobile!==wasMobile){
+      wasMobile=nowMobile;
+      if(nowMobile){
+        if(typeof bootTimers!=='undefined'){
+          bootTimers.forEach(function(t){clearTimeout(t);});
+        }
+        scr.innerHTML='';
+        state='boot';
+        cursor=0;subCur=0;history=[];currApp='';inDetail=false;
+        boot();
+      }
+    }
+  });
 })();
 
 
