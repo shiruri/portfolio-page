@@ -1192,26 +1192,21 @@ if(window.innerWidth<=700){
   (function(){
     var kc=document.getElementById('gbaKeychain');
     if(!kc)return;
-    function startDrag(e){
+    function sd(e){
       e.preventDefault();
       var cx=e.clientX||(e.touches?e.touches[0].clientX:0);
       var cy=e.clientY||(e.touches?e.touches[0].clientY:0);
-      var startL=kc.offsetLeft,startT=kc.offsetTop;
-      function onMove(e2){
+      var sl=kc.offsetLeft,st=kc.offsetTop;
+      function om(e2){
         var mx=e2.clientX||(e2.touches?e2.touches[0].clientX:0);
         var my=e2.clientY||(e2.touches?e2.touches[0].clientY:0);
-        kc.style.left=(startL+mx-cx)+'px';
-        kc.style.top=(startT+my-cy)+'px';
-        kc.style.right='auto';
+        kc.style.left=(sl+mx-cx)+'px';kc.style.top=(st+my-cy)+'px';kc.style.right='auto';
       }
-      function onUp(){document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);}
-      document.addEventListener('mousemove',onMove);
-      document.addEventListener('mouseup',onUp);
-      document.addEventListener('touchmove',onMove,{passive:true});
-      document.addEventListener('touchend',onUp);
+      function ou(){document.removeEventListener('mousemove',om);document.removeEventListener('mouseup',ou);document.removeEventListener('touchmove',om);document.removeEventListener('touchend',ou);}
+      document.addEventListener('mousemove',om);document.addEventListener('mouseup',ou);
+      document.addEventListener('touchmove',om,{passive:true});document.addEventListener('touchend',ou);
     }
-    kc.addEventListener('mousedown',startDrag);
-    kc.addEventListener('touchstart',startDrag);
+    kc.addEventListener('mousedown',sd);kc.addEventListener('touchstart',sd);
   })();
 
   boot();
