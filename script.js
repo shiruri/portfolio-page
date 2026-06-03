@@ -930,7 +930,7 @@ if(window.innerWidth<=700){
       '</div></div>'+
       '<div class="gba-section"><b>Education</b><br>ACLC College Manila</div>'+
       '<div class="gba-section"><b>Technologies</b><br>Java / OOP / Swing &bull; MySQL &amp; Oracle &bull; Spring Boot + JWT &bull; Ren\'Py &bull; HTML / CSS / JS</div>'+
-      '<div class="gba-section"><b>About</b><br>Student at ACLC College Manila, building across the full stack. Core is Java — from Swing desktop apps and custom interpreters to Spring Boot REST APIs with JWT and MySQL/Oracle.</div>'+
+      '<div class="gba-section"><b>About</b><br>Student at ACLC College Manila building web apps with Spring Boot + JWT, desktop tools with Java Swing, and visual novels with Ren\'Py. Creator of MPOS, Elysium (custom language interpreter), Cosnima, and Elysiae HMS.</div>'+
       '<div class="gba-section"><b>Links</b></div>'+
       ls+
       '</div>'+
@@ -1192,21 +1192,54 @@ if(window.innerWidth<=700){
   (function(){
     var kc=document.getElementById('gbaKeychain');
     if(!kc)return;
+    var aL=6,aT=6,rad=40;
+    var raf=null;
+    function sp(){
+      var cl=parseFloat(kc.style.left)||aL;
+      var ct=parseFloat(kc.style.top)||aT;
+      var st=Date.now(),dur=350;
+      function f(){
+        var t=Math.min((Date.now()-st)/dur,1);
+        var e=1-Math.pow(1-t,3);
+        kc.style.left=(cl+(aL-cl)*e)+'px';
+        kc.style.top=(ct+(aT-ct)*e)+'px';
+        if(t<1)raf=requestAnimationFrame(f);
+        else{raf=null;kc.style.left='';kc.style.top='';kc.style.right='6px';}
+      }
+      f();
+    }
     function sd(e){
+      if(raf){cancelAnimationFrame(raf);raf=null;}
       e.preventDefault();
       var cx=e.clientX||(e.touches?e.touches[0].clientX:0);
       var cy=e.clientY||(e.touches?e.touches[0].clientY:0);
-      var sl=kc.offsetLeft,st=kc.offsetTop;
+      var rc=kc.getBoundingClientRect();
+      var ox=cx-rc.left,oy=cy-rc.top;
+      kc.style.right='auto';
+      kc.style.left=(aL-6)+'px';kc.style.top=(aT-6)+'px';
       function om(e2){
         var mx=e2.clientX||(e2.touches?e2.touches[0].clientX:0);
         var my=e2.clientY||(e2.touches?e2.touches[0].clientY:0);
-        kc.style.left=(sl+mx-cx)+'px';kc.style.top=(st+my-cy)+'px';kc.style.right='auto';
+        var dx=mx-cx,dy=my-cy;
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist>rad){dx=dx/dist*rad;dy=dy/dist*rad;}
+        kc.style.left=(aL+dx-6)+'px';
+        kc.style.top=(aT+dy-6)+'px';
       }
-      function ou(){document.removeEventListener('mousemove',om);document.removeEventListener('mouseup',ou);document.removeEventListener('touchmove',om);document.removeEventListener('touchend',ou);}
-      document.addEventListener('mousemove',om);document.addEventListener('mouseup',ou);
-      document.addEventListener('touchmove',om,{passive:true});document.addEventListener('touchend',ou);
+      function ou(){
+        document.removeEventListener('mousemove',om);
+        document.removeEventListener('mouseup',ou);
+        document.removeEventListener('touchmove',om);
+        document.removeEventListener('touchend',ou);
+        sp();
+      }
+      document.addEventListener('mousemove',om);
+      document.addEventListener('mouseup',ou);
+      document.addEventListener('touchmove',om,{passive:true});
+      document.addEventListener('touchend',ou);
     }
-    kc.addEventListener('mousedown',sd);kc.addEventListener('touchstart',sd);
+    kc.addEventListener('mousedown',sd);
+    kc.addEventListener('touchstart',sd,{passive:true});
   })();
 
   boot();
