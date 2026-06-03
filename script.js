@@ -790,7 +790,9 @@ function showLoadingText(){
 
 // ===== BOOT SCREEN / STATE =====
 var savedState=localStorage.getItem('state');
-if(savedState==='bios'){
+if(window.innerWidth<=700){
+  wrap.classList.add('hidden');
+}else if(savedState==='bios'){
   showBiosScreen();
 }else if(!sessionStorage.getItem('booted')){
   sessionStorage.setItem('booted','1');
@@ -804,5 +806,415 @@ if(savedState==='bios'){
 }else{
   wrap.classList.add('hidden');
 }
+
+// ===== GBA MOBILE SYSTEM =====
+(function(){
+  if(window.innerWidth>700&&!window.matchMedia('(max-width:700px)').matches)return;
+
+  var scr=document.getElementById('gbaScreen');
+  if(!scr)return;
+
+  scr.textContent='';
+
+  var state='boot',cursor=0,subCur=0,linkSub=0,history=[],currApp='',inDetail=false;
+  var soundOn=localStorage.getItem('sound')!=='off';
+  var audioCtx,audioEl,isPlaying=false;
+
+  function playClick(){
+    if(!soundOn)return;
+    try{
+      if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+      var o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.connect(g);g.connect(audioCtx.destination);
+      o.type='square';o.frequency.value=800;g.gain.value=.05;
+      o.start();o.stop(audioCtx.currentTime+.05);
+    }catch(e){}
+  }
+
+  var apps=[
+    {id:'about',name:'ABOUT.GBA'},
+    {id:'web',name:'WEB.GBA'},
+    {id:'java',name:'JAVA.GBA'},
+    {id:'game',name:'GAME.GBA'},
+    {id:'contact',name:'CONTACT.GBA'},
+    {id:'tamagotchi',name:'TAMAGOTCHI'},
+    {id:'settings',name:'SETTINGS'},
+    {id:'music',name:'MUSIC'},
+  ];
+
+  var aboutLinks=[
+    {label:'GitHub',url:'https://github.com/shiruri'},
+    {label:'itch.io',url:'https://shiroi26.itch.io/'},
+    {label:'Facebook',url:'https://www.facebook.com/shirobako2'},
+    {label:'Email',url:'mailto:jemmeralmoneda58@gmail.com'},
+  ];
+
+  var contactItems=[
+    {label:'Email',url:'mailto:jemmeralmoneda58@gmail.com'},
+    {label:'GitHub',url:'https://github.com/shiruri'},
+    {label:'itch.io',url:'https://shiroi26.itch.io/'},
+    {label:'Facebook',url:'https://www.facebook.com/shirobako2'},
+  ];
+
+  var projData={
+    web:[
+      {name:'Portfolio Site',img:'Documents/portfolio.png',tags:'HTML,CSS,JavaScript',desc:'A fully interactive Windows 98-themed portfolio that simulates a retro desktop environment. Features draggable windows with title bars and resize handles, a functional taskbar with Start menu, desktop icons, boot/shutdown animations with BIOS screen, a file-explorer style project browser, and a built-in music player. Every element mimics the Win98 UX — from beveled borders and pixel icons to the classic teal wallpaper. Built from scratch with vanilla HTML, CSS, and JavaScript without any frameworks.'},
+    ],
+    java:[
+      {name:'MPOS System',img:'Documents/mpos.png',tags:'Java,Swing,MySQL,OOP',desc:'A full-featured Point of Sale system built with Java Swing and MySQL. Handles transaction processing with receipt generation, real-time inventory tracking with low-stock alerts, admin dashboard with sales analytics, employee management with role-based access control, and customer loyalty program. Features a clean Swing GUI with responsive layouts and keyboard shortcuts for fast checkout.'},
+      {name:'Elysium',img:'Documents/ELYSIUM.png',tags:'Java,Interpreter,AST',desc:'A custom programming language interpreter written entirely in Java. Features a BASIC-inspired syntax with a full tokenizer, recursive-descent parser generating an AST, and a tree-walking executor. Supports variables, conditionals, loops, functions, and basic I/O. Includes error reporting with line numbers and a REPL for interactive coding. Demonstrates compiler design principles from the ground up.'},
+      {name:'Cosnima',img:'Documents/cosnima.jpeg',tags:'Java,Spring Boot,JWT',desc:'A full-stack social platform for cosplay and anime enthusiasts built with Spring Boot and vanilla JavaScript. Features user profiles with cosplay galleries, JWT-authenticated API, post feeds with likes and comments, event organization for conventions, and a marketplace for cosplay commissions. MySQL database with optimized queries for social feed performance.'},
+      {name:'Elysiae HMS',img:'Documents/Elysiae_HMS.PNG',tags:'Java,Spring Boot,MySQL,RBAC',desc:'A comprehensive Hospital Management System built with Spring Boot, JWT security, and MySQL. Supports 8 distinct roles (Admin, Doctor, Nurse, Pharmacist, Lab Tech, Receptionist, Patient, Insurance) with fine-grained RBAC. Features full patient lifecycle management from admission to discharge, appointment scheduling, electronic medical records, pharmacy inventory, lab test tracking, billing, and insurance claims.'},
+    ],
+    game:[
+      {name:'Digital Love',img:'Documents/digital.png',tags:"Ren'Py,Visual Novel",desc:"A heartfelt Ren'Py visual novel that blends a romantic coming-of-age story with interactive programming education. Follow the journey of a student who discovers love while learning to code. Features branching dialogue that affects relationships, integrated coding mini-challenges that teach HTML/CSS/JS fundamentals, original character art, multiple endings, and a chiptune soundtrack. Designed to make programming approachable through narrative."},
+      {name:'Paperweight',img:'Documents/paperweight.png',tags:"Ren'Py,Mental Health",desc:"A poignant Ren'Py visual novel exploring student life, mental health, and the weight of expectations. Features branching narrative with meaningful choices that impact the protagonist's mental state, multiple endings reflecting different life paths, original soundtrack, and hand-drawn art. Tackles themes of anxiety, depression, friendship, and self-discovery with sensitivity and authenticity."},
+    ],
+  };
+
+  function boot(){
+    state='boot';
+    scr.innerHTML=
+      '<div class="gba-boot">'+
+      '<img src="Documents/boot.webp" class="gba-boot-img">'+
+      '<div class="gba-boot-sub">GAME BOY ADVANCE</div>'+
+      '<div class="gba-boot-anim"><span></span></div>'+
+      '</div>';
+    setTimeout(showMenu,2800);
+  }
+
+  function renderMenu(){
+    var h='<div class="gba-menu"><div class="gba-menu-title">WinBoy v1.0</div>';
+    h+='<div class="gba-menu-div">────────────────</div><div class="gba-menu-list">';
+    apps.forEach(function(a,i){
+      h+='<div class="gba-menu-item'+(i===cursor?' active':'')+'">'+
+        (i===cursor?'\u25b8 ':'  ')+a.name+'</div>';
+    });
+    h+='</div><div class="gba-menu-div">────────────────</div>';
+    h+='<div class="gba-menu-help">A OK  B BACK</div></div>';
+    scr.innerHTML=h;
+  }
+
+  var audioEl=null,isPlaying=false;
+  var soundOn=localStorage.getItem('sound')!=='off';
+
+  function renderApp(){
+    if(currApp==='about')rAbout();
+    else if(currApp==='web'||currApp==='java'||currApp==='game')rProjList(currApp);
+    else if(currApp==='contact')rContact();
+    else if(currApp==='settings')rSettings();
+    else if(currApp==='music')rMusic();
+    else if(currApp==='tamagotchi')rTamagotchi();
+  }
+
+  function openApp(i){
+    history.push({type:'menu'});state='app';
+    currApp=apps[i].id;subCur=0;inDetail=false;linkSub=0;
+    renderApp();
+  }
+
+  function rAbout(){
+    var ls=aboutLinks.map(function(l,i){
+      return '<div class="gba-link-item'+(i===linkSub?' active':'')+'" data-idx="'+i+'">'+
+        (i===linkSub?'\u25b8 ':'  ')+l.label+'</div>';
+    }).join('');
+    scr.innerHTML=
+      '<div class="gba-app"><div class="gba-app-title">ABOUT ME</div>'+
+      '<div class="gba-app-body gba-app-detail">'+
+      '<div class="gba-about-head">'+
+      '<img src="Documents/avatar.jpg" class="gba-avatar" onerror="this.style.display=\'none\'">'+
+      '<div class="gba-about-info">'+
+      '<b>Jemmer Almoneda</b>'+
+      '<div class="gba-about-role">Java Developer / Game Dev / Web</div>'+
+      '<div class="gba-about-status">OPEN TO WORK</div>'+
+      '</div></div>'+
+      '<div class="gba-section"><b>Education</b><br>ACLC College Manila</div>'+
+      '<div class="gba-section"><b>Technologies</b><br>Java / OOP / Swing &bull; MySQL &amp; Oracle &bull; Spring Boot + JWT &bull; Ren\'Py &bull; HTML / CSS / JS</div>'+
+      '<div class="gba-section"><b>About</b><br>Student at ACLC College Manila, building across the full stack. Core is Java — from Swing desktop apps and custom interpreters to Spring Boot REST APIs with JWT and MySQL/Oracle.</div>'+
+      '<div class="gba-section"><b>Links</b></div>'+
+      ls+
+      '</div>'+
+      '<div class="gba-app-foot">\u25b2\u25bc NAV &bull; A OPEN &bull; B BACK</div></div>';
+  }
+
+  function rProjList(cat){
+    if(inDetail){
+      var p=projData[cat][subCur];
+      var tags=p.tags.split(',').map(function(t){
+        return '<span class="gba-tag">'+t.trim()+'</span>';
+      }).join('');
+      scr.innerHTML=
+        '<div class="gba-app"><div class="gba-app-title">'+p.name+'</div>'+
+        '<div class="gba-app-body gba-app-detail">'+
+        '<img src="'+p.img+'" class="gba-detail-img" onerror="this.style.display=\'none\'">'+
+        '<p>'+p.desc+'</p>'+
+        '<div class="gba-tag-row">'+tags+'</div></div>'+
+        '<div class="gba-app-foot">\u25b2\u25bc SCROLL &bull; B BACK</div></div>';
+      return;
+    }
+    var labels={web:'WEB',java:'JAVA',game:'GAME'};
+    var items=projData[cat];
+    var h='<div class="gba-app"><div class="gba-app-title">'+labels[cat]+'</div><div class="gba-app-body">';
+    items.forEach(function(p,i){
+      h+='<div class="gba-app-item'+(i===subCur?' active':'')+'">'+
+        (i===subCur?'\u25b8 ':'  ')+p.name+'</div>';
+    });
+    h+='</div><div class="gba-app-foot">\u25b2\u25bc NAV &bull; A OPEN &bull; B BACK</div></div>';
+    scr.innerHTML=h;
+  }
+
+  function rContact(){
+    var cs=contactItems.map(function(c,i){
+      return '<div class="gba-link-item'+(i===linkSub?' active':'')+'">'+
+        (i===linkSub?'\u25b8 ':'  ')+c.label+': '+c.url.replace('mailto:','')+'</div>';
+    }).join('');
+    scr.innerHTML=
+      '<div class="gba-app"><div class="gba-app-title">CONTACT</div>'+
+      '<div class="gba-app-body gba-app-detail">'+
+      '<div class="gba-section" style="margin-bottom:6px">Select a contact method and press A to open:</div>'+
+      cs+
+      '</div><div class="gba-app-foot">\u25b2\u25bc NAV &bull; A OPEN &bull; B BACK</div></div>';
+  }
+
+  function rSettings(){
+    scr.innerHTML=
+      '<div class="gba-app"><div class="gba-app-title">SETTINGS</div>'+
+      '<div class="gba-app-body">'+
+      '<div class="gba-setting-row"><span>Sound</span><span id="gbaSnd">'+
+      (soundOn?'ON':'OFF')+'</span></div>'+
+      '</div><div class="gba-app-foot">\u25b2\u25bc NAV &bull; A TOGGLE &bull; B BACK</div></div>';
+  }
+
+  function rMusic(){
+    scr.innerHTML=
+      '<div class="gba-app"><div class="gba-app-title">MUSIC PLAYER</div>'+
+      '<div class="gba-app-body gba-music-body">'+
+      '<div class="gba-music-screen">'+
+      '<div class="gba-music-track">Senbonzakura</div>'+
+      '<div class="gba-music-artist">Hatsune Miku</div>'+
+      '<div class="gba-music-bar"><div class="gba-music-bar-fill" id="gbaMusicFill"></div></div>'+
+      '<div class="gba-music-time"><span>1:23</span><span>3:45</span></div>'+
+      '</div>'+
+      '<div class="gba-music-controls">'+
+      '<button class="gba-music-btn" id="gbaPlay">'+(isPlaying?'\u23F8':'\u25B6')+'</button>'+
+      '</div>'+
+      '<div class="gba-music-status" id="gbaMusicStatus">'+(isPlaying?'NOW PLAYING':'PAUSED')+'</div>'+
+      '</div><div class="gba-app-foot">\u25b2\u25bc SCROLL &bull; A PLAY &bull; B BACK</div></div>';
+    var fill=document.getElementById('gbaMusicFill');
+    if(fill)fill.style.animationPlayState=isPlaying?'running':'paused';
+    var pb=document.getElementById('gbaPlay');
+    if(pb)pb.onclick=function(){toggleMusic();};
+  }
+
+  function toggleMusic(){
+    if(!audioEl){
+      audioEl=new Audio('Documents/track.mp3');
+      audioEl.loop=true;
+    }
+    if(isPlaying){audioEl.pause();isPlaying=false;}
+    else{audioEl.play().catch(function(){});isPlaying=true;}
+    var btn=document.getElementById('gbaPlay');
+    if(btn)btn.textContent=isPlaying?'\u23F8':'\u25B6';
+    var st=document.getElementById('gbaMusicStatus');
+    if(st)st.textContent=isPlaying?'NOW PLAYING':'PAUSED';
+    var fill=document.getElementById('gbaMusicFill');
+    if(fill)fill.style.animationPlayState=isPlaying?'running':'paused';
+  }
+
+  var tamaIdleMsgs=[
+    '\u2665 hello, miku here! \u2665',
+    'She hums a tune~ \u266a',
+    'The leek wiggles!',
+    'Miku stares at you...',
+    'She draws a note in the air~',
+    'Tick tock... play with me!',
+    '\u3042~\u3042 bored...',
+    'She fixes her hair~',
+    '\u266a la la la~ \u266a',
+    'The stage lights dim...',
+    'Miku smiles at you!',
+    'She adjusts her mic~',
+    'A gentle breeze blows~',
+    'Her eyes sparkle!',
+    'She hugs her leek~',
+  ];
+
+  var tamaFeedMsgs=[
+    'Miku nibbles her leek~ \u266a',
+    'She loves pasta! \u2665',
+    'Mmm, so tasty!',
+    'She sips some\u8471\u8471 tea~',
+    'A happy little hum~',
+    'She shares a bite with you!',
+    'Miku\'s tummy is happy!',
+    '\u3042\u307e\u3044\u301c so sweet!',
+  ];
+
+  var tamaPlayMsgs=[
+    'Miku dances! \u266a',
+    'SENBONZAKURA~! \u266a',
+    'She twirls and spins!',
+    'The world is her stage~',
+    'Miku sings a melody!',
+    'She waves her leek around!',
+    'A joyful concert begins!',
+    'Miku\'s heart is full! \u2665',
+    'She takes a bow~',
+  ];
+
+  function rTamagotchi(){
+    if(tamaIdleTimer)clearInterval(tamaIdleTimer);
+    var actions=['FEED','PLAY'];
+    var btns=actions.map(function(a,i){
+      return '<div class="gba-tama-action'+(i===subCur?' active':'')+'">'+
+        (i===subCur?'\u25b8 ':'  ')+a+'</div>';
+    }).join('');
+    scr.innerHTML=
+      '<div class="gba-app"><div class="gba-app-title">TAMAGOTCHI</div>'+
+      '<div class="gba-app-body gba-tama-body">'+
+      '<div class="gba-tama-device">'+
+      '<div class="gba-tama-screen">'+
+      '<img src="Documents/tamagotchi.gif" class="gba-tama-pet" id="gbaTamaPet" onerror="this.parentElement.textContent=\'(no image)\'">'+
+      '</div>'+
+      '<div class="gba-tama-label">TAMAGOTCHI</div>'+
+      '</div>'+
+      '<div class="gba-tama-actions">'+btns+'</div>'+
+      '<div class="gba-tama-msg" id="gbaTamaMsg">\u2665 hello, miku here! \u2665</div>'+
+      '</div><div class="gba-app-foot">\u25b2\u25bc NAV &bull; A INTERACT &bull; B BACK</div></div>';
+    tamaIdleTimer=setInterval(function(){
+      var el=document.getElementById('gbaTamaMsg');
+      if(el)el.textContent=tamaIdleMsgs[Math.floor(Math.random()*tamaIdleMsgs.length)];
+    },4000);
+  }
+
+  function tamaInteract(){
+    if(tamaIdleTimer){clearInterval(tamaIdleTimer);tamaIdleTimer=null;}
+    var g=document.getElementById('gbaTamaPet');
+    if(!g)return;
+    if(subCur===0){
+      g.style.transform='translateY(6px)';
+      setTimeout(function(){if(g)g.style.transform='translateY(0)'},250);
+    }else{
+      g.style.transform='scale(1.15)';
+      setTimeout(function(){if(g)g.style.transform='scale(1)'},200);
+    }
+    var msgs=subCur===0?tamaFeedMsgs:tamaPlayMsgs;
+    var msg=msgs[Math.floor(Math.random()*msgs.length)];
+    var el=document.getElementById('gbaTamaMsg');
+    if(el)el.textContent=msg;
+    tamaIdleTimer=setInterval(function(){
+      var el2=document.getElementById('gbaTamaMsg');
+      if(el2)el2.textContent=tamaIdleMsgs[Math.floor(Math.random()*tamaIdleMsgs.length)];
+    },4000);
+  }
+
+  var tamaIdleTimer=null;
+
+  function showMenu(){
+    if(tamaIdleTimer){clearInterval(tamaIdleTimer);tamaIdleTimer=null;}
+    state='menu';
+    history=[];
+    renderMenu();
+  }
+
+  function goBack(){
+    if(history.length===0){showMenu();return;}
+    if(currApp==='tamagotchi'&&tamaIdleTimer){clearInterval(tamaIdleTimer);tamaIdleTimer=null;}
+    var prev=history.pop();
+    if(prev.type==='menu'){state='menu';renderMenu();}
+    else if(prev.type==='app'){
+      state='app';currApp=prev.app;subCur=prev.sub||0;
+      inDetail=false;renderApp();
+    }
+  }
+
+  function input(key){
+    playClick();
+    if(state==='menu'){
+      if(key==='up'){cursor=(cursor-1+apps.length)%apps.length;renderMenu();}
+      else if(key==='down'){cursor=(cursor+1)%apps.length;renderMenu();}
+      else if(key==='a')openApp(cursor);
+      else if(key==='start')showMenu();
+    }else if(state==='app'){
+      if(key==='b'||key==='select'){
+        if(inDetail){inDetail=false;history.pop();renderApp();}
+        else goBack();
+      }else if(key==='start'){showMenu();}
+      else if(!inDetail&&currApp in projData){
+        var items=projData[currApp];
+        if(key==='up'){subCur=(subCur-1+items.length)%items.length;renderApp();}
+        else if(key==='down'){subCur=(subCur+1)%items.length;renderApp();}
+        else if(key==='a'){
+          history.push({type:'app',app:currApp,sub:subCur});
+          inDetail=true;renderApp();
+        }
+      }else if(currApp==='settings'&&key==='a'){
+        soundOn=!soundOn;
+        localStorage.setItem('sound',soundOn?'on':'off');
+        renderApp();
+      }else if(currApp==='music'&&key==='a'){
+        toggleMusic();
+      }else if(currApp==='about'){
+        if(key==='up'){linkSub=(linkSub-1+aboutLinks.length)%aboutLinks.length;renderApp();}
+        else if(key==='down'){linkSub=(linkSub+1)%aboutLinks.length;renderApp();}
+        else if(key==='a')window.open(aboutLinks[linkSub].url,'_blank');
+      }else if(currApp==='contact'){
+        if(key==='up'){linkSub=(linkSub-1+contactItems.length)%contactItems.length;renderApp();}
+        else if(key==='down'){linkSub=(linkSub+1)%contactItems.length;renderApp();}
+        else if(key==='a')window.open(contactItems[linkSub].url,'_blank');
+      }else if(currApp==='tamagotchi'){
+        if(key==='up'){subCur=0;renderApp();}
+        else if(key==='down'){subCur=1;renderApp();}
+        else if(key==='a'){playClick();tamaInteract();}
+      }else if(key==='up'||key==='down'){
+        var el=document.querySelector('.gba-app-body');
+        if(el)el.scrollTop+=key==='up'?-60:60;
+      }
+    }
+  }
+
+  document.querySelectorAll('.dpad-arm,.gba-btn,.gba-ss').forEach(function(el){
+    el.addEventListener('click',function(){
+      input(this.dataset.key);
+    });
+  });
+
+  document.addEventListener('keydown',function(e){
+    var map={
+      ArrowUp:'up',ArrowDown:'down',
+      ArrowLeft:'left',ArrowRight:'right',
+      z:'b',x:'a',Z:'b',X:'a',d:'b',D:'b',Enter:'start'
+    };
+    var k=map[e.key]||map[e.code];
+    if(k){e.preventDefault();input(k);}
+  });
+
+  (function(){
+    var kc=document.getElementById('gbaKeychain');
+    if(!kc)return;
+    function startDrag(e){
+      e.preventDefault();
+      var cx=e.clientX||(e.touches?e.touches[0].clientX:0);
+      var cy=e.clientY||(e.touches?e.touches[0].clientY:0);
+      var startL=kc.offsetLeft,startT=kc.offsetTop;
+      function onMove(e2){
+        var mx=e2.clientX||(e2.touches?e2.touches[0].clientX:0);
+        var my=e2.clientY||(e2.touches?e2.touches[0].clientY:0);
+        kc.style.left=(startL+mx-cx)+'px';
+        kc.style.top=(startT+my-cy)+'px';
+        kc.style.right='auto';
+      }
+      function onUp(){document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);}
+      document.addEventListener('mousemove',onMove);
+      document.addEventListener('mouseup',onUp);
+      document.addEventListener('touchmove',onMove,{passive:true});
+      document.addEventListener('touchend',onUp);
+    }
+    kc.addEventListener('mousedown',startDrag);
+    kc.addEventListener('touchstart',startDrag);
+  })();
+
+  boot();
+})();
 
 

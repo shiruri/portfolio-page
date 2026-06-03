@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jemmer Almoneda - Portfolio</title>
   <link rel="icon" type="image/png" href="https://win98icons.alexmeub.com/icons/png/windows-0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -505,6 +506,39 @@
     </div>
   </div>
 
+</div>
+
+<div id="gbaContainer" class="gba-container">
+  <div class="gba-device">
+    <div class="gba-brand">GAME BOY ADVANCE</div>
+    <div class="gba-screen-wrap">
+      <div class="gba-battery"></div>
+      <div class="gba-screen" id="gbaScreen">WinBoy</div>
+    </div>
+    <div class="gba-controls">
+      <div class="gba-dpad" id="gbaDpad">
+        <div class="dpad-arm dpad-up" data-key="up"></div>
+        <div class="dpad-arm dpad-down" data-key="down"></div>
+        <div class="dpad-arm dpad-left" data-key="left"></div>
+        <div class="dpad-arm dpad-right" data-key="right"></div>
+        <div class="dpad-center"></div>
+      </div>
+      <div class="gba-ab-group">
+        <div class="gba-btn-wrap">
+          <button class="gba-btn gba-btn-b" data-key="b">B</button>
+          <button class="gba-btn gba-btn-a" data-key="a">A</button>
+        </div>
+      </div>
+    </div>
+    <div class="gba-ss-row">
+      <button class="gba-ss" data-key="select">SELECT</button>
+      <button class="gba-ss" data-key="start">START</button>
+    </div>
+    <div class="gba-corner-bl"></div>
+    <div class="gba-corner-br"></div>
+    <div class="gba-model">MIKU ADVANCE</div>
+    <img src="Documents/miku-head.png" class="gba-keychain" id="gbaKeychain" draggable="false">
+  </div>
 </div>
 
 <script src="script.js"></script>
