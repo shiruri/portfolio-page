@@ -1,550 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jemmer Almoneda - Portfolio</title>
-  <link rel="icon" type="image/png" href="https://win98icons.alexmeub.com/icons/png/windows-0.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jemmer Almoneda - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="v2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Fredoka', sans-serif; }
+        .bg-pattern {
+            background-image: radial-gradient(#ff3b3b 0.5px, transparent 0.5px);
+            background-size: 32px 32px;
+            opacity: 0.05;
+        }
+        .text-pop { text-shadow: 2px 2px 0px rgba(255, 59, 59, 0.1); }
+    </style>
 </head>
-<body>
+<body class="bg-[#fff9f9] text-slate-800 overflow-x-hidden selection:bg-red-200">
 
-<div id="overlayWrap" class="overlay-wrap hidden">
-  <div id="bootScreen" class="overlay-screen boot-screen">
-    <div class="boot-content">
-      <div class="boot-logo">
-        <div class="boot-flag">
-          <span class="flag-bar b1"></span><span class="flag-bar b2"></span>
-          <span class="flag-bar b3"></span><span class="flag-bar b4"></span>
-        </div>
-        <div class="boot-title-wrap">
-          <img src="Documents/boot.webp" class="boot-img">
-          <div class="boot-title">Mikusoft<br>Win39</div>
-        </div>
-      </div>
-      <div class="boot-progress-wrap">
-        <div class="boot-progress-bar" id="bootProgressBar"></div>
-      </div>
-      <div class="boot-text">Starting Win39...</div>
+    <!-- Decorative Background Layer -->
+    <div class="fixed inset-0 pointer-events-none z-[-10] overflow-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-5"></div>
+        
+        <!-- Background Glow Elements -->
+        <div class="glow-blob top-[-10%] left-[-10%] opacity-10"></div>
+        <div class="glow-blob bottom-[-10%] right-[-10%] opacity-10"></div>
     </div>
-  </div>
-  <div id="shutdownScreen" class="overlay-screen shutdown-screen">
-    <div class="shutdown-content">
-      <div class="shutdown-logo">
-        <div class="boot-flag">
-          <span class="flag-bar b1"></span><span class="flag-bar b2"></span>
-          <span class="flag-bar b3"></span><span class="flag-bar b4"></span>
-        </div>
-        <div class="boot-title-wrap">
-          <img src="Documents/boot.webp" class="boot-img">
-          <div class="boot-title">Mikusoft<br>Win39</div>
-        </div>
-      </div>
-      <div class="shutdown-text">Windows is shutting down...</div>
-    </div>
-  </div>
-  <div id="biosScreen" class="overlay-screen bios-screen">
-    <div class="bios-content">
-      <div class="bios-line">MikuSoft Win39 BIOS v3.9.0</div>
-      <div class="bios-line">Copyright (C) 1984-2026 MikuSoft Corp.</div>
-      <div class="bios-line">&nbsp;</div>
-      <div class="bios-line">CPU: Miku Core 39 @ 3.9GHz</div>
-      <div class="bios-line">Memory Test: 3939MB OK</div>
-      <div class="bios-line">Primary Master: MikuDisk 39GB</div>
-      <div class="bios-line">Secondary Slave: MikCD-ROM 39x</div>
-      <div class="bios-line">&nbsp;</div>
-      <div class="bios-line bios-cursor" id="biosLastLine">Click to boot...</div>
-    </div>
-  </div>
-  <div id="loadScreen" class="overlay-screen bios-screen">
-    <div class="bios-content" id="loadText"></div>
-  </div>
-  <div id="projLoadScreen" class="overlay-screen bios-screen">
-    <div class="bios-content" id="projLoadText"></div>
-  </div>
-</div>
 
-<!-- ROTATE OVERLAY -->
-<div id="rotateOverlay" class="rotate-overlay">
-  <div class="rotate-content">
-    <div class="rotate-icon">&#8635;</div>
-    <div class="rotate-text">Please rotate your device to landscape</div>
-    <div class="rotate-sub">This site is designed for landscape orientation</div>
-  </div>
-</div>
+    <!-- Navigation -->
+    <nav class="fixed top-8 left-1/2 -translate-x-1/2 z-50 px-8 py-4 rounded-full bg-white border-2 border-red-100 flex items-center gap-10 shadow-[0_15px_30px_-10px_rgba(255,59,59,0.3)]">
+        <a href="#about" class="text-sm font-bold hover:text-red-600 transition-all hover:scale-110">About</a>
+        <a href="#projects" class="text-sm font-bold hover:text-red-600 transition-all hover:scale-110">Works</a>
+        <div class="w-12 h-12 relative group cursor-pointer mx-2" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" alt="Logo" class="w-full h-full animate-bounce-slow group-hover:scale-125 transition-transform drop-shadow-md">
+        </div>
+        <a href="#contact" class="text-sm font-bold hover:text-red-600 transition-all hover:scale-110">Contact</a>
+        <a href="https://github.com/shiruri" target="_blank" class="text-sm font-bold hover:text-red-600 transition-all hover:scale-110">GitHub</a>
+    </nav>
 
-<div id="imgModal" class="img-modal-overlay hidden" onclick="closeImgModal()">
-  <div class="img-modal-content" onclick="event.stopPropagation()">
-    <div class="img-modal-bar"><span id="imgModalTitle">Screenshot</span><button class="img-modal-close" onclick="closeImgModal()">X</button></div>
-    <img id="imgModalImg" src="" alt="">
-  </div>
-</div>
-
-<div class="desktop">
-
-  <!-- Desktop Icons -->
-  <div class="icons">
-    <div class="icon" ondblclick="openWindow('about')" onclick="openWindow('about')">
-      <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="">
-      <span>My Computer</span>
-    </div>
-    <div class="icon" ondblclick="openWindow('projects')" onclick="openWindow('projects')">
-      <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" alt="">
-      <span>Projects</span>
-    </div>
-    <div class="icon" ondblclick="openWindow('contact')" onclick="openWindow('contact')">
-      <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" alt="">
-      <span>Internet Explorer</span>
-    </div>
-    <div class="icon" ondblclick="openWindow('win-config')" onclick="openWindow('win-config')">
-      <img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png" alt="">
-      <span>Settings</span>
-    </div>
-    <div class="icon" ondblclick="openWindow('win-music')" onclick="openWindow('win-music')">
-      <img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd-0.png" alt="">
-      <span>Music Player</span>
-    </div>
-  </div>
-
-  <!-- ABOUT WINDOW -->
-  <div class="window active" id="win-about" style="top:40px;left:60px;width:420px">
-    <div class="titlebar" onmousedown="dragStart(event,'win-about')" ontouchstart="dragStart(event,'win-about')">
-      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" class="titlebar-icon"> Jemmer Almoneda - About</div>
-      <div class="titlebar-btns">
-        <button class="tb-btn" onclick="minimizeWin('win-about')">_</button>
-        <button class="tb-btn" onclick="maximizeWin('win-about')">[]</button>
-        <button class="tb-btn close-btn" onclick="closeWin('win-about')">X</button>
-      </div>
-    </div>
-    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
-    <div class="window-body about-content">
-      <div class="about-top">
-        <div class="about-avatar">
-          <img src="Documents/avatar.jpg" alt="Jemmer" onerror="this.style.display='none'">
-        </div>
-        <div class="about-info">
-          <div class="about-name">Jemmer Almoneda</div>
-          <div class="about-role">Java Developer / Game Dev / Web</div>
-          <div class="about-status">&#128994; Open to opportunities</div>
-        </div>
-      </div>
-      <div class="win98-box">
-        <div class="box-label">Education</div>
-        <div class="box-content">
-          <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" class="box-icon"> ACLC College Manila
-        </div>
-      </div>
-      <div class="win98-box">
-        <div class="box-label">Technologies</div>
-        <div class="tech-grid">
-          <div class="tech-item"><span class="tech-emoji">&#9749;</span> Java / OOP / Swing <span class="tech-tag">Primary</span></div>
-          <div class="tech-item"><span class="tech-emoji">&#128451;</span> MySQL &amp; Oracle <span class="tech-tag">Database</span></div>
-          <div class="tech-item"><span class="tech-emoji">&#127793;</span> Spring Boot + JWT <span class="tech-tag">Backend</span></div>
-          <div class="tech-item"><span class="tech-emoji">&#127918;</span> Ren'Py Engine <span class="tech-tag">Games</span></div>
-          <div class="tech-item"><span class="tech-emoji">&#127760;</span> HTML / CSS / JS <span class="tech-tag">Web</span></div>
-        </div>
-      </div>
-      <div class="win98-box">
-        <div class="box-label">About Me</div>
-        <p class="bio-text">
-          Student at <b>ACLC College Manila</b>, building things across the full stack. My core is <b>Java</b> - from Swing desktop apps and custom programming language interpreters to production-grade <b>Spring Boot REST APIs</b> secured with JWT and connected to <b>MySQL and Oracle</b> databases.<br><br>
-          Beyond back-end systems, I build community platforms like <b>Cosnima</b> and large-scale management systems like <b>Elysiae</b> - an 8-role hospital management system. On the creative side, I write and develop <b>visual novels</b> using Ren'Py.
-        </p>
-      </div>
-      <div class="win98-box">
-        <div class="box-label">Links</div>
-        <div class="link-row">
-          <a href="https://github.com/shiruri" target="_blank" class="win98-link">GitHub</a>
-          <a href="https://shiroi26.itch.io/" target="_blank" class="win98-link">itch.io</a>
-          <a href="https://www.facebook.com/shirobako2" target="_blank" class="win98-link">Facebook</a>
-          <a href="mailto:jemmeralmoneda58@gmail.com" class="win98-link">Email</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PROJECTS WINDOW -->
-  <div class="window" id="win-projects" style="top:60px;left:100px;width:560px">
-    <div class="titlebar" onmousedown="dragStart(event,'win-projects')" ontouchstart="dragStart(event,'win-projects')">
-      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="titlebar-icon"> Projects</div>
-      <div class="titlebar-btns">
-        <button class="tb-btn" onclick="minimizeWin('win-projects')">_</button>
-        <button class="tb-btn" onclick="maximizeWin('win-projects')">[]</button>
-        <button class="tb-btn close-btn" onclick="closeWin('win-projects')">X</button>
-      </div>
-    </div>
-    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Help</span></div>
-    <div class="addressbar">
-      <span>Address</span>
-      <div class="address-input" id="projPath">C:\My Projects\</div>
-    </div>
-    <div class="window-body proj-body">
-      <div class="proj-explorer">
-        <div class="proj-tree">
-          <div class="tree-item tree-root" onclick="navigateFolder('all',this)">
-            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="tree-icon"> My Projects
-          </div>
-          <div class="tree-item" onclick="navigateFolder('web',this)">
-            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="tree-icon"> Web
-          </div>
-          <div class="tree-item" onclick="navigateFolder('java',this)">
-            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="tree-icon"> Java
-          </div>
-          <div class="tree-item" onclick="navigateFolder('game',this)">
-            <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png" class="tree-icon"> Game
-          </div>
-        </div>
-        <div class="proj-files" id="projFiles">
-          <!-- files rendered by JS -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTACT WINDOW -->
-  <div class="window" id="win-contact" style="top:80px;left:140px;width:380px">
-    <div class="titlebar" onmousedown="dragStart(event,'win-contact')" ontouchstart="dragStart(event,'win-contact')">
-      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" class="titlebar-icon"> Contact - Internet Explorer</div>
-      <div class="titlebar-btns">
-        <button class="tb-btn" onclick="minimizeWin('win-contact')">_</button>
-        <button class="tb-btn" onclick="maximizeWin('win-contact')">[]</button>
-        <button class="tb-btn close-btn" onclick="closeWin('win-contact')">X</button>
-      </div>
-    </div>
-    <div class="addressbar">
-      <span>Address</span>
-      <div class="address-input">https://www.cyworld.com/shiroi26/contact</div>
-    </div>
-    <div class="window-body contact-content">
-      <div class="contact-head">Get in Touch</div>
-      <div class="contact-sub">Reach out via any of the channels below.</div>
-      <a class="contact-row" href="https://github.com/shiruri" target="_blank">
-        <img src="https://win98icons.alexmeub.com/icons/png/folder_closed-4.png" class="contact-icon">
-        <div class="contact-info"><div class="contact-plat">GitHub</div><div class="contact-handle">github.com/shiruri</div></div>
-        <span class="contact-arrow">&gt;</span>
-      </a>
-      <a class="contact-row" href="https://www.facebook.com/shirobako2" target="_blank">
-        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png" class="contact-icon">
-        <div class="contact-info"><div class="contact-plat">Facebook</div><div class="contact-handle">facebook.com/shirobako2</div></div>
-        <span class="contact-arrow">&gt;</span>
-      </a>
-      <a class="contact-row" href="mailto:jemmeralmoneda58@gmail.com">
-        <img src="https://win98icons.alexmeub.com/icons/png/mail-2.png" class="contact-icon">
-        <div class="contact-info"><div class="contact-plat">Email</div><div class="contact-handle">jemmeralmoneda58@gmail.com</div></div>
-        <span class="contact-arrow">&gt;</span>
-      </a>
-      <a class="contact-row" href="https://shiroi26.itch.io/" target="_blank">
-        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" class="contact-icon">
-        <div class="contact-info"><div class="contact-plat">itch.io</div><div class="contact-handle">shiroi26.itch.io</div></div>
-        <span class="contact-arrow">&gt;</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- PROJECT DETAIL WINDOW (multi-mode) -->
-  <div class="window" id="win-projdetail" style="top:60px;left:140px;width:460px;height:440px">
-    <div class="titlebar" onmousedown="dragStart(event,'win-projdetail')" ontouchstart="dragStart(event,'win-projdetail')">
-      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png" class="titlebar-icon" id="pdetail-icon"> <span id="pdetail-title">Project Properties</span></div>
-      <div class="titlebar-btns">
-        <button class="tb-btn" onclick="minimizeWin('win-projdetail')">_</button>
-        <button class="tb-btn" onclick="maximizeWin('win-projdetail')">[]</button>
-        <button class="tb-btn close-btn" onclick="closeWin('win-projdetail')">X</button>
-      </div>
-    </div>
-    <div class="menubar" id="pdetail-menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
-    <div class="window-body" id="pdetail-body">
-      <!-- === WEB: Internet Explorer mode === -->
-      <div id="pdetail-web" class="pdetail-mode" style="display:none">
-        <div class="ie-toolbar">
-          <button class="ie-btn" title="Back">&larr;</button>
-          <button class="ie-btn" title="Forward">&rarr;</button>
-          <button class="ie-btn" title="Stop">&#10005;</button>
-          <button class="ie-btn" title="Refresh">&#8635;</button>
-          <button class="ie-btn" title="Home">&#8962;</button>
-          <span class="ie-addr-label">Address</span>
-          <span class="ie-addr" id="pdetail-web-url">about:project</span>
-        </div>
-        <div class="ie-body">
-          <div class="pdetail-img-wrap" id="pdetail-imgwrap-w">
-            <img class="pdetail-screenshot" id="pdetail-screenshot-w">
-            <span class="pdetail-zoomhint">Click to view full size</span>
-          </div>
-          <div class="pdetail-badge" id="pdetail-badge-w"></div>
-          <p class="pdetail-desc" id="pdetail-desc-w"></p>
-          <div class="pdetail-tags" id="pdetail-tags-w"></div>
-          <div class="pdetail-actions">
-            <a class="win98-link" id="pdetail-link-w" target="_blank">View Project</a>
-            <button class="win98-link" onclick="closeWin('win-projdetail')">Close</button>
-          </div>
-        </div>
-      </div>
-      <!-- === JAVA: Terminal mode === -->
-      <div id="pdetail-java" class="pdetail-mode" style="display:none">
-        <div class="pdetail-img-wrap" id="pdetail-imgwrap-j">
-          <img class="pdetail-screenshot" id="pdetail-screenshot-j">
-          <span class="pdetail-zoomhint">Click to view full size</span>
-        </div>
-        <div class="java-term" id="java-term">
-          <div class="term-line" id="java-term-lines"></div>
-        </div>
-        <div class="pdetail-actions" style="margin-top:4px">
-          <a class="win98-link" id="pdetail-link-j" target="_blank">View Project</a>
-          <button class="win98-link" onclick="closeWin('win-projdetail')" style="margin-left:4px">Close</button>
-        </div>
-      </div>
-      <!-- === GAME: Splash + Launcher mode === -->
-      <div id="pdetail-game" class="pdetail-mode" style="display:none">
-        <div class="game-wrap" id="game-wrap">
-          <div class="game-splash" id="game-splash">
-            <img class="game-splash-img" id="game-splash-img" alt="">
-            <div class="game-splash-overlay" onclick="launchGame()">
-              <span class="game-launch-btn">&#9654; Click to Launch</span>
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 overflow-hidden">
+        <div class="relative z-10 text-center max-w-5xl mx-auto">
+            <div class="mb-8 relative inline-block">
+                <div class="absolute inset-0 bg-red-500 rounded-full blur-[100px] opacity-20 animate-pulse"></div>
+                <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" alt="Big Apple" class="w-64 h-64 md:w-80 md:h-80 object-contain mx-auto animate-float drop-shadow-[0_25px_60px_rgba(255,59,59,0.5)]">
+                
+                <!-- Sticker Overlays -->
+                <img src="../assets/download (87)_no_bg_og2r2tgf.png" class="absolute -top-12 -right-12 w-40 h-40 animate-float-slow pointer-events-none drop-shadow-xl rotate-12">
+                <img src="../assets/download (89)_no_bg_n5obyqm0.png" class="absolute -bottom-12 -left-12 w-40 h-40 animate-float pointer-events-none drop-shadow-xl -rotate-12" style="animation-delay: 1s">
             </div>
-          </div>
-          <div class="game-info" id="game-info">
-            <div class="pdetail-badge" id="pdetail-badge-g"></div>
-            <p class="pdetail-desc" id="pdetail-desc-g"></p>
-            <div class="pdetail-tags" id="pdetail-tags-g"></div>
-            <div class="pdetail-actions">
-              <a class="win98-link" id="pdetail-link-g" target="_blank">View Project</a>
-              <button class="win98-link" onclick="closeWin('win-projdetail')">Close</button>
+
+            <h1 class="text-7xl md:text-9xl font-black mb-6 tracking-tighter leading-[0.85] text-slate-900 text-pop">
+                Hi! I'm <br class="md:hidden"> <span class="apple-gradient-text italic">Jemmer</span>
+            </h1>
+            <p class="text-2xl md:text-3xl font-medium text-slate-500 mb-12 max-w-3xl mx-auto leading-relaxed">
+                Building <span class="text-red-600 font-black underline decoration-red-200 decoration-8 underline-offset-4">robust</span> Java systems & <span class="text-red-600 font-black underline decoration-red-200 decoration-8 underline-offset-4">playful</span> web experiences.
+            </p>
+            
+            <div class="flex flex-wrap gap-6 justify-center">
+                <a href="#projects" class="group relative bg-red-600 text-white px-12 py-6 rounded-[2.5rem] text-xl font-bold shadow-[0_20px_40px_-10px_rgba(255,59,59,0.5)] hover:bg-red-700 transition-all hover:scale-105 active:scale-95 overflow-hidden">
+                    <span class="relative z-10">See My Stuff 🍎</span>
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </a>
+                <a href="#contact" class="bg-white border-4 border-red-50 text-red-600 px-12 py-6 rounded-[2.5rem] text-xl font-bold hover:bg-red-50 transition-all hover:border-red-100 shadow-xl shadow-red-100/20">
+                    Say Hello!
+                </a>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </header>
 
-  <!-- SETTINGS WINDOW -->
-  <div class="window" id="win-config" style="top:50px;left:180px;width:340px">
-    <div class="titlebar" onmousedown="dragStart(event,'win-config')" ontouchstart="dragStart(event,'win-config')">
-      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png" class="titlebar-icon"> Display Settings</div>
-      <div class="titlebar-btns">
-        <button class="tb-btn" onclick="minimizeWin('win-config')">_</button>
-        <button class="tb-btn" onclick="maximizeWin('win-config')">[]</button>
-        <button class="tb-btn close-btn" onclick="closeWin('win-config')">X</button>
-      </div>
-    </div>
-    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
-    <div class="window-body config-body">
-      <div class="config-section">
-        <div class="box-label">Appearance</div>
-        <div class="config-row">
-          <span class="config-label">Window Animation</span>
-          <button class="config-toggle" onclick="toggleAnim(this)">Off</button>
+    <!-- About Section -->
+    <section id="about" class="py-32 px-6 md:px-12 relative overflow-hidden">
+        <div class="glow-blob top-[20%] right-[-10%]" style="background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, transparent 70%);"></div>
+        
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-24 items-center">
+            <div class="relative order-2 md:order-1 group">
+                <div class="aspect-square bg-white rounded-[4rem] shadow-[0_40px_80px_-20px_rgba(255,59,59,0.15)] flex items-center justify-center p-4 border-4 border-red-50 rotate-3 overflow-hidden group-hover:rotate-0 transition-all duration-700">
+                    <img src="../Documents/avatar.jpg" alt="Jemmer Almoneda" class="w-full h-full object-cover rounded-[3rem] group-hover:scale-110 transition-transform duration-1000">
+                </div>
+                <!-- Playful Overlays -->
+                <img src="../assets/download (94)_no_bg_d1313suh.png" class="absolute -top-16 -left-16 w-48 h-48 animate-float z-20 drop-shadow-2xl">
+                <img src="../assets/download (96)_no_bg_1hfqc934.png" class="absolute -bottom-16 -right-16 w-48 h-48 animate-float-slow z-20 drop-shadow-2xl">
+            </div>
+            
+            <div class="order-1 md:order-2">
+                <div class="inline-block bg-red-100 text-red-600 px-6 py-2 rounded-full font-black text-xs mb-8 rotate-[-3deg] tracking-widest shadow-sm">WHO AM I?</div>
+                <h2 class="text-6xl font-black mb-10 leading-[0.9] text-pop">Jemmer <br> Almoneda</h2>
+                
+                <div class="flex items-center gap-4 mb-8 p-4 bg-white rounded-3xl border-2 border-red-50 w-fit shadow-sm animate-squish">
+                    <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-8 h-8">
+                    <span class="font-black text-red-600 tracking-tight">Open to Opportunities</span>
+                </div>
+                
+                <div class="space-y-8 text-slate-600 text-xl font-medium leading-relaxed mb-12">
+                    <p>
+                        Student at <span class="text-slate-900 font-bold underline decoration-red-200 decoration-4">ACLC College Manila</span>, building things across the full stack. My core is <span class="text-red-600 font-black italic">Java</span> - from Swing desktop apps and custom interpreters to production-grade <span class="bg-red-50 px-2 rounded-lg text-red-600">Spring Boot REST APIs</span>.
+                    </p>
+                    <p>
+                        I build platforms like <span class="font-bold text-slate-800 italic">Cosnima</span> (Cosplay Social) and large-scale management systems like <span class="text-red-500 font-bold underline decoration-red-100 decoration-4">Elysiae HMS</span> (8-role hospital system). On the creative side, I write and develop <span class="italic font-bold text-slate-800">Visual Novels</span> using the Ren'Py engine.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex items-center gap-4 p-4 bg-white rounded-[2rem] border-2 border-red-50 shadow-md hover:-translate-y-2 transition-all">
+                        <div class="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center overflow-hidden">
+                            <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-8 h-8">
+                        </div>
+                        <div>
+                            <div class="font-black text-sm text-slate-900">Java Specialist</div>
+                            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Spring / Swing / OOP</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 bg-white rounded-[2rem] border-2 border-red-50 shadow-md hover:-translate-y-2 transition-all">
+                        <div class="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center overflow-hidden">
+                            <img src="../assets/green apple keychain!!_no_bg_6gugqvu4.png" class="w-8 h-8">
+                        </div>
+                        <div>
+                            <div class="font-black text-sm text-slate-900">Backend Dev</div>
+                            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">MySQL / Oracle / JWT</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 bg-white rounded-[2rem] border-2 border-red-50 shadow-md hover:-translate-y-2 transition-all">
+                        <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center overflow-hidden">
+                            <img src="../assets/download (97)_no_bg_sf5p5wst.png" class="w-8 h-8">
+                        </div>
+                        <div>
+                            <div class="font-black text-sm text-slate-900">Game Design</div>
+                            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Ren'Py / Narrative</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 bg-white rounded-[2rem] border-2 border-red-50 shadow-md hover:-translate-y-2 transition-all">
+                        <div class="w-12 h-12 bg-yellow-50 rounded-2xl flex items-center justify-center overflow-hidden">
+                            <img src="../assets/download (95)_no_bg_ijjjde55.png" class="w-8 h-8">
+                        </div>
+                        <div>
+                            <div class="font-black text-sm text-slate-900">Web Craft</div>
+                            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">HTML / CSS / JS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="config-row">
-          <span class="config-label">Show Desktop Icons</span>
-          <button class="config-toggle" onclick="toggleIcons(this)">Off</button>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-32 px-6 md:px-12 relative overflow-hidden">
+        <div class="glow-blob bottom-[-20%] left-[-10%] bg-red-400/10"></div>
+        
+        <div class="max-w-[1400px] mx-auto bg-white/80 rounded-[5rem] p-12 md:p-20 border-4 border-white relative shadow-[0_50px_100px_-20px_rgba(255,59,59,0.1)]">
+            <div class="text-center mb-16 relative">
+                <img src="../assets/download (88)_no_bg_vvj2uyhu.png" class="absolute -top-24 right-0 w-48 h-48 opacity-20 animate-float pointer-events-none">
+                <h2 class="text-7xl md:text-9xl font-black mb-10 tracking-tighter leading-none text-pop">My Recent <br> Works</h2>
+                
+                <!-- Tab Controls -->
+                <div id="tabContainer" class="flex flex-wrap justify-center gap-4 mb-8">
+                    <button data-tab="all" class="bg-red-600 text-white px-10 py-4 rounded-3xl font-black shadow-xl shadow-red-200 transition-all hover:scale-110 active:scale-95 text-lg">All</button>
+                    <button data-tab="web" class="bg-white text-red-600 px-10 py-4 rounded-3xl font-black shadow-lg transition-all hover:scale-110 active:scale-95 border-2 border-red-50 text-lg">Web</button>
+                    <button data-tab="java" class="bg-white text-red-600 px-10 py-4 rounded-3xl font-black shadow-lg transition-all hover:scale-110 active:scale-95 border-2 border-red-50 text-lg">Java</button>
+                    <button data-tab="game" class="bg-white text-red-600 px-10 py-4 rounded-3xl font-black shadow-lg transition-all hover:scale-110 active:scale-95 border-2 border-red-50 text-lg">Games</button>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12 min-h-[500px]" id="projectGrid">
+                <!-- Projects injected by v2.js -->
+            </div>
         </div>
-      </div>
-      <div class="config-section">
-        <div class="box-label">Sounds</div>
-        <div class="config-row">
-          <span class="config-label">Sound Effects</span>
-          <button class="config-toggle" onclick="toggleSound(this)">Off</button>
+    </section>
+
+    <!-- Project Detail Modal -->
+    <div id="projectModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-10">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-xl" onclick="closeModal()"></div>
+        <div id="modalContent" class="relative bg-white w-full max-w-5xl rounded-[4rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border-8 border-white">
+            <div class="absolute top-8 right-8 z-10">
+                <button onclick="closeModal()" class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center hover:bg-red-200 transition-all hover:rotate-90 shadow-lg">
+                    <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-8 h-8">
+                </button>
+            </div>
+            
+            <div class="overflow-y-auto">
+                <!-- Modal Body injected by v2.js -->
+            </div>
         </div>
-      </div>
-      <div class="config-section">
-        <div class="box-label">About This Site</div>
-        <div class="config-info">
-          Windows 98 themed portfolio built with vanilla HTML, CSS, and JavaScript.<br><br>
-          <b>Version:</b> 2.0<br>
-          <b>Engine:</b> Vanilla JS Window Manager<br>
-          <b>Fonts:</b> VT323 + MS Sans Serif
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="py-32 px-6 text-center relative overflow-hidden">
+        <div class="glow-blob top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-red-500/10"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
+            <img src="../assets/download (84)_no_bg_9to5j7ev.png" class="absolute -top-32 left-0 w-48 h-48 animate-float opacity-30 drop-shadow-2xl">
+            <img src="../assets/download (86)_no_bg_048y45sy.png" class="absolute -bottom-32 right-0 w-48 h-48 animate-float-slow opacity-30 drop-shadow-2xl">
+
+            <h2 class="text-7xl md:text-9xl font-black mb-12 leading-[0.85] tracking-tighter text-pop">Let's build <br> something <br> <span class="apple-gradient-text italic underline decoration-red-200 decoration-8 underline-offset-8">awesome!</span></h2>
+            
+            <a href="mailto:jemmeralmoneda58@gmail.com" class="group relative inline-block bg-slate-900 text-white px-16 py-8 rounded-[3rem] text-3xl font-black hover:bg-red-600 transition-all shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95 mb-20 overflow-hidden">
+                <span class="relative z-10">Get In Touch 🍎</span>
+                <div class="absolute inset-0 bg-red-500 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+            </a>
+            
+            <div class="flex justify-center gap-12 font-black text-2xl">
+                <a href="https://github.com/shiruri" class="hover:text-red-500 flex items-center gap-3 group">
+                    <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-8 h-8 group-hover:rotate-12 transition-transform"> GitHub
+                </a>
+                <a href="https://www.facebook.com/shirobako2" class="hover:text-red-500 flex items-center gap-3 group">
+                    <img src="../assets/green apple keychain!!_no_bg_6gugqvu4.png" class="w-8 h-8 group-hover:rotate-12 transition-transform"> FB
+                </a>
+            </div>
         </div>
-      </div>
-      <div style="text-align:right;margin-top:10px">
-        <button class="win98-link" onclick="saveSettings()">OK</button>
-        <button class="win98-link" onclick="closeWin('win-config')" style="margin-left:4px">Cancel</button>
-      </div>
-    </div>
-  </div>
+    </footer>
 
-  <!-- MUSIC PLAYER WINDOW -->
-  <div class="window" id="win-music" style="top:80px;left:280px;width:380px">
-    <div class="titlebar" onmousedown="dragStart(event,'win-music')" ontouchstart="dragStart(event,'win-music')">
-      <div class="titlebar-text"><img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd-0.png" class="titlebar-icon"> Music Player</div>
-      <div class="titlebar-btns">
-        <button class="tb-btn" onclick="minimizeWin('win-music')">_</button>
-        <button class="tb-btn" onclick="maximizeWin('win-music')">[]</button>
-        <button class="tb-btn close-btn" onclick="closeWin('win-music')">X</button>
-      </div>
-    </div>
-    <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
-    <div class="window-body music-body">
-      <div class="music-display">
-        <div class="music-gif-wrap">
-          <img src="Documents/music-paused.gif" class="music-gif" id="musicGifPaused">
-          <img src="Documents/music.gif" class="music-gif music-gif-play" id="musicGifPlay">
-        </div>
-        <div class="music-info">
-          <div class="music-title">Senbonzakura</div>
-          <div class="music-artist">Hatsune Miku</div>
-        </div>
-      </div>
-      <div class="music-controls">
-        <button class="music-btn" onclick="playMusic()" id="playBtn">&#9654;</button>
-        <div class="music-progress-wrap">
-          <div class="music-progress-bar" id="musicProgress"></div>
-        </div>
-        <span class="music-time" id="musicTime">0:00 / 0:00</span>
-      </div>
-      <div class="music-volume-row">
-        <span>Volume</span>
-        <input type="range" min="0" max="100" value="70" class="music-volume" id="musicVolume" oninput="setVolume(this.value)">
-      </div>
-      <div class="music-now">Now Playing: Senbonzakura (8-bit chiptune cover)</div>
-    </div>
-  </div>
-
-  <!-- TASKBAR -->
-  <div class="taskbar">
-    <button class="start-btn" onclick="toggleStartMenu()">
-      <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" class="start-logo"> Start
-    </button>
-    <div class="taskbar-divider"></div>
-    <div class="task-tabs">
-      <button class="task-tab active" data-win="win-about" onclick="switchWindow('win-about')">
-        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png"> <span class="tabtext">About</span>
-      </button>
-      <button class="task-tab" data-win="win-projects" onclick="switchWindow('win-projects')">
-        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png"> <span class="tabtext">Projects</span>
-      </button>
-      <button class="task-tab" data-win="win-contact" onclick="switchWindow('win-contact')">
-        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png"> <span class="tabtext">Contact</span>
-      </button>
-      <button class="task-tab" data-win="win-config" onclick="switchWindow('win-config')">
-        <img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png"> <span class="tabtext">Settings</span>
-      </button>
-      <button class="task-tab" data-win="win-music" onclick="switchWindow('win-music')">
-        <img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd-0.png"> <span class="tabtext">Music</span>
-      </button>
-      <button class="task-tab" data-win="win-projdetail" onclick="switchWindow('win-projdetail')" id="tab-projdetail" style="display:none">
-        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png" id="tab-projdetail-icon"> <span class="tabtext" id="tab-projdetail-text">Project</span>
-      </button>
-      <button class="task-tab" data-win="win-projdetail" onclick="switchWindow('win-projdetail')" id="tab-projdetail-web" style="display:none">
-        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" id="tab-projdetail-icon-web"> <span class="tabtext" id="tab-projdetail-text-web">Project</span>
-      </button>
-      <button class="task-tab" data-win="win-projdetail" onclick="switchWindow('win-projdetail')" id="tab-projdetail-java" style="display:none">
-        <img src="https://win98icons.alexmeub.com/icons/png/regedit-0.png" id="tab-projdetail-icon-java"> <span class="tabtext" id="tab-projdetail-text-java">Project</span>
-      </button>
-      <button class="task-tab" data-win="win-projdetail" onclick="switchWindow('win-projdetail')" id="tab-projdetail-game" style="display:none">
-        <img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" id="tab-projdetail-icon-game"> <span class="tabtext" id="tab-projdetail-text-game">Project</span>
-      </button>
-    </div>
-    <div class="taskbar-right">
-      <div class="clock" id="clock">5:26 PM</div>
-    </div>
-  </div>
-
-  <!-- Start Menu -->
-  <div class="start-menu hidden" id="startMenu">
-    <div class="start-menu-header">
-      <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png">
-      <b>Windows98</b>
-    </div>
-    <div class="start-menu-items">
-      <div class="start-item" onclick="openWindow('about');toggleStartMenu()">
-        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png"> About Me
-      </div>
-      <div class="start-item" onclick="openWindow('projects');toggleStartMenu()">
-        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-0.png"> Projects
-      </div>
-      <div class="start-item" onclick="openWindow('contact');toggleStartMenu()">
-        <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png"> Contact
-      </div>
-      <div class="start-item" onclick="openWindow('win-config');toggleStartMenu()">
-        <img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png"> Settings
-      </div>
-      <div class="start-item" onclick="openWindow('win-music');toggleStartMenu()">
-        <img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd-0.png"> Music Player
-      </div>
-      <div class="start-divider"></div>
-      <div class="start-item" onclick="showRestartConfirm()">
-        <img src="https://win98icons.alexmeub.com/icons/png/desktop-0.png"> Restart...
-      </div>
-      <div class="start-item" onclick="showShutdownConfirm()">
-        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png"> Shut Down...
-      </div>
-    </div>
-  </div>
-
-  <!-- SHUTDOWN CONFIRMATION DIALOG -->
-  <div id="shutdownConfirm" class="shutdown-confirm-overlay hidden" onclick="closeShutdownConfirm()">
-    <div class="shutdown-confirm-dialog" onclick="event.stopPropagation()">
-      <div class="shutdown-confirm-title">
-        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" class="sc-icon"> Shut Down Windows
-      </div>
-      <div class="shutdown-confirm-body">
-        <div class="sc-text">Are you sure you want to shut down your computer?</div>
-        <img src="Documents/confirmation.png" class="shutdown-confirm-img">
-      </div>
-      <div class="shutdown-confirm-actions">
-        <button class="win98-link" onclick="confirmShutdown()">Yes</button>
-        <button class="win98-link" onclick="closeShutdownConfirm()" style="margin-left:4px">No</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- RESTART CONFIRMATION DIALOG -->
-  <div id="restartConfirm" class="shutdown-confirm-overlay hidden" onclick="closeRestartConfirm()">
-    <div class="shutdown-confirm-dialog" onclick="event.stopPropagation()">
-      <div class="shutdown-confirm-title">
-        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" class="sc-icon"> Restart Windows
-      </div>
-      <div class="shutdown-confirm-body">
-        <div class="sc-text">Are you sure you want to restart your computer?</div>
-        <img src="Documents/confirmation.png" class="shutdown-confirm-img">
-      </div>
-      <div class="shutdown-confirm-actions">
-        <button class="win98-link" onclick="confirmRestart()">Yes</button>
-        <button class="win98-link" onclick="closeRestartConfirm()" style="margin-left:4px">No</button>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div id="gbaContainer" class="gba-container">
-  <div class="gba-device">
-    <div class="gba-brand">GAME BOY ADVANCE</div>
-    <div class="gba-screen-wrap">
-      <div class="gba-battery"></div>
-      <div class="gba-screen" id="gbaScreen">WinBoy</div>
-    </div>
-    <div class="gba-controls">
-      <div class="gba-dpad" id="gbaDpad">
-        <div class="dpad-arm dpad-up" data-key="up"></div>
-        <div class="dpad-arm dpad-down" data-key="down"></div>
-        <div class="dpad-arm dpad-left" data-key="left"></div>
-        <div class="dpad-arm dpad-right" data-key="right"></div>
-        <div class="dpad-center"></div>
-      </div>
-      <div class="gba-ab-group">
-        <div class="gba-btn-wrap">
-          <button class="gba-btn gba-btn-b" data-key="b">B</button>
-          <button class="gba-btn gba-btn-a" data-key="a">A</button>
-        </div>
-      </div>
-    </div>
-    <div class="gba-ss-row">
-      <button class="gba-ss" data-key="select">SELECT</button>
-      <button class="gba-ss" data-key="start">START</button>
-    </div>
-    <div class="gba-corner-bl"></div>
-    <div class="gba-corner-br"></div>
-    <div class="gba-diamond" style="top:32px;left:4px"></div>
-    <div class="gba-diamond" style="top:32px;right:4px"></div>
-    <div class="gba-model">MIKU ADVANCE</div>
-    <div class="gba-rope" id="gbaRope"></div>
-    <div class="gba-keychain" id="gbaKeychain"></div>
-    <div class="gba-tooltip" id="gbaTooltip">grab me!</div>
-  </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="v2.js"></script>
 </body>
 </html>
