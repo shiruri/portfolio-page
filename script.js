@@ -6,7 +6,7 @@ const projects = [
         desc: "A fully interactive Windows 98-themed portfolio that simulates a retro desktop environment. Features draggable windows, functional taskbar, and classic animations.",
         details: "Built from scratch with vanilla HTML, CSS, and JavaScript. Every element mimics the Win98 UX — from beveled borders and pixel icons to the classic teal wallpaper. Demonstrates mastery of state management and DOM manipulation without frameworks.",
         category: "web",
-        image: "../Documents/portfolio.png",
+        image: "Documents/portfolio.png",
         tags: ["HTML", "CSS", "JavaScript", "Retro UI"],
         links: { github: "https://github.com/shiruri/portfolio-page" }
     },
@@ -15,7 +15,7 @@ const projects = [
         desc: "A full-featured Point of Sale system built with Java Swing and MySQL.",
         details: "Handles transaction processing with receipt generation, real-time inventory tracking with low-stock alerts, admin dashboard with sales analytics, and employee management with role-based access control.",
         category: "java",
-        image: "../Documents/mpos.png",
+        image: "Documents/mpos.png",
         tags: ["Java", "Swing", "MySQL", "OOP"],
         links: { github: "https://github.com/shiruri/MPOS" }
     },
@@ -24,7 +24,7 @@ const projects = [
         desc: "A custom programming language interpreter written in Java.",
         details: "Features a BASIC-inspired syntax with a full tokenizer, recursive-descent parser generating an AST, and a tree-walking executor. Supports variables, conditionals, loops, functions, and basic I/O.",
         category: "java",
-        image: "../Documents/ELYSIUM.png",
+        image: "Documents/ELYSIUM.png",
         tags: ["Java", "Interpreter", "AST", "Compiler"],
         links: { github: "https://github.com/shiruri/Elysium/tree/main" }
     },
@@ -33,7 +33,7 @@ const projects = [
         desc: "A full-stack social platform for cosplay and anime enthusiasts built with Spring Boot and vanilla JS.",
         details: "Features user profiles with cosplay galleries, JWT-authenticated API, post feeds with likes and comments, event organization for conventions, and a marketplace for cosplay commissions. MySQL database with optimized queries for social feed performance.",
         category: "web",
-        image: "../Documents/cosnima.jpeg",
+        image: "Documents/cosnima.jpeg",
         tags: ["Java", "Spring Boot", "JWT", "MySQL"],
         links: { github: "https://github.com/shiruri/Cosnima" }
     },
@@ -42,7 +42,7 @@ const projects = [
         desc: "A comprehensive Hospital Management System built with Spring Boot, JWT security, and MySQL.",
         details: "Supports 8 distinct roles (Admin, Doctor, Nurse, etc.) with fine-grained RBAC. Features full patient lifecycle management, appointment scheduling, electronic medical records, and billing. Built with accessibility in mind following WCAG guidelines.",
         category: "java",
-        image: "../Documents/Elysiae_HMS.PNG",
+        image: "Documents/Elysiae_HMS.PNG",
         tags: ["Java", "Spring Boot", "MySQL", "RBAC"],
         links: { github: "https://github.com/shiruri/Elysiae" }
     },
@@ -51,7 +51,7 @@ const projects = [
         desc: "A Ren'Py visual novel blending romance with interactive programming education.",
         details: "Follow the journey of a student who discovers love while learning to code. Features branching dialogue, integrated coding mini-challenges (HTML/CSS/JS), original character art, chiptune soundtrack, and multiple endings.",
         category: "game",
-        image: "../Documents/digital.png",
+        image: "Documents/digital.png",
         tags: ["Ren'Py", "Visual Novel", "Educational"],
         links: { itch: "https://shiroi26.itch.io/digital-love" }
     },
@@ -60,7 +60,7 @@ const projects = [
         desc: "A poignant Ren'Py visual novel exploring student life and mental health.",
         details: "Branching narrative with meaningful choices that impact the protagonist's mental state. Tackles themes of anxiety, depression, and self-discovery with sensitivity. Features original soundtrack and hand-drawn art.",
         category: "game",
-        image: "../Documents/paperweight.png",
+        image: "Documents/paperweight.png",
         tags: ["Ren'Py", "Mental Health", "Narrative"],
         links: { itch: "https://shiroi26.itch.io/paperweigth" }
     }
@@ -88,7 +88,7 @@ function renderProjects(filter = 'all') {
             <div class="relative z-10 px-2">
                 <div class="flex justify-between items-start mb-4">
                     <span class="text-[10px] font-black uppercase tracking-[0.2em] text-red-600 bg-red-50 px-4 py-1.5 rounded-full border border-red-100 flex items-center gap-2 shadow-sm">
-                        <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-3 h-3">
+                        <img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-3 h-3">
                         ${proj.category}
                     </span>
                 </div>
@@ -96,7 +96,7 @@ function renderProjects(filter = 'all') {
                 <p class="text-slate-500 text-base leading-relaxed font-semibold line-clamp-2">${proj.desc}</p>
             </div>
             
-            <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="absolute -bottom-6 -right-6 w-16 h-16 opacity-0 group-hover:opacity-100 group-hover:rotate-12 transition-all duration-500 pointer-events-none drop-shadow-2xl">
+            <img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="absolute -bottom-6 -right-6 w-16 h-16 opacity-0 group-hover:opacity-100 group-hover:rotate-12 transition-all duration-500 pointer-events-none drop-shadow-2xl">
         </div>
     `).join('');
 
@@ -135,8 +135,8 @@ function openModal(index) {
                 <div id="overview" class="modal-pane">
                     <p class="text-2xl text-slate-600 leading-relaxed font-bold mb-10">${proj.desc}</p>
                     <div class="flex flex-wrap gap-6">
-                        ${proj.links.github ? `<a href="${proj.links.github}" target="_blank" class="bg-slate-900 text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-slate-200 group"><img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-6 h-6 invert group-hover:rotate-12 transition-transform"> View GitHub</a>` : ''}
-                        ${proj.links.itch ? `<a href="${proj.links.itch}" target="_blank" class="bg-[#ff4b5c] text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-red-200 group"><img src="../assets/green apple keychain!!_no_bg_6gugqvu4.png" class="w-6 h-6 group-hover:rotate-12 transition-transform"> Play on itch.io</a>` : ''}
+                        ${proj.links.github ? `<a href="${proj.links.github}" target="_blank" class="bg-slate-900 text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-slate-200 group"><img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-6 h-6 invert group-hover:rotate-12 transition-transform"> View GitHub</a>` : ''}
+                        ${proj.links.itch ? `<a href="${proj.links.itch}" target="_blank" class="bg-[#ff4b5c] text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-red-200 group"><img src="assets/green apple keychain!!_no_bg_6gugqvu4.png" class="w-6 h-6 group-hover:rotate-12 transition-transform"> Play on itch.io</a>` : ''}
                     </div>
                 </div>
                 <div id="details" class="modal-pane hidden">
@@ -147,7 +147,7 @@ function openModal(index) {
                         ${proj.tags.map(tag => `
                             <div class="bg-white border-2 border-red-50 p-6 rounded-3xl flex items-center gap-4 shadow-md hover:scale-105 transition-transform">
                                 <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center">
-                                    <img src="../assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-8 h-8">
+                                    <img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-8 h-8">
                                 </div>
                                 <span class="text-xl font-black text-slate-800 tracking-tight">${tag}</span>
                             </div>
