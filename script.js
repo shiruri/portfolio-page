@@ -2,15 +2,6 @@
 
 const projects = [
     {
-        title: "Portfolio Site",
-        desc: "A fully interactive Windows 98-themed portfolio that simulates a retro desktop environment. Features draggable windows, functional taskbar, and classic animations.",
-        details: "Built from scratch with vanilla HTML, CSS, and JavaScript. Every element mimics the Win98 UX — from beveled borders and pixel icons to the classic teal wallpaper. Demonstrates mastery of state management and DOM manipulation without frameworks.",
-        category: "web",
-        image: "Documents/portfolio.png",
-        tags: ["HTML", "CSS", "JavaScript", "Retro UI"],
-        links: { github: "https://github.com/shiruri/portfolio-page" }
-    },
-    {
         title: "MPOS System",
         desc: "A full-featured Point of Sale system built with Java Swing and MySQL.",
         details: "Handles transaction processing with receipt generation, real-time inventory tracking with low-stock alerts, admin dashboard with sales analytics, and employee management with role-based access control.",
