@@ -35,7 +35,7 @@ const projects = [
         category: "web",
         image: "Documents/cosnima.jpeg",
         tags: ["Java", "Spring Boot", "JWT", "MySQL"],
-        links: { github: "https://github.com/shiruri/Cosnima" }
+        links: { github: "https://github.com/shiruri/Cosnima", demo: "https://cosnima.vercel.app/listing/listings.html" }
     },
     {
         title: "Elysiae HMS",
@@ -44,7 +44,7 @@ const projects = [
         category: "java",
         image: "Documents/Elysiae_HMS.PNG",
         tags: ["Java", "Spring Boot", "MySQL", "RBAC"],
-        links: { github: "https://github.com/shiruri/Elysiae" }
+        links: { github: "https://github.com/shiruri/Elysiae", demo: "https://elysiae.vercel.app/index.html" }
     },
     {
         title: "Digital Love",
@@ -136,6 +136,7 @@ function openModal(index) {
                     <p class="text-2xl text-slate-600 leading-relaxed font-bold mb-10">${proj.desc}</p>
                     <div class="flex flex-wrap gap-6">
                         ${proj.links.github ? `<a href="${proj.links.github}" target="_blank" class="bg-slate-900 text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-slate-200 group"><img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-6 h-6 invert group-hover:rotate-12 transition-transform"> View GitHub</a>` : ''}
+                        ${proj.links.demo ? `<a href="${proj.links.demo}" target="_blank" class="bg-teal-600 text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-teal-200 group"><img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-6 h-6 invert group-hover:rotate-12 transition-transform"> Live Demo</a>` : ''}
                         ${proj.links.itch ? `<a href="${proj.links.itch}" target="_blank" class="bg-[#ff4b5c] text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-red-200 group"><img src="assets/green apple keychain!!_no_bg_6gugqvu4.png" class="w-6 h-6 group-hover:rotate-12 transition-transform"> Play on itch.io</a>` : ''}
                     </div>
                 </div>
