@@ -23,7 +23,7 @@ const projects = [
         title: "Cosnima",
         desc: "A full-stack social platform for cosplay and anime enthusiasts built with Spring Boot and vanilla JS.",
         details: "Features user profiles with cosplay galleries, JWT-authenticated API, post feeds with likes and comments, event organization for conventions, and a marketplace for cosplay commissions. MySQL database with optimized queries for social feed performance.",
-        category: "web",
+        category: "java",
         image: "Documents/cosnima.jpeg",
         tags: ["Java", "Spring Boot", "JWT", "MySQL"],
         links: { github: "https://github.com/shiruri/Cosnima", demo: "https://cosnima.vercel.app/listing/listings.html" }
