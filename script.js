@@ -1,3 +1,5 @@
+"use strict";
+
 // v2.js - Portfolio Content & Interactions (JUICY EDITION)
 
 const projects = [
@@ -21,11 +23,11 @@ const projects = [
     },
     {
         title: "Cosnima",
-        desc: "A cosplay and anime community platform built with Spring Boot 4 and Java 21, with JWT auth and real-time chat.",
-        details: "JWT-based authentication and Spring Security guard the REST API, with WebSocket/STOMP powering live chat and Cloudinary handling image uploads for cosplay photos and avatars. Backend runs on PostgreSQL, paired with an HTML/CSS/JS frontend.",
+        desc: "A cosplay and anime community platform built with Spring Boot 4 and Java 21, with JWT auth.",
+        details: "JWT-based authentication and Spring Security guard the REST API, with Cloudinary handling image uploads for cosplay photos and avatars. Backend runs on PostgreSQL, paired with an HTML/CSS/JS frontend.",
         category: "java",
         image: "Documents/cosnima.jpeg",
-        tags: ["Java", "Spring Boot", "PostgreSQL", "WebSocket"],
+        tags: ["Java", "Spring Boot", "PostgreSQL", "JWT"],
         links: { github: "https://github.com/shiruri/Cosnima", demo: "https://cosnima.vercel.app/listing/listings.html" }
     },
     {
@@ -70,8 +72,8 @@ function renderProjects(filter = 'all') {
              style="transition-delay: ${i * 60}ms"
              onclick="openModal(${projects.indexOf(proj)})">
             <div class="shine"></div>
-            <div class="aspect-[16/10] bg-red-50/50 rounded-[2.5rem] overflow-hidden flex items-center justify-center relative group-hover:scale-95 transition-transform duration-700 shadow-inner p-2">
-                <img src="${proj.image}" alt="${proj.title}" class="w-full h-full object-cover rounded-[2rem] shadow-lg">
+            <div class="aspect-[4/3] md:aspect-[16/10] bg-red-50/50 rounded-[2.5rem] overflow-hidden flex items-center justify-center relative group-hover:scale-95 transition-transform duration-700 shadow-inner">
+                <img src="${proj.image}" alt="${proj.title}" loading="lazy" class="w-full h-full object-contain rounded-[2rem] shadow-lg">
                 <div class="absolute inset-0 bg-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
                     <div class="bg-white px-8 py-3 rounded-full font-black text-red-600 shadow-2xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 scale-110">VIEW WORK</div>
                 </div>
@@ -84,7 +86,10 @@ function renderProjects(filter = 'all') {
                     </span>
                 </div>
                 <h3 class="text-3xl font-black mb-3 text-slate-800 tracking-tight">${proj.title}</h3>
-                <p class="text-slate-500 text-base leading-relaxed font-semibold line-clamp-2">${proj.desc}</p>
+                <p class="text-slate-500 text-base leading-relaxed font-semibold line-clamp-2 mb-3">${proj.desc}</p>
+                <div class="flex flex-wrap gap-2">
+                    ${proj.tags.map(tag => `<span class="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2.5 py-1 rounded-full border border-red-100">${tag}</span>`).join('')}
+                </div>
             </div>
             
             <img src="assets/apple-red.png" class="absolute -bottom-6 -right-6 w-16 h-16 opacity-0 group-hover:opacity-100 group-hover:rotate-12 transition-all duration-500 pointer-events-none drop-shadow-2xl">
@@ -100,24 +105,31 @@ function renderProjects(filter = 'all') {
     }, 50);
 }
 
+let lastFocusedElement = null;
+
 function openModal(index) {
     const proj = projects[index];
     const modal = document.getElementById('projectModal');
     const content = modal.querySelector('.overflow-y-auto');
-    
+
+    lastFocusedElement = document.activeElement;
+    modal.setAttribute('aria-hidden', 'false');
+
     content.innerHTML = `
         <div class="p-10 md:p-16">
-            <div class="aspect-video bg-red-50/50 rounded-[3rem] overflow-hidden mb-12 shadow-2xl p-4 border-4 border-white">
-                <img src="${proj.image}" class="w-full h-full object-cover rounded-[2.5rem]">
+            <div class="relative aspect-[4/3] md:aspect-video bg-red-50/50 rounded-[3rem] overflow-hidden mb-12 shadow-2xl border-4 border-white group">
+                <img src="${proj.image}" class="w-full h-full object-contain rounded-[2.5rem]">
+                <button onclick="openLightbox('${proj.image}')" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-red-600 border-2 border-red-50 hover:bg-red-50 transition-all px-4 py-2 rounded-full font-black text-xs shadow-lg flex items-center gap-1.5 opacity-0 group-hover:opacity-100 md:opacity-100"><img src="assets/apple-red.png" class="w-3 h-3 md:w-4 md:h-4 object-contain"> Enlarge</button>
             </div>
-            
-            <div class="flex flex-wrap items-center gap-6 mb-10">
+
+            <div class="flex flex-wrap items-center gap-4 mb-10">
                 <h2 class="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">${proj.title}</h2>
                 <span class="bg-red-600 text-white px-6 py-2 rounded-full font-black text-sm uppercase tracking-widest shadow-lg shadow-red-200">${proj.category}</span>
+                <button onclick="openLightbox('${proj.image}')" class="bg-red-50 text-red-600 border-2 border-red-100 hover:bg-red-100 hover:border-red-200 transition-all px-5 py-2.5 rounded-full font-black text-sm shadow-md flex items-center gap-2"><img src="assets/apple-red.png" class="w-4 h-4 md:w-5 md:h-5 object-contain"> Enlarge</button>
             </div>
 
             <div class="flex gap-6 border-b-4 border-red-50 mb-12 overflow-x-auto pb-4 scrollbar-hide">
-                <button class="modal-tab-btn active text-red-600 font-black text-xl px-6 py-2 relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-2 after:bg-red-600 after:rounded-full transition-all" onclick="switchModalTab(this, 'overview')">Overview</button>
+                <button class="modal-tab-btn active text-red-600 font-black text-xl px-6 py-2 transition-all" onclick="switchModalTab(this, 'overview')">Overview</button>
                 <button class="modal-tab-btn text-slate-300 font-black text-xl px-6 py-2 hover:text-red-400 transition-all" onclick="switchModalTab(this, 'details')">Deep Dive</button>
                 <button class="modal-tab-btn text-slate-300 font-black text-xl px-6 py-2 hover:text-red-400 transition-all" onclick="switchModalTab(this, 'stack')">Tech Stack</button>
             </div>
@@ -152,21 +164,19 @@ function openModal(index) {
 
     modal.classList.remove('hidden');
     modal.querySelector('#modalContent').classList.add('modal-enter-active');
+    modal.focus();
 }
 
 function switchModalTab(btn, paneId) {
     const currentPane = document.querySelector('.modal-pane:not(.hidden)');
     const nextPane = document.getElementById(paneId);
-
     if (currentPane === nextPane) return;
-
     document.querySelectorAll('.modal-tab-btn').forEach(b => {
-        b.classList.remove('text-red-600', 'active', 'after:absolute', 'after:bottom-[-4px]', 'after:left-0', 'after:w-full', 'after:h-2', 'after:bg-red-600', 'after:rounded-full');
+        b.classList.remove('active', 'text-red-600');
         b.classList.add('text-slate-300');
     });
-    btn.classList.remove('text-slate-300');
-    btn.classList.add('text-red-600', 'active', 'after:absolute', 'after:bottom-[-4px]', 'after:left-0', 'after:w-full', 'after:h-2', 'after:bg-red-600', 'after:rounded-full');
-
+    btn.classList.replace('text-slate-300', 'text-red-600');
+    btn.classList.add('active');
     currentPane.classList.add('hidden');
     nextPane.classList.remove('hidden');
 }
@@ -174,7 +184,26 @@ function switchModalTab(btn, paneId) {
 function closeModal() {
     const modal = document.getElementById('projectModal');
     modal.querySelector('#modalContent').classList.remove('modal-enter-active');
-    setTimeout(() => modal.classList.add('hidden'), 200);
+    modal.setAttribute('aria-hidden', 'true');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        if (lastFocusedElement) lastFocusedElement.focus();
+    }, 200);
+}
+
+// Lightbox
+function openLightbox(src) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    if (!lb || !img) return;
+    img.src = src;
+    lb.classList.remove('hidden');
+    lb.focus();
+}
+
+function closeLightbox() {
+    const lb = document.getElementById('lightbox');
+    if (lb) lb.classList.add('hidden');
 }
 
 function handleTabClick(e) {
@@ -183,52 +212,120 @@ function handleTabClick(e) {
     const filter = tab.dataset.tab;
     if (filter === currentTab) return;
     document.querySelectorAll('[data-tab]').forEach(t => {
-        t.classList.remove('bg-red-600', 'text-white', 'shadow-red-200');
-        t.classList.add('bg-white', 'text-red-600');
+        t.classList.replace('bg-red-600', 'bg-white');
+        t.classList.replace('text-white', 'text-red-600');
+        t.classList.remove('shadow-red-200');
     });
-    tab.classList.remove('bg-white', 'text-red-600');
-    tab.classList.add('bg-red-600', 'text-white', 'shadow-red-200');
+    tab.classList.replace('bg-white', 'bg-red-600');
+    tab.classList.replace('text-red-600', 'text-white');
+    tab.classList.add('shadow-red-200');
     currentTab = filter;
     renderProjects(filter);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const isDark = document.documentElement.classList.contains('dark');
+    if (themeIcon) {
+        themeIcon.src = isDark ? 'assets/apple-red.png' : 'assets/apple-green.png';
+    }
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            const dark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+            if (themeIcon) {
+                themeIcon.src = dark ? 'assets/apple-red.png' : 'assets/apple-green.png';
+                themeIcon.classList.remove('theme-toggle-spin');
+                void themeIcon.offsetWidth;
+                themeIcon.classList.add('theme-toggle-spin');
+            }
+        });
+    }
+
     renderProjects();
     const tabContainer = document.getElementById('tabContainer');
     if (tabContainer) tabContainer.addEventListener('click', handleTabClick);
 
-    // Custom Interactive Cursor Logic
+    // Custom Interactive Cursor Logic (with event delegation)
     const cursor = document.querySelector('.custom-cursor');
-    if (cursor) {
+    if (cursor && window.matchMedia('(hover: hover)').matches) {
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = `${e.clientX}px`;
             cursor.style.top = `${e.clientY}px`;
         });
 
-        // Add magnetic reactive scaling on clickables
-        const addCursorHoverListeners = () => {
-            document.querySelectorAll('a, button, .project-card, [onclick]').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = 'translate(-50%, -50%) scale(1.6)';
-                    cursor.style.backgroundColor = 'transparent';
-                    cursor.style.borderColor = '#ff3b3b';
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                    cursor.style.backgroundColor = '#ff3b3b';
-                    cursor.style.borderColor = '#ffffff';
-                });
-            });
-        };
-        addCursorHoverListeners();
-        
-        // Re-observe whenever elements get re-rendered (like changing tabs)
-        const observerTarget = document.getElementById('projectGrid');
-        if (observerTarget) {
-            const gridObserver = new MutationObserver(() => addCursorHoverListeners());
-            gridObserver.observe(observerTarget, { childList: true });
-        }
+        document.body.addEventListener('mouseover', (e) => {
+            const interactable = e.target.closest('a, button, .project-card, [onclick]');
+            if (interactable) {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.6)';
+                cursor.style.backgroundColor = 'transparent';
+                cursor.style.borderColor = '#ff3b3b';
+            }
+        });
+        document.body.addEventListener('mouseout', (e) => {
+            const interactable = e.target.closest('a, button, .project-card, [onclick]');
+            if (interactable) {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.backgroundColor = '#ff3b3b';
+                cursor.style.borderColor = '#ffffff';
+            }
+        });
     }
+
+    // Lightbox: delegation for close, frame stop, and Escape
+    const lightbox = document.getElementById('lightbox');
+    lightbox.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+    lightbox.addEventListener('click', function (e) {
+        if (e.target.closest('[data-close-lightbox]') || e.target === this) {
+            closeLightbox();
+        }
+    });
+    lightbox.querySelector('[data-lightbox-frame]').addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    // Modal keyboard: Escape to close + focus trap
+    const modal = document.getElementById('projectModal');
+    modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Tab') {
+            const focusable = modal.querySelectorAll('button, a, [tabindex]:not([tabindex="-1"])');
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    });
+
+    // Nav active section highlighting
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    const sections = document.querySelectorAll('section[id], header[id], footer[id]');
+    const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('text-red-600');
+                    link.style.opacity = '0.6';
+                });
+                const activeLink = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('text-red-600');
+                    activeLink.style.opacity = '1';
+                }
+            }
+        });
+    }, { threshold: 0.3, rootMargin: '0px 0px -50% 0px' });
+    sections.forEach(s => navObserver.observe(s));
 
     // Smooth Scroll for Nav
     document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
@@ -269,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.classList.add('opacity-100', 'translate-y-0');
             }
         });
-    }, { threshold: 0.05 }); // Lowered threshold means it loads immediately on reveal
+    }, { threshold: 0.05 });
 
     document.querySelectorAll('section, header, footer').forEach(el => {
         el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-12');

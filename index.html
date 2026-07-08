@@ -7,14 +7,49 @@
     <meta name="description" content="Jemmer Almoneda — Java/Spring Boot developer and visual novel creator. Portfolio of MPOS, Elysiae HMS, Cosnima, and more.">
     <meta property="og:title" content="Jemmer Almoneda - Portfolio">
     <meta property="og:description" content="Java/Spring Boot developer & visual novel creator. Explore MPOS, Elysiae HMS, Cosnima, and more.">
-    <meta property="og:image" content="assets/apple-red.png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
+    <meta property="og:image" content="Documents/portfolio.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="author" content="Jemmer Almoneda">
+    <meta name="keywords" content="Jemmer Almoneda, portfolio, Java, Spring Boot, developer, visual novel, MPOS, Elysiae HMS, Cosnima, Ren'Py">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preload" href="assets/apple-red.png" as="image">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            var theme = localStorage.getItem('theme');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jemmer Almoneda",
+        "url": "https://github.com/shiruri",
+        "image": "assets/apple-red.png",
+        "jobTitle": "Java Developer",
+        "description": "Java/Spring Boot backend developer and visual novel creator. Building robust systems and playful web experiences.",
+        "knowsAbout": ["Java", "Spring Boot", "PostgreSQL", "Ren'Py", "Visual Novel Development"],
+        "sameAs": ["https://github.com/shiruri", "https://www.facebook.com/shirobako2"],
+        "worksOn": [
+            { "@type": "SoftwareApplication", "name": "MPOS", "description": "Java Swing POS system" },
+            { "@type": "SoftwareApplication", "name": "Elysiae HMS", "description": "Hospital Management System" },
+            { "@type": "SoftwareApplication", "name": "Cosnima", "description": "Cosplay community platform" },
+            { "@type": "SoftwareApplication", "name": "Elysium", "description": "Custom interpreted language" },
+            { "@type": "CreativeWork", "name": "Digital Love", "description": "Ren'Py visual novel" },
+            { "@type": "CreativeWork", "name": "Paperweight", "description": "Ren'Py visual novel" }
+        ]
+    }
+    </script>
     <style>
         body { font-family: 'Fredoka', sans-serif; }
         .bg-pattern {
@@ -37,6 +72,7 @@
 </head>
 <body class="bg-[#fff9f9] text-slate-800 overflow-x-hidden selection:bg-red-200 pb-20 md:pb-0">
 
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="custom-cursor"></div>
 
     <div class="fixed inset-0 pointer-events-none z-[-10] overflow-hidden">
@@ -53,9 +89,12 @@
         </div>
         <a href="#contact" class="text-xs md:text-sm font-bold hover:text-red-600 transition-all hover:scale-110 shrink-0">Contact</a>
         <a href="https://github.com/shiruri" target="_blank" class="text-xs md:text-sm font-bold hover:text-red-600 transition-all hover:scale-110 shrink-0">GitHub</a>
+        <button id="themeToggle" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-red-100 hover:bg-red-200 transition-all hover:scale-110 shrink-0 flex items-center justify-center overflow-hidden p-1.5 md:p-2" aria-label="Toggle dark mode">
+            <img id="themeIcon" src="assets/apple-green.png" alt="Theme" class="w-full h-full object-contain">
+        </button>
     </nav>
 
-    <header class="relative min-h-screen flex flex-col items-center justify-center px-4 pt-10 md:pt-20 overflow-hidden">
+    <header id="main-content" class="relative min-h-screen flex flex-col items-center justify-center px-4 pt-10 md:pt-20 overflow-hidden">
         <div class="relative z-10 text-center max-w-5xl mx-auto w-full">
             <div class="mb-8 relative inline-block">
                 <div class="absolute inset-0 bg-red-500 rounded-full blur-[100px] opacity-20 animate-pulse"></div>
@@ -199,7 +238,18 @@
         </div>
     </footer>
 
-    <div id="projectModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-10">
+    <div id="lightbox" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4 md:p-10 bg-slate-900/80 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Image enlarged view" tabindex="-1">
+        <button data-close-lightbox class="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 md:w-14 md:h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center hover:bg-red-200 transition-all hover:rotate-90 shadow-lg z-10">
+            <img src="assets/apple-red.png" class="w-6 h-6 md:w-8 md:h-8">
+        </button>
+        <div data-lightbox-frame class="lightbox-frame relative max-w-full max-h-full flex items-center justify-center">
+            <img id="lightboxImg" src="" alt="Enlarged image" class="max-w-full max-h-[80vh] md:max-h-[85vh] object-contain rounded-[2rem] md:rounded-[3rem] relative z-10">
+            <img src="assets/icon-12.png" class="absolute -top-8 -left-8 md:-top-12 md:-left-12 w-16 h-16 md:w-24 md:h-24 animate-float pointer-events-none z-20 opacity-60">
+            <img src="assets/icon-14.png" class="absolute -bottom-8 -right-8 md:-bottom-12 md:-right-12 w-16 h-16 md:w-24 md:h-24 animate-float-slow pointer-events-none z-20 opacity-60">
+        </div>
+    </div>
+
+    <div id="projectModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-10" role="dialog" aria-modal="true" aria-label="Project details" tabindex="-1">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-xl" onclick="closeModal()"></div>
         <div id="modalContent" class="relative bg-white w-full max-w-5xl rounded-[2rem] md:rounded-[4rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border-4 md:border-8 border-white">
             <div class="absolute top-4 right-4 md:top-8 md:right-8 z-10">
