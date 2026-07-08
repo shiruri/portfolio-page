@@ -184,9 +184,12 @@ function switchModalTab(btn, paneId) {
 function closeModal() {
     const modal = document.getElementById('projectModal');
     modal.querySelector('#modalContent').classList.remove('modal-enter-active');
-    modal.setAttribute('aria-hidden', 'true');
+    if (document.activeElement && modal.contains(document.activeElement)) {
+        document.activeElement.blur();
+    }
     setTimeout(() => {
         modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
         if (lastFocusedElement) lastFocusedElement.focus();
     }, 200);
 }
