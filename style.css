@@ -37,9 +37,33 @@ html.dark .border-white { border-color: var(--card-border); }
 html.dark .bg-red-50 { background-color: rgba(255, 59, 59, 0.1); }
 html.dark .bg-red-50\/50 { background-color: rgba(255, 59, 59, 0.05); }
 html.dark .bg-red-50\/30 { background-color: rgba(255, 59, 59, 0.08); }
+html.dark .text-pop {
+    text-shadow: 4px 4px 0px rgba(255, 227, 227, 0.08), 8px 8px 0px rgba(255, 59, 59, 0.03);
+}
 html.dark .img-skeleton {
     background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
     background-size: 200% 100%;
+}
+html.dark .project-card {
+    background: var(--card-bg) !important;
+    border-color: var(--card-border) !important;
+    box-shadow: 0 16px 0px 0px #1e293b !important;
+}
+html.dark .project-card:hover {
+    border-color: var(--apple-red) !important;
+    box-shadow: 0 8px 0px 0px var(--apple-red) !important;
+}
+html.dark #projects .max-w-\[1400px\] {
+    border-color: var(--card-border);
+    box-shadow: 0 30px 60px -20px rgba(255, 59, 59, 0.05);
+}
+html.dark #tabContainer button {
+    border-color: var(--card-border);
+    box-shadow: 0 6px 0px 0px #1e293b;
+}
+html.dark #tabContainer button.bg-red-600 {
+    border-color: var(--apple-red);
+    box-shadow: 0 6px 0px 0px var(--apple-red);
 }
 
 html,
