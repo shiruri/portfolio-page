@@ -3,38 +3,38 @@
 const projects = [
     {
         title: "MPOS System",
-        desc: "A full-featured Point of Sale system built with Java Swing and MySQL.",
-        details: "Handles transaction processing with receipt generation, real-time inventory tracking with low-stock alerts, admin dashboard with sales analytics, and employee management with role-based access control.",
+        desc: "A Java Swing Point of Sale system backed by MySQL, with an admin dashboard, POS terminal, and encrypted PDF invoicing.",
+        details: "Role-based access across Admin, Staff, and Employee tiers. The dashboard covers inventory, suppliers, staff, and registered POS machines, plus sales reports exportable as password-encrypted PDF invoices. The terminal itself handles order building, discounts/tax, payment processing, voids, and receipt printing.",
         category: "java",
         image: "Documents/mpos.png",
-        tags: ["Java", "Swing", "MySQL", "OOP"],
+        tags: ["Java", "Swing", "MySQL", "iText"],
         links: { github: "https://github.com/shiruri/MPOS" }
     },
     {
         title: "Elysium",
-        desc: "A custom programming language interpreter written in Java.",
-        details: "Features a BASIC-inspired syntax with a full tokenizer, recursive-descent parser generating an AST, and a tree-walking executor. Supports variables, conditionals, loops, functions, and basic I/O.",
+        desc: "A small interpreted language built from scratch in Java, with a hand-written lexer and a parser that evaluates directly as it goes — no AST, no parser-generator frameworks.",
+        details: "Custom .cy source files run through a lexer → parser/interpreter pipeline. Supports variables, arithmetic, string concatenation, user input, and if/then/endif conditionals, all with zero external dependencies.",
         category: "java",
-        image: "Documents/ELYSIUM.png",
-        tags: ["Java", "Interpreter", "AST", "Compiler"],
+        image: "Documents/elysium.png",
+        tags: ["Java", "Interpreter", "Lexer", "Parser"],
         links: { github: "https://github.com/shiruri/Elysium/tree/main" }
     },
     {
         title: "Cosnima",
-        desc: "A full-stack social platform for cosplay and anime enthusiasts built with Spring Boot and vanilla JS.",
-        details: "Features user profiles with cosplay galleries, JWT-authenticated API, post feeds with likes and comments, event organization for conventions, and a marketplace for cosplay commissions. MySQL database with optimized queries for social feed performance.",
+        desc: "A cosplay and anime community platform built with Spring Boot 4 and Java 21, with JWT auth and real-time chat.",
+        details: "JWT-based authentication and Spring Security guard the REST API, with WebSocket/STOMP powering live chat and Cloudinary handling image uploads for cosplay photos and avatars. Backend runs on PostgreSQL, paired with an HTML/CSS/JS frontend.",
         category: "java",
         image: "Documents/cosnima.jpeg",
-        tags: ["Java", "Spring Boot", "JWT", "MySQL"],
+        tags: ["Java", "Spring Boot", "PostgreSQL", "WebSocket"],
         links: { github: "https://github.com/shiruri/Cosnima", demo: "https://cosnima.vercel.app/listing/listings.html" }
     },
     {
         title: "Elysiae HMS",
-        desc: "A comprehensive Hospital Management System built with Spring Boot, JWT security, and MySQL.",
-        details: "Supports 8 distinct roles (Admin, Doctor, Nurse, etc.) with fine-grained RBAC. Features full patient lifecycle management, appointment scheduling, electronic medical records, and billing. Built with accessibility in mind following WCAG guidelines.",
+        desc: "A role-based Hospital Management System REST API built with Spring Boot and PostgreSQL.",
+        details: "Covers the patient lifecycle end to end: registration, appointments, ward/bed admissions, lab requests, pharmacy dispensing, electronic health records, and billing. JWT auth enforces a first-login password change, and 8 distinct roles (Admin, Doctor, Nurse, and more) are scoped down to fine-grained permissions, with full audit logging throughout.",
         category: "java",
-        image: "Documents/Elysiae_HMS.PNG",
-        tags: ["Java", "Spring Boot", "MySQL", "RBAC"],
+        image: "Documents/elysiae-hms.png",
+        tags: ["Java", "Spring Boot", "PostgreSQL", "JWT"],
         links: { github: "https://github.com/shiruri/Elysiae", demo: "https://elysiae.vercel.app/index.html" }
     },
     {
@@ -79,7 +79,7 @@ function renderProjects(filter = 'all') {
             <div class="relative z-10 px-2">
                 <div class="flex justify-between items-start mb-4">
                     <span class="text-[10px] font-black uppercase tracking-[0.2em] text-red-600 bg-red-50 px-4 py-1.5 rounded-full border border-red-100 flex items-center gap-2 shadow-sm">
-                        <img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-3 h-3">
+                        <img src="assets/apple-red.png" class="w-3 h-3">
                         ${proj.category}
                     </span>
                 </div>
@@ -87,7 +87,7 @@ function renderProjects(filter = 'all') {
                 <p class="text-slate-500 text-base leading-relaxed font-semibold line-clamp-2">${proj.desc}</p>
             </div>
             
-            <img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="absolute -bottom-6 -right-6 w-16 h-16 opacity-0 group-hover:opacity-100 group-hover:rotate-12 transition-all duration-500 pointer-events-none drop-shadow-2xl">
+            <img src="assets/apple-red.png" class="absolute -bottom-6 -right-6 w-16 h-16 opacity-0 group-hover:opacity-100 group-hover:rotate-12 transition-all duration-500 pointer-events-none drop-shadow-2xl">
         </div>
     `).join('');
 
@@ -126,9 +126,9 @@ function openModal(index) {
                 <div id="overview" class="modal-pane">
                     <p class="text-2xl text-slate-600 leading-relaxed font-bold mb-10">${proj.desc}</p>
                     <div class="flex flex-wrap gap-6">
-                        ${proj.links.github ? `<a href="${proj.links.github}" target="_blank" class="bg-slate-900 text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-slate-200 group"><img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-6 h-6 invert group-hover:rotate-12 transition-transform"> View GitHub</a>` : ''}
-                        ${proj.links.demo ? `<a href="${proj.links.demo}" target="_blank" class="bg-teal-600 text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-teal-200 group"><img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-6 h-6 invert group-hover:rotate-12 transition-transform"> Live Demo</a>` : ''}
-                        ${proj.links.itch ? `<a href="${proj.links.itch}" target="_blank" class="bg-[#ff4b5c] text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-red-200 group"><img src="assets/green apple keychain!!_no_bg_6gugqvu4.png" class="w-6 h-6 group-hover:rotate-12 transition-transform"> Play on itch.io</a>` : ''}
+                        ${proj.links.github ? `<a href="${proj.links.github}" target="_blank" class="bg-slate-900 text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-slate-200 group"><img src="assets/apple-red.png" class="w-6 h-6 invert group-hover:rotate-12 transition-transform"> View GitHub</a>` : ''}
+                        ${proj.links.demo ? `<a href="${proj.links.demo}" target="_blank" class="bg-teal-600 text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-teal-200 group"><img src="assets/apple-red.png" class="w-6 h-6 invert group-hover:rotate-12 transition-transform"> Live Demo</a>` : ''}
+                        ${proj.links.itch ? `<a href="${proj.links.itch}" target="_blank" class="bg-[#ff4b5c] text-white px-10 py-5 rounded-3xl font-black text-lg hover:bg-red-600 transition-all flex items-center gap-3 shadow-xl shadow-red-200 group"><img src="assets/apple-green.png" class="w-6 h-6 group-hover:rotate-12 transition-transform"> Play on itch.io</a>` : ''}
                     </div>
                 </div>
                 <div id="details" class="modal-pane hidden">
@@ -139,7 +139,7 @@ function openModal(index) {
                         ${proj.tags.map(tag => `
                             <div class="bg-white border-2 border-red-50 p-6 rounded-3xl flex items-center gap-4 shadow-md hover:scale-105 transition-transform">
                                 <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center">
-                                    <img src="assets/red apple keychain png!!_no_bg_jw1x4ea9.png" class="w-8 h-8">
+                                    <img src="assets/apple-red.png" class="w-8 h-8">
                                 </div>
                                 <span class="text-xl font-black text-slate-800 tracking-tight">${tag}</span>
                             </div>
