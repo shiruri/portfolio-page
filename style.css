@@ -22,31 +22,52 @@ html.dark {
     --nav-bg: rgba(15, 23, 42, 0.95);
     --section-bg: rgba(15, 23, 42, 0.8);
 }
-html.dark body { background-color: var(--bg) !important; color: var(--text) !important; }
-html.dark .bg-\[#fff9f9\] { background-color: var(--bg) !important; }
+html.dark body { background-color: var(--bg); color: var(--text); }
+html.dark .bg-\[#fff9f9\] { background-color: var(--bg); }
 html.dark .text-slate-800,
 html.dark .text-slate-900,
 html.dark .text-slate-500,
-html.dark .text-slate-600 { color: var(--text) !important; }
+html.dark .text-slate-600 { color: var(--text); }
 html.dark .bg-white,
 html.dark .bg-white\/80,
-html.dark .bg-white\/95 { background-color: var(--card-bg) !important; }
+html.dark .bg-white\/95 { background-color: var(--card-bg); }
 html.dark .border-red-50,
 html.dark .border-red-100,
-html.dark .border-white { border-color: var(--card-border) !important; }
-html.dark .bg-red-50 { background-color: rgba(255, 59, 59, 0.1) !important; }
-html.dark .bg-red-50\/50 { background-color: rgba(255, 59, 59, 0.05) !important; }
-html.dark .bg-red-50\/30 { background-color: rgba(255, 59, 59, 0.08) !important; }
+html.dark .border-white { border-color: var(--card-border); }
+html.dark .bg-red-50 { background-color: rgba(255, 59, 59, 0.1); }
+html.dark .bg-red-50\/50 { background-color: rgba(255, 59, 59, 0.05); }
+html.dark .bg-red-50\/30 { background-color: rgba(255, 59, 59, 0.08); }
 html.dark .img-skeleton {
     background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
     background-size: 200% 100%;
 }
 
-html, body {
+html,
+body {
     overflow-x: hidden;
     max-width: 100%;
     position: relative;
     scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 1.2s ease, color 1.2s ease;
+}
+
+body,
+.bg-\[#fff9f9\],
+.bg-white,
+.bg-white\/80,
+.bg-white\/95,
+.border-red-50,
+.border-red-100,
+.border-white,
+.bg-red-50,
+.bg-red-50\/50,
+.bg-red-50\/30 {
+    transition: background-color 1.2s ease, border-color 1.2s ease, color 1.2s ease;
 }
 
 body {
@@ -292,12 +313,13 @@ section, header, footer {
 }
 
 @keyframes theme-toggle-spin {
-    0% { transform: rotate(0deg) scale(1); }
-    40% { transform: rotate(200deg) scale(1.25); }
-    100% { transform: rotate(360deg) scale(1); }
+    0% { transform: rotate(0deg) scale(1); opacity: 1; }
+    30% { transform: rotate(120deg) scale(0.9); opacity: 0.6; }
+    60% { transform: rotate(240deg) scale(0.95); opacity: 0.8; }
+    100% { transform: rotate(360deg) scale(1); opacity: 1; }
 }
 .theme-toggle-spin {
-    animation: theme-toggle-spin 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: theme-toggle-spin 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @media (max-width: 768px) {
